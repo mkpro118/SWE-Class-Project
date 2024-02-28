@@ -2,58 +2,46 @@
 
 ## TeamName
 
-<!--The name of your team.-->
+The 37ers
 
-### Project Abstract
+### Project Abstract & Customer
 
-<!--A one paragraph summary of what the software will do.-->
+This software management platform is meant to serve the aircraft industry specifically aircraft manufacturers. The lifecycle of the construction of an airplane is very complex and keeping track of all the process data is even more cumbersome. Top level management requires a way to clearly see their model/part inventory across all their warehouses in order to adjust to customer orders, preferences and requests. Being able to check the statuses of prodcution lines, model performances and current market trends are vital to the success of a manufacturing business therefore KPIs are generated in order to help managers streamline their processes. Finally, our platform allows administrators to order parts, viewing price fluctuations and better manage their upply inventory. 
 
-This is an example paragraph written in markdown. You can use *italics*, **bold**, and other formatting options. You can also <u>use inline html</u> to format your text. The example sections included in this document are not necessarily all the sections you will want, and it is possible that you won't use all the one's provided. It is your responsibility to create a document that adequately conveys all the information about your project specifications and requirements.
-
-Please view this file's source to see `<!--comments-->` with guidance on how you might use the different sections of this document. 
-
-### Customer
-
-<!--A brief description of the customer for this software, both in general (the population who might eventually use such a system) and specifically for this document (the customer(s) who informed this document). Every project will have a customer from the CS506 instructional staff. Requirements should not be derived simply from discussion among team members. Ideally your customer should not only talk to you about requirements but also be excited later in the semester to use the system.-->
 
 ### User Requirements
 
 <!--This section lists the behavior that the users see. This information needs to be presented in a logical, organized fashion. It is most helpful if this section is organized in outline form: a bullet list of major topics (e.g., one for each kind of user, or each major piece of system functionality) each with some number of subtopics.-->
 
-Here is a user requirements sample from [Crookshanks](https://learning-oreilly-com.ezproxy.library.wisc.edu/library/view/practical-software-development/9781484206201/9781484206218_Ch02.xhtml):
-
 | ID   | Description                                                  | Priority | Status |
 | ---- | ------------------------------------------------------------ | -------- | ------ |
-| R11  | Users should not have to sign into the system; their current network login should be used for identification. | Med      | Done   |
-| R12  | The user should pick a project first; the tasks available are a derivative of the project. | High     | Open   |
-| R13  | A full-time employee should not be able to submit a time card with less than 40 hours per week recorded. | High     | Open   |
-| R14  | A contractor can submit any number of hours up to 60 without special approval. | Med      | Open   |
-| R15  | A team lead can see his/her team's time cards before they are submitted but cannot approve them until the user submits it. | High     | Open   |
-
-<div align="center"><small><i>Excerpt from Crookshanks Table 2-2 showing example user requirements for a timekeeping system</i></small></div>
-
-- You 
-  - Can
-    - Use
-- Bullet
-  - Points
-    - In
-    - Markdown
+| R11  | The user should be able to see current model/parts inventory | High      | Done   |
+| R12  | The user should be able to see where a particular plane is in its development lifecycle. | High     | Open   |
+| R13  | The user should be able to see all warehouses and their inventory/staff . | High     | Open   |
+| R14  | The user should be able to order new parts from suppliers and understand the finances required. | High      | Open   |
+| R15  | The user should be able to view warehouse/model performances as KPIs. | High     | Open   |
+| R16  | The user shoudl be able to view customer orders and prioritize them | High     | Open   |
 
 ### Use Cases & User Stories
 
 <!--Use cases and user stories that support the user requirements in the previous section. The use cases should be based off user stories. Every major scenario should be represented by a use case, and every use case should say something not already illustrated by the other use cases. Diagrams (such as sequence charts) are encouraged. Ask the customer what are the most important use cases to implement by the deadline. You can have a total ordering, or mark use cases with “must have,” “useful,” or “optional.” For each use case you may list one or more concrete acceptance tests (concrete scenarios that the customer will try to see if the use case is implemented).-->
 
-Here is a sample user story from [Clean Agile](https://learning-oreilly-com.ezproxy.library.wisc.edu/library/view/clean-agile-back/9780135782002/ch03.xhtml#ch03lev1sec1) using a markdown block quote:
 
-> As the driver of a car, in order to increase my velocity, I will press my foot harder on the accelerator pedal.
+> As a user, I want to be able to view the inventory of planes in design, production, finished and sold on a per warehouse per model basis.
+> I also want to view current parts on a per warehouse per model basis so I can determine if I need to order more or hold off. 
+> AC: Aggregated/filter data should be viewable on a webpage.
 
-1. You
-   1. Can
-      1. Also
-2. Use
-   1. Numbered
-      1. Lists
+> As a user, I want to be able to click on a particular plane in development and view necessary metadata such as model, size, number of engineers, ID, and production stage.
+> AC: Create a unique 'plane' webpage where plane metadata is displayed
+
+> As a user, I want the ability to put in orders with suppliers based on current inventory KPIs and counts. I also want the abiity to add new suppliers if the business facilitates a good connection. 
+> AC: Use a form to place order and another form to add suppliers 
+
+> As a user, I need the ability to view KPIs on warehouse production line metrics, model preferences based on customer orders/requirements and and price fluctuation KPIs of parts, models and other key elements of an aircraft manufacturing process.
+> AC: Build charts and graphs of useful metrics and display them on a webpage. Have them update based on inventory, orders and feedback.
+
+> As a user, I want to be able to view customer orders as a list based on filters such as most recent, more important and reprioritize them if need be.
+> AC: View orders on a webpage. 
 
 ### User Interface Requirements
 
