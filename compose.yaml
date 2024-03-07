@@ -1,0 +1,84 @@
+version: '3.8'
+services:
+  frontend:
+    image: frontend
+    build:
+      context: src/frontend
+      dockerfile: Node.Dockerfile
+    volumes:
+      - frontend_artifacts:/src/artifacts
+    depends_on:
+      web_server:
+        restart: true
+        required: true
+        condition: service_healthy
+    restart: on-failure:5
+    networks:
+      - front_end
+    ports:
+      - "43000:3000"
+      - "45000:5000"
+
+  web_server:
+    image: web_server
+    build:
+      context: src/python_web_api
+      dockerfile: Python.Dockerfile
+    volumes:
+      - python_web_api_artifacts:/src/artifacts
+    depends_on:
+      proxy_server:
+        restart: true
+        required: true
+        condition: service_healthy
+    restart: on-failure:5
+    networks:
+      - front_end
+      - back_end
+    ports:
+      - "45000:5000"
+      - "48000:8000"
+
+  proxy_server:
+    image: proxy_server
+    build:
+      context: src/java-socket-server
+      dockerfile: Java.Dockerfile
+    volumes:
+      - java-socket-server_artifacts:/src/artifacts
+    depends_on:
+      sql_server:
+        restart: true
+        required: true
+        condition: service_healthy
+    restart: on-failure:5
+    networks:
+      - back_end
+      - database
+    ports:
+      - "48000:8000"
+      - "43306:3306"
+
+  sql_server:
+    image: sql_server
+    build:
+      context: src/mysql-db-repo
+      dockerfile: SQL.Dockerfile
+    volumes:
+      - mysql-db-repo_artifacts:/src/artifacts
+    restart: on-failure:5
+    networks:
+      - database
+    ports:
+      - "43306:3306"
+
+volumes:
+  frontend_artifacts:
+  java-socket-server_artifacts:
+  mysql-db-repo_artifacts:
+  python_web_api_artifacts:
+
+networks:
+  front_end:
+  back_end:
+  database:
