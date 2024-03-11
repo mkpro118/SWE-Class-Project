@@ -1,24 +1,25 @@
 version: '3.8'
 services:
-  # frontend:
-  #   container_name: frontend
-  #   image: frontend
-  #   build:
-  #     context: src/frontend
-  #     dockerfile: Node.Dockerfile
-  #   volumes:
-  #     - frontend_artifacts:/src/artifacts
-  #   depends_on:
-  #     web_server:
-  #       restart: true
-  #       required: true
-  #       condition: service_healthy
-  #   restart: on-failure:5
-  #   networks:
-  #     - front_end
-  #   ports:
-  #     - "43000:3000"
-  #     - "45000:5000"
+  frontend:
+    container_name: frontend
+    image: frontend
+    build:
+      context: src/frontend
+      dockerfile: Node.Dockerfile
+    volumes:
+      - frontend_artifacts:/src/artifacts
+    depends_on:
+      - web_server
+        # restart: true
+        # required: true
+        # condition: service_healthy
+    # restart: on-failure:5
+    networks:
+      - front_end
+    expose:
+      - 5000
+    ports:
+      - "80:3000"
 
   web_server:
     container_name: web_server
@@ -62,18 +63,19 @@ services:
       - 8000
       - 3306
 
-  # sql_server:
-  #   image: sql_server
-  #   build:
-  #     context: src/mysql-db-repo
-  #     dockerfile: SQL.Dockerfile
-  #   volumes:
-  #     - mysql-db-repo_artifacts:/src/artifacts
-  #   restart: on-failure:5
-  #   networks:
-  #     - database
-  #   ports:
-  #     - "43306:3306"
+  sql_server:
+    container_name: sql_server
+    image: sql_server
+    build:
+      context: src/mysql-db-repo
+      dockerfile: SQL.Dockerfile
+    volumes:
+      - mysql-db-repo_artifacts:/src/artifacts
+    # restart: on-failure:5
+    networks:
+      - database
+    expose:
+      - 3306
 
 volumes:
   frontend_artifacts:
