@@ -45,6 +45,6 @@ ENV ARTIFACTS_ROOT=/src/artifacts
 
 # The following commands may be changed depending on the how
 # We decide to build and run the Java Server
-# RUN javac ./*.java -cp .:mysql_connector
+RUN javac -d bin -cp .:mysql_connector ./*.java
 
-# CMD ["java", "Main", "-cp", ".:mysql_connector"]
+CMD ["java", "-cp", "bin:mysql_connector", "JavaServer"]

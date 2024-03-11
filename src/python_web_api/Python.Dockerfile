@@ -39,4 +39,4 @@ RUN mkdir -p artifacts
 VOLUME /src/artifacts
 ENV ARTIFACTS_ROOT=/src/artifacts
 
-# CMD ["python3", "server.py"]
+CMD ["python3", "PythonServer.py"]
