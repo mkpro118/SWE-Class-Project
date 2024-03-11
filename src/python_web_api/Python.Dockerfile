@@ -29,14 +29,14 @@ EXPOSE 8000
 RUN mkdir src
 WORKDIR /src
 
-COPY . .
-
-# Install dependencies for the Web Server
-RUN pip install -r requirements.txt
-
 # Preserve any files generated within the container
 RUN mkdir -p artifacts
 VOLUME /src/artifacts
 ENV ARTIFACTS_ROOT=/src/artifacts
+
+COPY . .
+
+# Install dependencies for the Web Server
+RUN pip install -r requirements.txt
 
 CMD ["python3", "PythonServer.py"]

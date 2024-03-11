@@ -32,16 +32,16 @@ EXPOSE 3306
 RUN mkdir src
 WORKDIR /src
 
-COPY . .
+# Preserve any files generated within the container
+RUN mkdir -p artifacts
+VOLUME /src/artifacts
+ENV ARTIFACTS_ROOT=/src/artifacts
 
 # MySQL plugin for connection Java Apps to MySQL
 RUN wget --no-check-certificate https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-j-8.3.0.zip -O mysql_connector.zip
 RUN unzip mysql_connector.zip
 
-# Preserve any files generated within the container
-RUN mkdir - artifacts
-VOLUME /src/artifacts
-ENV ARTIFACTS_ROOT=/src/artifacts
+COPY . .
 
 # The following commands may be changed depending on the how
 # We decide to build and run the Java Server
