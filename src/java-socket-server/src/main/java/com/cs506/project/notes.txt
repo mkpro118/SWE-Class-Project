@@ -1,0 +1,10 @@
+Interfaces -- Contains all interfaces for the repository
+Repos -- Contains specific methods/return contracts based on the entity they are built for
+Schemas -- Database schemas
+
+JDBCConnection -- Establishes connection to database, this is pulled out of the main entry-point class in order
+                  to make testing easier
+
+
+MySQLRepository -- Contains methods to call sub repositories. Creates JDBCConnection to pass down to sub repositories
+
