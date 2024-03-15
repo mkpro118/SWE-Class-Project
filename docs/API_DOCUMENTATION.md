@@ -1,43 +1,78 @@
 # API Documentation for Inventory Management Project
 
-## Endpoints you would need `Authorization: Bearer {`Token`}` for:
-
 ### Component
-- `GET` component
-- `POST` component
-- `PUT` component
-- `DELETE` component
+- `GET` 
+    - /component/{ID}
+    - /component
+- `POST` 
+    - /component
+- `PUT` 
+    - /component/{ID}
+- `DELETE` 
+    - /component/{ID}
 
 ### Airplane
-- `GET` airplane
-- `POST` airplane
-- `PUT` airplane
-- `DELETE` airplane
+- `GET` 
+    - /airplane/{ID}
+    - /airplane
+- `POST` 
+    - /airplane
+- `PUT` 
+    - /airplane/{ID}
+- `DELETE` 
+    - /airplane/{ID}
 
 ### AirplaneToComponent
-- `GET` AirplaneToComponent
-- `POST` AirplaneToComponent
-- `DELETE` AirplaneToComponent
+- `GET` 
+    - /airplanecomponent/{ID}
+    - /airplanecomponent
+- `POST` 
+    - /airplanecomponent
+- `DELETE` 
+    - /airplanecomponent/{ID}
 
 ### Facility
-- `GET` facility
-- `POST` facility
-- `PUT` facility
-- `DELETE` facility
-
+- `GET` 
+    - /facility/{ID}
+    - /facility
+- `POST` 
+    - /facility
+- `PUT`
+    - /facility/{ID}
+- `DELETE` 
+    - /facility/{ID}
 ### Customer
-- `GET` customer
-- `POST` customer
-- `DELETE` airplane
+- `GET` 
+    - /customer/{ID}
+    - /customer
+- `POST` 
+    - /customer
+- `DELETE` 
+    - /customer/{ID}
 
 ### Supplier
-- `GET` supplier
-- `POST` supplier
-- `PUT` supplier
-- `DELETE` supplier
+- `GET` 
+    - /supplier/{ID}
+    - /supplier
+- `POST` 
+    - /supplier
+- `DELETE` 
+    - /supplier/{ID}
+
+### SupplierToFacility
+- `GET` 
+    - /supplierfacility{ID}
+    - /supplierfacility
+- `POST` 
+    - /supplierfacility
+- `DELETE` 
+    - /supplierfacility{ID}
 
 ### Manager
-- `GET` manager
-- `POST` manager
-- `PUT` manager
-- `DELETE` manager
+- `GET` 
+    - /manager/{ID}
+    - /manager
+- `POST` 
+    - /manager
+- `DELETE` 
+    - /manager/{ID}
