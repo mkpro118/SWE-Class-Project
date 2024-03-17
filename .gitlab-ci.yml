@@ -1,0 +1,82 @@
+stages:
+  - lint
+  - build
+  - test
+
+frontend-lint:
+  stage: lint
+  image: node:20.11.1
+  before_script:
+    - cd src/frontend
+    - npm install
+    - npm install -g eslint
+  script:
+    - eslint .
+  only:
+    - prod/frontend
+
+proxyserver-lint:
+  stage: lint
+  image: python:3.11
+  before_script:
+    - cd src/python_web_api
+    - pip install -r requirements.txt
+    - pip install mypy
+  script:
+    - mypy --ignore-missing-imports .
+  only:
+    - prod/webserver
+
+frontend-build:
+  stage: build
+  image: node:20.11.1
+  before_script:
+    - cd src/frontend
+    - npm install
+  script:
+    - npm run build
+  only:
+    - prod/frontend
+
+proxyserver-build:
+  stage: build
+  image: gradle:jdk-17
+  before_script:
+    - cd src/java-socket-server
+  script:
+    - ./gradlew build
+  only:
+    - prod/proxyserver
+
+frontend-test:
+  stage: test
+  image: node:20.11.1
+  before_script:
+    - cd src/frontend
+    - npm install
+  script:
+    - npm test
+  only:
+    - prod/frontend
+
+webserver-test:
+  stage: test
+  image: python:3.11
+  before_script:
+    - cd src/python_web_api
+    - pip install -r requirements.txt
+  script:
+    - python3 -m unittest discover -s .
+  only:
+    - prod/webserver
+
+proxyserver-test:
+  stage: test
+  image: gradle:jdk-17
+  before_script:
+    - cd src/java-socket-server
+    - ./gradlew build
+  script:
+    - ./gradlew test
+  only:
+    - prod/proxyserver
