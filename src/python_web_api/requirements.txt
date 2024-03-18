@@ -1,1 +1,4 @@
 flask
+requests
+types-requests
+types-urllib3

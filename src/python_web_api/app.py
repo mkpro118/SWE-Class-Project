@@ -114,6 +114,7 @@ def manager_with_id(manager_id: int):
 
 
 if __name__ == '__main__':
-    app.run(host=os.environ.get('FLASK_RUN_HOST', '0.0.0.0'),
-            port=os.environ.get('SERVER_PORT', 5000),
-            debug=os.environ.get('FLASK_DEBUG', True))
+    host = os.environ.get('FLASK_RUN_HOST', '0.0.0.0')
+    port = int(os.environ.get('SERVER_PORT', 5000))
+    debug = bool(os.environ.get('FLASK_DEBUG', True))
+    app.run(host=host, port=port, debug=debug)

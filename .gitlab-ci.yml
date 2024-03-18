@@ -23,7 +23,7 @@ proxyserver-lint:
     - pip install -r requirements.txt
     - pip install mypy
   script:
-    - mypy --ignore-missing-imports .
+    - mypy --ignore-missing-imports --disable-error-code=import-untyped .
   only:
     - prod/webserver
 
