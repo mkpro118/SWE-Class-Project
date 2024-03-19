@@ -39,4 +39,4 @@ COPY . .
 # Install dependencies for the Web Server
 RUN pip install -r requirements.txt
 
-CMD ["python3", "PythonServer.py"]
+CMD ["flask", "run"]
