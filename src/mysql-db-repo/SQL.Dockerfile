@@ -9,7 +9,13 @@ WORKDIR /src
 RUN mkdir -p artifacts
 VOLUME /src/artifacts
 
-COPY . .
+# Testing purposes only
+ENV MYSQL_ROOT_PASSWORD=pass
+ENV MYSQL_DATABASE=appdb
+
+COPY Dump.sql /docker-entrypoint-initdb.d/Dump.sql
+
+CMD ["mysqld"]
 
 # The file that contains required sensitive information
-ENV MYSQL_ROOT_PASSWORD_FILE=/src/secrets
+# ENV MYSQL_ROOT_PASSWORD_FILE=/src/secrets
