@@ -4,7 +4,7 @@ import React, { ReactNode, useEffect, useRef, useState } from 'react';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { SIDENAV_ITEMS } from '@/styles/constants';
+import { SIDENAV_ITEMS } from '@/app/styles/constants';
 
 import { Icon } from '@iconify/react';
 import { motion, useCycle } from 'framer-motion';
