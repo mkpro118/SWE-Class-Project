@@ -8,7 +8,7 @@ export const SIDENAV_ITEMS = [
     },
     {
         title: "Warehouses",
-        path: "/warehouses",
+        path: "/warehousecs",
         icon: <Icon icon="lucide:rows-3" color="darkblue" width="24" height="24"/>,
     },
     {

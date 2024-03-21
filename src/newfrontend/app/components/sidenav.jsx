@@ -3,9 +3,9 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import BoeingLogo from "../app/icons/Boeing_full_logo.svg.png"
+import BoeingLogo from "../icons/Boeing_full_logo.svg.png"
 import { usePathname } from 'next/navigation';
-import { SIDENAV_ITEMS } from '@/styles/constants';
+import { SIDENAV_ITEMS } from '@/app/styles/constants';
 
 const SideNav = () => {
   const [displaySelectedTab, setDisplaySelectedTab] = useState("Master Inventory");

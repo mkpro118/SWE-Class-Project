@@ -4,8 +4,8 @@ import React from 'react';
 
 import Link from 'next/link';
 import { useSelectedLayoutSegment } from 'next/navigation';
-import useScroll from '@/hooks/useScroll';
-import { cn } from '@/libs/utils';
+import useScroll from '@/app/hooks/useScroll';
+import { cn } from '@/app/libs/utils';
 
 const Header = () => {
   const scrolled = useScroll(5);
