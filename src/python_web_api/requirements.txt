@@ -2,3 +2,6 @@ flask
 requests
 types-requests
 types-urllib3
+faker
+typing
+typing-extensions

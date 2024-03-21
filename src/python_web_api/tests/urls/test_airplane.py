@@ -1,7 +1,12 @@
-import unittest
-import requests
+import functools
+import json
+import models
 import random
+import requests
+import unittest
 from tests.urls.url_test_utils import Server
+
+parse = functools.partial(json.loads, cls=models.ModelDecoder)
 
 
 class TestAirplane(unittest.TestCase):
@@ -24,10 +29,24 @@ class TestAirplane(unittest.TestCase):
             self.assertTrue(resp.ok)
             self.assertEqual(resp.status_code, 200)
 
-            text = resp.text.lower()
+            src = resp.text
 
-            expected_msg = r'success\s+on\s+"/airplane"\s+with\s+method\s+get'
-            self.assertRegex(text, expected_msg)
+        try:
+            decoded_models = parse(src)
+        except Exception:
+            self.fail(msg='Could not parse JSON Data as a Airplane')
+
+        self.assertIsNotNone(decoded_models)
+        self.assertIsInstance(decoded_models, list)
+        self.assertGreaterEqual(len(decoded_models), 1)
+
+        for model in decoded_models:
+            self.assertIsInstance(model, models.Airplane)
+            for key, value in model.__annotations__.items():
+                self.assertIsNotNone(getattr(model, key, None))
+                self.assertIsInstance(getattr(model, key), value)
+
+            self.assertGreaterEqual(model.ID, int(1e6))
 
     def test_airplane_get_with_id(self):
         x = random.randint(1, 10000)
@@ -35,13 +54,21 @@ class TestAirplane(unittest.TestCase):
             self.assertTrue(resp.ok)
             self.assertEqual(resp.status_code, 200)
 
-            text = resp.text.lower()
+            src = resp.text
 
-            expected_msg = r'success\s+on\s+"/airplane/[{]id[}]"\s+with\s+method\s+get'
-            self.assertRegex(text, expected_msg)
+        try:
+            model = parse(src)
+        except Exception:
+            self.fail(msg='Could not parse JSON Data as a Airplane')
 
-            expected_id = f'airplane_id\\s+=\\s+{x}'
-            self.assertRegex(text, expected_id)
+        self.assertIsNotNone(model)
+        self.assertIsInstance(model, models.Airplane)
+
+        for key, value in model.__annotations__.items():
+            self.assertIsNotNone(getattr(model, key, None))
+            self.assertIsInstance(getattr(model, key), value)
+
+        self.assertEqual(model.ID, x)
 
     def test_airplane_post(self):
         with requests.post('http://127.0.0.1:5000/airplane') as resp:
