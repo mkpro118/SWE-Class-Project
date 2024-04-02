@@ -1,17 +1,17 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import DropdownCard from '@/components/dropdown-card';
+import DropdownCard from '@/app/components/dropdown-card';
 
-const Warehouses = () => {
+const Facilities = () => {
   const [fullInventory, setFullInventory] = useState([]);
 
   //This will load in all the data from API
   useEffect(() => {
-    const warehouse1 = { "city": "Atlanta", "state": "GA", "product": "737 Max", "type": "not sure", "quantity": 74, "id": 1930298 };
-    const warehouse2 = { "city": "Madison", "state": "WI", "product": "747", "type": "not sure", "quantity": 36, "id": 1930299 };
+    const facility1 = { city: "Atlanta", state: "GA", "aircrafts": 22, "components": 700, "employees": 3000, "manager": "John Smith", "id": 1930298 };
+    const facility2 = { city: "Madison", state: "WI", "aircrafts": 54, "components": 400, "employees": 2000, "manager": "William David", "id": 1930299 };
     let tempArr = [];
-    tempArr.push(warehouse1, warehouse2);
+    tempArr.push(facility1, facility2);
     setFullInventory(tempArr);
   }, []);
 
@@ -55,10 +55,8 @@ const Warehouses = () => {
       </header>
       <div>
         {
-          fullInventory.map(warehouse => {
-            return <DropdownCard title={warehouse}>
-              <p>Table for {warehouse.city}, {warehouse.state}</p>
-            </DropdownCard>
+          fullInventory.map(facility => {
+            return <DropdownCard props={facility} key={facility.id}/>
           })
         }
       </div>
@@ -66,4 +64,4 @@ const Warehouses = () => {
   )
 }
 
-export default Warehouses
+export default Facilities

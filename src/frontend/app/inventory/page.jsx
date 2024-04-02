@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Table from '@/components/table';
+import Table from '@/app/components/table';
 
 //Displays all warehouse inventory data
 
