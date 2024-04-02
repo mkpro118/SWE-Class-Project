@@ -5,10 +5,12 @@ import functools
 import json
 import models
 import mock_data
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 jsonify = functools.partial(json.dumps, cls=models.ModelEncoder)
 randint = functools.partial(random.randint, 3, 10)
+CORS(app, support_credentials=True)
 
 
 @app.route('/')
