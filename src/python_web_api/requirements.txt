@@ -1,4 +1,5 @@
 flask
+flask-cors
 requests
 types-requests
 types-urllib3
