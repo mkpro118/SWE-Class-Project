@@ -15,12 +15,12 @@ This software management platform is meant to serve the aircraft industry specif
 
 | ID   | Description                                                  | Priority | Status |
 | ---- | ------------------------------------------------------------ | -------- | ------ |
-| R11  | The user should be able to see current model/parts inventory | High      | Done   |
-| R12  | The user should be able to see where a particular plane is in its development lifecycle. | High     | Open   |
-| R13  | The user should be able to see all warehouses and their inventory/staff . | High     | Open   |
-| R14  | The user should be able to order new parts from suppliers and understand the finances required. | High      | Open   |
-| R15  | The user should be able to view warehouse/model performances as KPIs. | High     | Open   |
-| R16  | The user shoudl be able to view customer orders and prioritize them | High     | Open   |
+| R01  | The user should be able to see current model/parts inventory | High      | In Progress   |
+| R02  | The user should be able to see where a particular plane is in its development lifecycle. | High     | Open   |
+| R03  | The user should be able to see all warehouses and their inventory/staff . | High     | In Progress   |
+| R04  | The user should be able to order new parts from suppliers and understand the finances required. | High      | Open   |
+| R05  | The user should be able to view warehouse/model performances as KPIs. | High     | Open   |
+| R06  | The user should be able to view customer orders and prioritize them | High     | Open   |
 
 ### Use Cases & User Stories
 
@@ -31,7 +31,7 @@ This software management platform is meant to serve the aircraft industry specif
 > I also want to view current parts on a per warehouse per model basis so I can determine if I need to order more or hold off. 
 > AC: Aggregated/filter data should be viewable on a webpage.
 
-> As a user, I want to be able to click on a particular plane in development and view necessary metadata such as model, size, number of engineers, ID, and production stage.
+> As a user, I want to be able to click on a particular plane in development and view necessary metadata such as model, size, ID, and production stage.
 > AC: Create a unique 'plane' webpage where plane metadata is displayed
 
 > As a user, I want the ability to put in orders with suppliers based on current inventory KPIs and counts. I also want the abiity to add new suppliers if the business facilitates a good connection. 
@@ -42,6 +42,7 @@ This software management platform is meant to serve the aircraft industry specif
 
 > As a user, I want to be able to view customer orders as a list based on filters such as most recent, more important and reprioritize them if need be.
 > AC: View orders on a webpage. 
+
 
 ### User Interface Requirements
 
