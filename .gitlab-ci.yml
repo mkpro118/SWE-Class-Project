@@ -10,8 +10,9 @@ frontend-lint:
     - cd src/frontend
     - npm install
     - npm install -g eslint
+    - npm install -g eslint-config-next
   script:
-    - eslint .
+    - npm run lint
   only:
     - prod/frontend
 
