@@ -2,7 +2,7 @@
 import axios from "axios";
 
 describe('URL Fetch **Manager** Tests', () => {
-  const BASE_URL = 'http://127.0.0.1:5000';
+  const BASE_URL = 'http://web_server:5000';
 
   test('GET request to /manager', async () => {
     const response = await axios.get(`${BASE_URL}/manager`);

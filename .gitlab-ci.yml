@@ -81,3 +81,17 @@ proxyserver-test:
     - ./gradlew test
   only:
     - prod/proxyserver
+
+frontend-webserver-test:
+  stage: test
+  image: docker
+  tags:
+    - dind
+  before_script:
+    - docker compose up -d --build frontend web_server
+  script:
+    - docker exec frontend bash -c "npm test"
+  after_script:
+    - docker compose down
+  only:
+    - main

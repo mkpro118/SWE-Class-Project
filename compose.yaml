@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   frontend:
     container_name: frontend
@@ -29,8 +28,8 @@ services:
       dockerfile: Python.Dockerfile
     volumes:
       - python_web_api_artifacts:/src/artifacts
-    depends_on:
-      - proxy_server
+    # depends_on:
+      # - proxy_server
         # restart: true
         # required: true
         # condition: service_healthy
