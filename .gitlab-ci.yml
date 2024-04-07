@@ -84,10 +84,13 @@ proxyserver-test:
 
 frontend-webserver-test:
   stage: test
-  image: docker
+  image: docker:26.0.0
+  services:
+    - docker:26.0.0-dind
   tags:
     - dind
   before_script:
+    - docker ps
     - docker compose up -d --build frontend web_server
   script:
     - docker exec frontend bash -c "npm test"
