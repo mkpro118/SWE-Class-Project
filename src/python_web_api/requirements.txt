@@ -6,3 +6,4 @@ types-urllib3
 faker
 typing
 typing-extensions
+coverage
