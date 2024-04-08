@@ -8,8 +8,12 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 # Define communication ports as environment variables to avoid hardcoding them
 # in applications
-ENV SERVER_PORT=5000
-ENV PROXY_SERVER_PORT=8000
+ENV WEBSERVER_HOST=web_server
+ENV PROXYSERVER_HOST=proxy_server
+ENV FRONTEND_HOST=frontend
+ENV WEBSERVER_PORT=5000
+ENV PROXYSERVER_PORT=8000
+ENV FRONTEND_PORT=3000
 
 # Environment variables required by Flask
 ENV FLASK_APP=app.py

@@ -20,7 +20,11 @@ ENV JAVA_HOME=/usr/lib/jvm/jdk-17-oracle-x64/bin
 
 # Define communication ports as environment variables to avoid hardcoding them
 # in applications
-ENV PROXY_SERVER_PORT=8000
+ENV WEBSERVER_HOST=web_server
+ENV PROXYSERVER_HOST=proxy_server
+ENV SQL_SERVER_HOST=sql_server
+ENV WEBSERVER_PORT=5000
+ENV PROXYSERVER_PORT=8000
 ENV SQL_SERVER_PORT=3306
 
 # These don't really do much, but allow readers to know these ports will be
