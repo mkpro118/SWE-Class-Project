@@ -16,7 +16,7 @@ frontend-lint:
   only:
     - prod/frontend
 
-proxyserver-lint:
+webserver-lint:
   stage: lint
   image: python:3.11
   before_script:
