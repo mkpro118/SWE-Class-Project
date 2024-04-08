@@ -1,4 +1,7 @@
 # cs506-spring24-project
+![](https://img.shields.io/badge/CI-passing-passing)
+![](https://img.shields.io/badge/webserver_build-passing-passing)
+![](https://img.shields.io/badge/webserver_coverage-95%25-passing)
 
 
 
