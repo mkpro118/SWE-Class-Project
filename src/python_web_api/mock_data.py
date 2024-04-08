@@ -148,8 +148,8 @@ def facility(n: int = 1) -> Generator[Facility, None, None]:
         yield Facility(
             facility.ID,
             facility.faker.name(),
-            float(random.randint(-90, 90)),
-            float(random.randint(-180, 180)),
+            facility.faker.city(),
+            facility.faker.state(),
             facility.faker.sentence(),
             random.randint(0, 100),
             random.randint(0, 100),

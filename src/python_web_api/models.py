@@ -185,8 +185,8 @@ class Facility(Model):
     '''
     ID: int
     name: str
-    latitude: float
-    longitude: float
+    city: str
+    state: str
     description: str
     components_in_production: int
     components_completed: int
