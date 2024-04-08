@@ -3,7 +3,8 @@ FROM node:20.11.1
 
 # Define communication ports as environment variables to avoid hardcoding them
 # in applications
-ENV BACKEND_SERVER_PORT=5000
+ENV WEBSERVER_HOST=web_server
+ENV WEBSERVER_PORT=5000
 
 # The primary directory will be the /src in all apps
 RUN mkdir src
