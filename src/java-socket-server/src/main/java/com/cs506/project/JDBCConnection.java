@@ -2,15 +2,20 @@ package com.cs506.project;
 import java.sql.*;
 
 /*
-* JDBConnection class
+* JDBConnection class that establishes a connection with the database and then returns that connection
 * */
 public class JDBCConnection {
-    //these variables will need to change to fit what our project actually does
-    //for now these are the placeholders.
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/mydb";
-    private static final String USER = "username";
-    private static final String PASS = "password";
+    private static final String SQLHOSTNAME = System.getenv().getOrDefault("SQL_SERVER_HOST", "localhost");
+    private static final String SQLPORTNAME = System.getenv().getOrDefault("SQL_SERVER_PORT", "3306");
+    private static final String DB_URL = "jdbc:mysql://" + SQLHOSTNAME + ":" + SQLPORTNAME + "/mydb";
+    private static final String USER = System.getenv().getOrDefault("USERNAME","username");
+    private static final String PASS = System.getenv().getOrDefault("PASSWORD","password");
     private static Connection connection;
+    /*
+    * Actual connection method that will use the variables above and if it succeeded will return a connection
+    *
+    * @return connection object
+    * */
     public static Connection getConnection(){
         if (connection == null){
             try{
@@ -25,6 +30,9 @@ public class JDBCConnection {
         return connection;
     }
 
+    /*
+    * Main method runs a quick test query to make sure the connection is fine
+    * */
     public static void main(String args[]){
         Connection connection = null;
         Statement statement = null;
