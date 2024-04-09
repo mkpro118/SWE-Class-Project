@@ -1,6 +1,9 @@
 package com.cs506.project;
 import java.sql.*;
 
+/*
+* JDBConnection class
+* */
 public class JDBCConnection {
     //these variables will need to change to fit what our project actually does
     //for now these are the placeholders.
@@ -22,13 +25,26 @@ public class JDBCConnection {
         return connection;
     }
 
-    public static void closeConnection(){
-        if(connection != null){
-            try{
-                connection.close();
-            } catch(Exception e){
-                e.printStackTrace();
-            }
+    public static void main(String args[]){
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try{
+            connection = getConnection();
+            statement = connection.createStatement();
+            String query = "Select * FROM test_table";
+            resultSet = statement.executeQuery(query);
+
+            // Process the result set if needed
+            //while (resultSet.next()) {
+                // Process each row of the result set
+                // Example: String name = resultSet.getString("name");
+                //          int age = resultSet.getInt("age");
+                //          System.out.println(name + " - " + age);
+            //}
+        } catch (SQLException e){
+            e.printStackTrace();
         }
     }
 }
