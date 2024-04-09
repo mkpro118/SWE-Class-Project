@@ -8,3 +8,8 @@ JDBCConnection -- Establishes connection to database, this is pulled out of the 
 
 MySQLRepository -- Contains methods to call sub repositories. Creates JDBCConnection to pass down to sub repositories
 
+In resposnse contract -- add error field with 'reason'
+{
+    "data": [{}, {}],
+    "error": ""
+}

@@ -1,0 +1,7 @@
+{
+  "type": "CREATE, READ, UPDATE, DELETE",
+  "entityName": "Airplane, Component, ...",
+  "limit": 0,
+  "requestingAllDetails": "true",
+  "entities": []
+}
