@@ -4,23 +4,48 @@ import React, { useState, useEffect } from 'react';
 import DropdownCard from '@/app/components/dropdown-card';
 
 const Facilities = () => {
-  const [fullInventory, setFullInventory] = useState([]);
+
+  const host = process.env.WEBSERVER_HOST || 'localhost';
+  const port = process.env.WEBSERVER_PORT || 5000;
+  const url = `http://${host}:${port}`;
+
+  const [facilities, setFacilities] = useState([]);
+
+  const mapFacilityToCard = (facility) => {
+    return {
+      ID: facility.ID,
+      city: facility.city,
+      state: facility.state,
+      components: facility.components_completed,
+      componentsInProgress: facility.components_in_progress,
+      description: facility.description,
+      employees: facility.employee_count,
+      manager: facility.manager_id,
+      airplanes: facility.models_completed,
+      airplanesInProgress: facility.models_in_production,
+      name: facility.name,
+      type: facility.type
+    }
+  }
 
   //This will load in all the data from API
   useEffect(() => {
-    const facility1 = { city: "Atlanta", state: "GA", "aircrafts": 22, "components": 700, "employees": 3000, "manager": "John Smith", "id": 1930298 };
-    const facility2 = { city: "Madison", state: "WI", "aircrafts": 54, "components": 400, "employees": 2000, "manager": "William David", "id": 1930299 };
-    let tempArr = [];
-    tempArr.push(facility1, facility2);
-    setFullInventory(tempArr);
+    fetch(`${url}/facility`)
+    .then(res => res.json())
+    .then(data => data.map(mapFacilityToCard))
+    .then((facility) => setFacilities(facility))
   }, []);
+
+  useEffect(() => {
+    console.log(facilities);
+  }, [facilities]);
 
   return (
     <>
       <header className="mt-6 mb-4">
         <div className="lg:flex lg:items-center lg:justify-between">
           <div className="min-w-0 flex-1 ml-4">
-            <h2 className="text-2xl font-medium leading-7 text-gray-900">All Facilities ({fullInventory.length})</h2>
+            <h2 className="text-2xl font-medium leading-7 text-gray-900">All Facilities ({facilities.length})</h2>
           </div>
           <div className="mt-5 flex lg:ml-4 lg:mt-0">
             <span className="hidden sm:block">
@@ -55,8 +80,8 @@ const Facilities = () => {
       </header>
       <div>
         {
-          fullInventory.map(facility => {
-            return <DropdownCard props={facility} key={facility.id}/>
+          facilities.map(facility => {
+            return <DropdownCard props={facility} key={facility.ID}/>
           })
         }
       </div>
