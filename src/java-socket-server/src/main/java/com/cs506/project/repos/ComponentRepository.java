@@ -1,0 +1,177 @@
+package com.cs506.project.repos;
+
+import com.cs506.project.JDBCConnection;
+import com.cs506.project.interfaces.ISQLRepository;
+import com.cs506.project.schemas.AirplaneSchema;
+import com.cs506.project.schemas.ComponentSchema;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * SQL Repository used to query the Component table in the 506 database.
+ */
+public class ComponentRepository implements ISQLRepository<ComponentSchema> {
+
+    private Connection connection;
+    
+    public ComponentRepository (JDBCConnection connection) {
+        // Run jdbcConnection.createConnection(): Each method will be responsible for closing the connection
+    }
+
+    /**
+     * Fetches all rows in the table, however only certain predetermined 'basic info' columns.
+     *
+     * @return List of  Java Objects.
+     */
+    @Override
+    public List<ComponentSchema> getAllWithBasicDetails(int limit) {
+        return null;
+    }
+
+    /**
+     * Fetches all rows and columns in the Component table.
+     *
+     * @return List of Component Java Objects.
+     */
+    @Override
+    public List<ComponentSchema> getAllWithAllDetails(int limit) throws SQLException {
+        List<ComponentSchema> components = new ArrayList<>();
+        String query = "SELECT * FROM Component";
+
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) {
+
+                ComponentSchema componentSchema = new ComponentSchema();
+
+                componentSchema.componentId = resultSet.getInt("ComponentId");
+                componentSchema.name = resultSet.getString("Name");
+                componentSchema.description = resultSet.getString("Description");
+                componentSchema.componentType = resultSet.getString("ComponentType");
+                componentSchema.supplierId = resultSet.getInt("SupplierId");
+                componentSchema.cost = resultSet.getDouble("Cost");
+                componentSchema.productionStageName = resultSet.getString("ProductionStageName");
+
+                components.add(componentSchema);
+            }
+
+        }
+
+        return components;
+    }
+
+    /**
+     * Fetches an E object based on the id passed.
+     *
+     * @param componentId : Id of the Component queried.
+     * @return Component Java Object.
+     */
+    @Override
+    public List<ComponentSchema> getById(int componentId) throws SQLException{
+        List<ComponentSchema> component = new ArrayList<>();
+        String query = "SELECT * FROM Component WHERE ComponentId = " + componentId;
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)){
+            
+            while (resultSet.next()) {
+                
+                ComponentSchema componentSchema = new ComponentSchema();
+
+                componentSchema.componentId = resultSet.getInt("ComponentId");
+                componentSchema.name = resultSet.getString("Name");
+                componentSchema.description = resultSet.getString("Description");
+                componentSchema.componentType = resultSet.getString("ComponentType");
+                componentSchema.supplierId = resultSet.getInt("SupplierId");
+                componentSchema.cost = resultSet.getDouble("Cost");
+                componentSchema.productionStageName = resultSet.getString("ProductionStageName");
+
+                component.add(componentSchema);
+                
+            }
+            
+        }
+        
+        return component;
+    }
+
+    /**
+     * Takes a Create query and funnels it to the appropriate method within class.
+     *
+     * @param requestEntities : List of Components to create in database.
+     * @return
+     */
+    @Override
+    public List<ComponentSchema> handleCreateQuery(List<ComponentSchema> requestEntities) throws SQLException {
+        
+        closeConnection();
+        return null;
+    }
+
+    /**
+     * Takes a Read query and funnels it to the appropriate method within class.
+     *
+     * @param limit          : If not equal to -1, then adds a limit operator to final query.
+     * @param readAllDetails : Specifies whether all columns are requested from database.
+     * @return List of Components read from database;
+     */
+    @Override
+    public List<ComponentSchema> handleReadQuery(int limit, boolean readAllDetails, List<ComponentSchema> components) throws SQLException {
+        
+        List<ComponentSchema> result = new ArrayList<>();
+        
+        if (components.size() != 0){
+            for ( ComponentSchema component : components ){
+                result.addAll(getById(component.componentId));
+            }
+        }
+        
+        if (!readAllDetails) {
+            result = getAllWithBasicDetails(limit);
+        } else {
+            result = getAllWithAllDetails(limit);
+        }
+        
+        closeConnection();
+        return result;
+    }
+
+    /**
+     * Takes a Update query and funnels it to the appropriate method within class.
+     *
+     * @param request : List of E to update database with.
+     * @return List of updated Es
+     */
+    @Override
+    public List<ComponentSchema> handleUpdateQuery(List<ComponentSchema> request) throws SQLException {
+        
+        closeConnection();
+        return null;
+    }
+
+    /**
+     * Takes a Delete query and funnels it to the appropriate method within class.
+     *
+     * @param request : List of Components to delete from database.
+     * @return List of deleted Components
+     */
+    @Override
+    public List<ComponentSchema> handleDeleteQuery(List<ComponentSchema> request) throws SQLException {
+        
+        closeConnection();
+        return null;
+    }
+
+    /**
+     * Closes connection to the database. Must be run after every query method.
+     */
+    @Override
+    public void closeConnection() throws SQLException {
+        connection.close();
+    }
+}
