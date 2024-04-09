@@ -2,15 +2,34 @@
 
 import React, { useState, useEffect } from 'react';
 import Table from '@/app/components/table';
+import axios from 'axios';
 
 //Displays all warehouse inventory data
 
 const MasterInventory = () => {
 
   const [fullInventory, setFullInventory] = useState([]);
-
+  const [dataAPI, setDataAPI] = useState([]);
+  const host = process.env.FRONTEND_HOST || 'localhost'; //what should this be?
+  const port = process.env.WEBSERVER_PORT || 5000;
+  const url = `http://127.0.0.1:${port}`;
   //This will load in all the data from API
+  //fix the double load
+  //may need to load in airplaces as well
   useEffect(() => {
+    fetch(`${url}/airplane`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(res => res.json())
+    .then(
+      data => {
+        setDataAPI(data)
+        console.log(data)
+      }
+    )
     const warehouse1 = { "city": "Atlanta", "state": "GA", "product": "737 Max", "type": "not sure", "quantity": 74, "id": 1930298 };
     const warehouse2 = { "city": "Madison", "state": "WI", "product": "747", "type": "not sure", "quantity": 36, "id": 1930299 };
     let tempArr = [];
