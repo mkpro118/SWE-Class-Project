@@ -9,7 +9,7 @@ import axios from 'axios';
 const MasterInventory = () => {
 
   const [fullInventory, setFullInventory] = useState([]);
-  const host = process.env.FRONTEND_HOST || 'localhost';
+  const host = process.env.WEBSERVER_HOST || 'localhost';
   const port = process.env.WEBSERVER_PORT || 5000;
   const url = `http://${host}:${port}`;
   //This will load in all the data from API
