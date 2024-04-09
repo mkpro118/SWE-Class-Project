@@ -9,13 +9,11 @@ import axios from 'axios';
 const MasterInventory = () => {
 
   const [fullInventory, setFullInventory] = useState([]);
-  const [dataAPI, setDataAPI] = useState([]);
-  const host = process.env.FRONTEND_HOST || 'localhost'; //what should this be?
+  const host = process.env.FRONTEND_HOST || 'localhost';
   const port = process.env.WEBSERVER_PORT || 5000;
-  const url = `http://127.0.0.1:${port}`;
+  const url = `http://${host}:${port}`;
   //This will load in all the data from API
-  //fix the double load
-  //may need to load in airplaces as well
+ 
   useEffect(() => {
     fetch(`${url}/airplane`, {
       method: 'GET',
@@ -26,15 +24,10 @@ const MasterInventory = () => {
     .then(res => res.json())
     .then(
       data => {
-        setDataAPI(data)
-        console.log(data)
+        setFullInventory(data)
+        console.log(data) //currently fetches data twice and does not load in without a refress
       }
     )
-    const warehouse1 = { "city": "Atlanta", "state": "GA", "product": "737 Max", "type": "not sure", "quantity": 74, "id": 1930298 };
-    const warehouse2 = { "city": "Madison", "state": "WI", "product": "747", "type": "not sure", "quantity": 36, "id": 1930299 };
-    let tempArr = [];
-    tempArr.push(warehouse1, warehouse2);
-    setFullInventory(tempArr);
   }, []);
 
   return (
@@ -93,7 +86,13 @@ const MasterInventory = () => {
                 Type
               </th>
               <th scope="col" className="px-6 py-3">
-                Quantity
+                Capacity
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Production Stage
+              </th>
+              <th scope="col" className="px-6 py-3">
+                ID
               </th>
               <th scope="col" className="px-6 py-3">
                 Action
@@ -102,13 +101,15 @@ const MasterInventory = () => {
           </thead>
           <tbody>
             {
-              fullInventory.map(warehouse => {
-                return <Table key={warehouse.id}
-                  city={warehouse.city}
-                  state={warehouse.state}
-                  product={warehouse.product}
-                  type={warehouse.type}
-                  quantity={warehouse.quantity} />
+              fullInventory.map(airplane => {
+                return <Table key={airplane.ID}
+                  city={airplane.city}
+                  state={airplane.state}
+                  capacity={airplane.seating_capacity}
+                  product={airplane.name}
+                  type={airplane.type}
+                  stage={airplane.production_stage_name}
+                  ID={airplane.ID} />
               })
             }
           </tbody>

@@ -23,7 +23,13 @@ const Table = (props) => {
         {props.type}
       </td>
       <td className="px-6 py-4">
-        {props.quantity}
+        {props.capacity}
+      </td>
+      <td className="px-6 py-4">
+        {props.stage}
+      </td>
+      <td className="px-6 py-4">
+        {props.ID}
       </td>
       <td className="px-6 py-4">
         <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
