@@ -1,6 +1,10 @@
 # cs506-spring24-project
 ![](https://img.shields.io/badge/CI-passing-passing)
+![](https://img.shields.io/badge/frontend_build-passing-passing)
+![](https://img.shields.io/badge/frontend_tests-passing-passing)
 ![](https://img.shields.io/badge/webserver_build-passing-passing)
+![](https://img.shields.io/badge/webserver_tests-passing-passing)
+![](https://img.shields.io/badge/proxyserver_build-passing-passing)
 ![](https://img.shields.io/badge/webserver_coverage-95%25-passing)
 
 
