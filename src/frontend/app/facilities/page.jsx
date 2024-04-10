@@ -34,7 +34,7 @@ const Facilities = () => {
     .then(res => res.json())
     .then(data => data.map(mapFacilityToCard))
     .then((facility) => setFacilities(facility))
-  }, []);
+  }, [url]);
 
   useEffect(() => {
     console.log(facilities);

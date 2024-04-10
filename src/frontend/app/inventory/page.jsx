@@ -15,12 +15,7 @@ const MasterInventory = () => {
   //This will load in all the data from API
  
   useEffect(() => {
-    fetch(`${url}/airplane`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    fetch(`${url}/airplane`)
     .then(res => res.json())
     .then(
       data => {
@@ -28,7 +23,7 @@ const MasterInventory = () => {
         console.log(data) //currently fetches data twice and does not load in without a refress
       }
     )
-  }, []);
+  }, [url]);
 
   return (
     <>
