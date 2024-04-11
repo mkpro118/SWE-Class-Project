@@ -15,10 +15,10 @@ This software management platform is meant to serve the aircraft industry specif
 
 | ID   | Description                                                  | Priority | Status |
 | ---- | ------------------------------------------------------------ | -------- | ------ |
-| R01  | The user should be able to see current model/parts inventory | High      | In progress   |
-| R02  | The user should be able to see where a particular plane is in its development lifecycle. | High     | Open   |
+| R01  | The user should be able to see current model/parts inventory | High      | Done   |
+| R02  | The user should be able to see where a particular plane is in its development lifecycle. | High     | Done   |
 | R03  | The user should be able to see all warehouses and their inventory/staff . | High     | In Progress   |
-| R04  | The user should be able to order new parts from suppliers and understand the finances required. | High      | Open   |
+| R04  | The user should be able to order new parts from suppliers and understand the finances required. | High      | In Progress   |
 | R05  | The user should be able to view warehouse/model performances as KPIs. | High     | Open   |
 | R06  | The user should be able to view customer orders and prioritize them | High     | Open   |
 
