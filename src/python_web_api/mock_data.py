@@ -2,6 +2,7 @@
 
 import random
 import faker
+import functools
 from typing import Callable, Generator
 
 from models import (
@@ -35,6 +36,22 @@ def static_vars(**kwargs) -> Callable[[Callable], Callable]:
     return decorator
 
 
+def reset_faker_seed(func: Callable) -> Callable:
+    '''
+    Decorator to reset the seed of the Faker library before executing a function.
+    It ensures that each call to the decorated function starts with the same
+    Faker seed, providing consistent randomized data generation across
+    multiple function calls.
+    '''
+    @functools.wraps(func)
+    def inner(*args, **kwargs):
+        faker.Faker.seed(506)
+        return func(*args, **kwargs)
+
+    return inner
+
+
+@reset_faker_seed
 @static_vars(ID=1_000_000, faker=faker.Faker())
 def airplane(n: int = 1) -> Generator[Airplane, None, None]:
     '''Generate a specified number of airplane records.
@@ -64,6 +81,7 @@ def airplane(n: int = 1) -> Generator[Airplane, None, None]:
         n -= 1
 
 
+@reset_faker_seed
 @static_vars(ID=1_000_000)
 def airplane_to_component(n: int = 1) -> Generator[AirplaneToComponent, None, None]:
     '''Generate a specified number of airplane to component records.
@@ -86,6 +104,7 @@ def airplane_to_component(n: int = 1) -> Generator[AirplaneToComponent, None, No
         n -= 1
 
 
+@reset_faker_seed
 @static_vars(ID=1_000_000, faker=faker.Faker())
 def component(n: int = 1) -> Generator[Component, None, None]:
     '''Generate a specified number of component records.
@@ -112,6 +131,7 @@ def component(n: int = 1) -> Generator[Component, None, None]:
         n -= 1
 
 
+@reset_faker_seed
 @static_vars(ID=1_000_000, faker=faker.Faker())
 def customer(n: int = 1) -> Generator[Customer, None, None]:
     '''Generate a specified number of airplane records.
@@ -134,6 +154,7 @@ def customer(n: int = 1) -> Generator[Customer, None, None]:
         n -= 1
 
 
+@reset_faker_seed
 @static_vars(ID=1_000_000, faker=faker.Faker())
 def facility(n: int = 1) -> Generator[Facility, None, None]:
     '''Generate a specified number of facility records.
@@ -164,6 +185,7 @@ def facility(n: int = 1) -> Generator[Facility, None, None]:
         n -= 1
 
 
+@reset_faker_seed
 @static_vars(ID=1_000_000, faker=faker.Faker())
 def manager(n: int = 1) -> Generator[Manager, None, None]:
     '''Generate a specified number of manager records.
@@ -189,6 +211,7 @@ def manager(n: int = 1) -> Generator[Manager, None, None]:
         n -= 1
 
 
+@reset_faker_seed
 @static_vars(ID=1_000_000, faker=faker.Faker())
 def supplier(n: int = 1) -> Generator[Supplier, None, None]:
     '''Generate a specified number of supplier records.
@@ -216,6 +239,7 @@ def supplier(n: int = 1) -> Generator[Supplier, None, None]:
         n -= 1
 
 
+@reset_faker_seed
 @static_vars(ID=1_000_000, faker=faker.Faker())
 def supplier_to_facility(n: int = 1) -> Generator[SupplierToFacility, None, None]:
     '''Generate a specified number of supplier records.
