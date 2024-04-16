@@ -16,8 +16,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <div className="flex bg-indigo-300">
+      <body className="bg-slate-200 min-h-screen">
+        <div className="flex">
           <SideNav />
           <main className="flex-1">
             <MarginWidthWrapper>
