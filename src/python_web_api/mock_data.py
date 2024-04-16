@@ -124,6 +124,8 @@ def component(n: int = 1) -> Generator[Component, None, None]:
             component.ID,
             component.faker.name().split(' ')[0],
             component.faker.sentence(),
+            component.faker.city(),
+            component.faker.state(),
             random.choice(('Wings', 'Engines', 'Wheels', 'Gears', 'Flaps')),
             random.randint(int(1e6), int(2e6)),
             round(random.random() * 1e4, 2),
@@ -315,6 +317,12 @@ def deterministic(kind: str = '') -> list:
             # They're physically together
             airplane.city, airplane2.city = (facility.city,) * 2
             airplane.state, airplane2.state = (facility.state,) * 2
+
+        for atc in deterministic.airplanecomponent:
+            airplane = Airplane._lookup(atc.airplane_id)
+            component = Component._lookup(atc.component_id)
+            component.city = airplane.city
+            component.state = airplane.state
 
         # Correlation baby!
         return []

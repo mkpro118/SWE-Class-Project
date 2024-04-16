@@ -48,7 +48,7 @@ class RecordTracker(abc.ABCMeta):
             records: dict = getattr(new_cls, 'records')
             records[getattr(self, 'ID')] = self
 
-        def lookup(self, ID: int) -> Any:
+        def lookup(ID: int) -> Any:
             if not hasattr(new_cls, 'records'):
                 raise AttributeError(
                     f'Field `records` not found, which is required for lookups.'
@@ -65,6 +65,7 @@ class RecordTracker(abc.ABCMeta):
             return records.get(ID, None)
 
         setattr(new_cls, '__post_init__', meta_init)
+        setattr(new_cls, '_lookup', staticmethod(lookup))
 
         return new_cls
 
@@ -142,6 +143,8 @@ class Component(Model):
     ID: int
     name: str
     description: str
+    city: str
+    state: str
     component_type: str
     supplier_id: int
     cost: float
