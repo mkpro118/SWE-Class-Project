@@ -40,7 +40,7 @@ def try_deterministic(func):
 
         # If this was an ID function, lookup that ID
         if lookup:
-            ID = kwargs.get(func.__name__, -1)
+            ID = kwargs.get(f'{kind}_id', -1)
             resp = list(filter(lambda x: x.ID == ID, data))
 
             if resp:  # If ID was found, return that record

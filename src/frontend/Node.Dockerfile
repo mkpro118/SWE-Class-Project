@@ -28,5 +28,4 @@ EXPOSE 5000
 # RUN npm run build
 # ENV NODE_ENV production
 
-# CMD ["npm", "start"]
-CMD ["sleep", "infinity"]
+CMD ["npm", "run", "dev"]
