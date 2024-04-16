@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
  && rm -rf /var/lib/apt/lists/*
 
 # Define reused vars
-ARG SERVICE_PORT=5001
+ARG SERVICE_PORT=5000
 
 # Define communication ports as environment variables to avoid hardcoding them
 # in applications

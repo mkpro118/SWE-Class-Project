@@ -27,7 +27,7 @@ services:
       context: src/python_web_api
       dockerfile: Python.Dockerfile
     volumes:
-      - python_web_api_artifacts:/src/artifacts
+      - .\src\python_web_api:/src
     # depends_on:
       # - proxy_server
         # restart: true
@@ -40,6 +40,8 @@ services:
     expose:
       - 5000
       - 8000
+    ports:
+      - "5000:5000"
 
   proxy_server:
     container_name: proxy_server
