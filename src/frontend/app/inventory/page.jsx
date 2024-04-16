@@ -2,28 +2,43 @@
 
 import React, { useState, useEffect } from 'react';
 import Table from '@/app/components/table';
-import axios from 'axios';
 
 //Displays all warehouse inventory data
-
 const MasterInventory = () => {
 
   const [fullInventory, setFullInventory] = useState([]);
+  const [componentData, setComponentData] = useState([]);
+  const [airplaneData, setAirplaneData] = useState([])
   const host = process.env.WEBSERVER_HOST || 'localhost';
   const port = process.env.WEBSERVER_PORT || 5000;
   const url = `http://${host}:${port}`;
-  //This will load in all the data from API
- 
+  
+  //Load in all the data from API into corresponding arrays
   useEffect(() => {
     fetch(`${url}/airplane`)
     .then(res => res.json())
     .then(
       data => {
-        setFullInventory(data)
-        console.log(data) //currently fetches data twice and does not load in without a refress
+        setAirplaneData(data)
+        console.log(data)
+      }
+    )
+    fetch(`${url}/component`)
+    .then(res => res.json())
+    .then(
+      data => {
+        setComponentData(data)
+        console.log(data)
       }
     )
   }, [url]);
+  
+  // Merge fetched data into one array at runtime
+  useEffect(() => {
+    if (airplaneData && componentData) {
+      setFullInventory([...airplaneData, ...componentData])
+    }
+  }, [airplaneData, componentData]);
 
   return (
     <>
@@ -56,7 +71,7 @@ const MasterInventory = () => {
               <div className="relative">
                 <input
                   type="search"
-                  className="w-full rounded-md bg-white px-3 py-1.5 text-base font-semibold text-gray-700 shadow-sm ring-2 ring-inset ring-indigo-300 transition duration-200 ease-in-out placeholder:text-indigo-300 focus:border-primary focus:shadow-inset focus:outline-none motion-reduce:transition-none dark:border-white/10 dark:text-white dark:placeholder:text-neutral-200 dark:focus:border-primary"
+                  className="w-full rounded-md bg-white px-3 py-1.5 text-base font-semibold text-gray-700 shadow-sm ring-2 ring-inset ring-indigo-300 transition duration-200 ease-in-out placeholder:text-indigo-300 focus:border-primary focus:shadow-inset focus:outline-none motion-reduce:transition-none"
                   placeholder="Search"
                   aria-label="Search" />
               </div>
@@ -66,8 +81,8 @@ const MasterInventory = () => {
       </header>
       {/*Table header is not located in table component because it maps everytime leading to duplicate headers*/}
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-100">
             <tr>
               <th scope="col" className="p-4">
               </th>
@@ -81,7 +96,7 @@ const MasterInventory = () => {
                 Type
               </th>
               <th scope="col" className="px-6 py-3">
-                Capacity
+                Cost
               </th>
               <th scope="col" className="px-6 py-3">
                 Production Stage
@@ -96,15 +111,15 @@ const MasterInventory = () => {
           </thead>
           <tbody>
             {
-              fullInventory.map(airplane => {
-                return <Table key={airplane.ID}
-                  city={airplane.city}
-                  state={airplane.state}
-                  capacity={airplane.seating_capacity}
-                  product={airplane.name}
-                  type={airplane.type}
-                  stage={airplane.production_stage_name}
-                  ID={airplane.ID} />
+              fullInventory.map(data => {
+                return <Table key={data.ID}
+                  city={data.city}
+                  state={data.state}
+                  cost={data.cost}
+                  product={data.name}
+                  type={data.type}
+                  stage={data.production_stage}
+                  ID={data.ID} />
               })
             }
           </tbody>
