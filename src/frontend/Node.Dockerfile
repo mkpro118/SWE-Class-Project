@@ -29,3 +29,4 @@ EXPOSE 5000
 # ENV NODE_ENV production
 
 CMD ["npm", "run", "dev"]
+# CMD ["sleep", "infinity"]
