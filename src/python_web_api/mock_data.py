@@ -31,6 +31,8 @@ def static_vars(**kwargs) -> Callable[[Callable], Callable]:
         for key, value in kwargs.items():
             setattr(func, key, value)
 
+        setattr(func, '_static_vars', kwargs.keys())
+
         return func
 
     return decorator
@@ -260,3 +262,64 @@ def supplier_to_facility(n: int = 1) -> Generator[SupplierToFacility, None, None
         )
         supplier_to_facility.ID += 1
         n -= 1
+
+
+# Controlled instances that will always be the same
+control = static_vars(**{
+    'airplane': list(airplane(10)),
+    'airplanecomponent': list(airplane_to_component(20)),
+    'component': list(component(20)),
+    'facility': list(facility(5)),
+    'dry_run': True,
+})
+
+
+@control
+def deterministic(kind: str = '') -> list:
+    if hasattr(deterministic, 'dry_run'):
+        delattr(deterministic, 'dry_run')
+
+        assert len(deterministic.airplane) % 2 == 0, 'Wrong number of airplanes'
+
+        # Python hack to traverse two at a time
+        component_iter = iter(deterministic.component)
+        atc_iter = iter(deterministic.airplanecomponent)
+        airplane_iter = iter(deterministic.airplane)
+
+        for component, atc in zip(component_iter, atc_iter):
+            component2, atc2 = next(component_iter), next(atc_iter)
+
+            airplane = next(airplane_iter)
+
+            # Record 1 for ATC
+            atc.airplane_id = airplane.ID
+            atc.component_id = component.ID
+
+            # Record 2 for ATC
+            atc2.airplane_id = airplane.ID
+            atc2.component_id = component2.ID
+
+        # Same hack again
+        airplane_iter = iter(deterministic.airplane)
+        facility_iter = iter(deterministic.facility)
+        for airplane in airplane_iter:
+            airplane2 = next(airplane_iter)
+            facility = next(facility_iter)
+
+            facility.components_in_production = 2  # from airplane
+            facility.components_completed = 2  # from airplane2
+
+            facility.models_in_production = 1  # from airplane
+            facility.models_completed = 1  # from airplane2
+
+            # They're physically together
+            airplane.city, airplane2.city = (facility.city,) * 2
+            airplane.state, airplane2.state = (facility.state,) * 2
+
+        # Correlation baby!
+        return []
+
+    if kind not in deterministic._static_vars:
+        raise KeyError(f'{kind = } does not exist')
+
+    return getattr(deterministic, kind, [])

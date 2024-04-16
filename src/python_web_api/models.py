@@ -175,8 +175,8 @@ class Facility(Model):
     Attributes:
         ID: int
         name: str
-        latitude: float, +ve is North, -ve South
-        longitude: float, +ve is East, -ve is West
+        city: str
+        state: str
         description: str
         components_in_production: int
         components_completed: int
