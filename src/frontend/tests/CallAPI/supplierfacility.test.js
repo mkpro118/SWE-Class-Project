@@ -7,7 +7,9 @@ import axios from "axios";
  * Uses Axios library for fetching
  */
 describe('URL Fetch **SupplierFacility** Tests', () => {
-  const BASE_URL = 'http://web_server:5000';
+  const host = process.env.WEBSERVER_HOST || 'localhost';
+  const port = process.env.WEBSERVER_PORT || 5000;
+  const BASE_URL = `http://${host}:${port}`;
 
   /**
    * Tests GET request response for all supplierfacilities
