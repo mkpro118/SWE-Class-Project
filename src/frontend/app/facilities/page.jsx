@@ -6,7 +6,7 @@ import DropdownCard from '@/app/components/dropdown-card';
 const Facilities = () => {
 
   const host = process.env.WEBSERVER_HOST || 'localhost';
-  const port = process.env.WEBSERVER_PORT || 5000;
+  const port = process.env.WEBSERVER_PORT || 15000;
   const url = `http://${host}:${port}`;
 
   const [facilities, setFacilities] = useState([]);

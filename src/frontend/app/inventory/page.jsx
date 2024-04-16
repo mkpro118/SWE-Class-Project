@@ -11,7 +11,7 @@ const MasterInventory = () => {
   const [airplaneData, setAirplaneData] = useState([])
   const [pageActive, setPageActive] = useState(1);
   const host = process.env.WEBSERVER_HOST || 'localhost';
-  const port = process.env.WEBSERVER_PORT || 5000;
+  const port = process.env.WEBSERVER_PORT || 15000;
   const url = `http://${host}:${port}`;
 
   //Load in all the data from API into corresponding arrays
