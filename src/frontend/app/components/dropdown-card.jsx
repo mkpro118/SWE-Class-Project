@@ -1,10 +1,44 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Table from './table';
 
-const DropdownCard = ({ props, children }) => {
+const DropdownCard = ({ props }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const [fullInventory, setFullInventory] = useState([]);
+  const [componentData, setComponentData] = useState([]);
+  const [airplaneData, setAirplaneData] = useState([]);
+
+  const host = process.env.WEBSERVER_HOST || 'localhost';
+  const port = process.env.WEBSERVER_PORT || 15000;
+  const url = `http://${host}:${port}`;
+
+  //Load in all the data from API into corresponding arrays
+  useEffect(() => {
+    fetch(`${url}/airplane`)
+    .then(res => res.json())
+    .then(
+      data => {
+        setAirplaneData(data)
+        console.log(data)
+      }
+    )
+    fetch(`${url}/component`)
+    .then(res => res.json())
+    .then(
+      data => {
+        setComponentData(data)
+        console.log(data)
+      }
+    )
+  }, [url]);
+
+  useEffect(() => {
+    if (airplaneData && componentData) {
+      setFullInventory([...airplaneData, ...componentData])
+    }
+  }, [airplaneData, componentData]);
 
   const toggleExpansion = () => {
     setIsExpanded(!isExpanded);
@@ -59,11 +93,51 @@ const DropdownCard = ({ props, children }) => {
         </div>
       </div>
       {isExpanded && (
-        <div className='p-4 border-t'>
-          <Table/>
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-100">
+              <tr>
+                <th scope="col" className='p-4'>
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Product
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Type                  
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Cost
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Production Stage
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Action
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  ID
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            {
+            fullInventory.map(data => {
+                  if(data.city == props.city && data.state == props.state){ // if the datas are in facility
+                    return <Table key={data.id}
+                    cost={data.cost}
+                    product={data.name}
+                    type={data.type}
+                    stage={data.production_stage}
+                    ID={data.ID}
+                    city={data.city}
+                    state={data.state} />
+                  }
+                })
+              }
+            </tbody>
+          </table>
         </div>
       )}
-
     </div>
   );
 };
