@@ -12,6 +12,43 @@ jsonify = functools.partial(json.dumps, cls=models.ModelEncoder)
 randint = functools.partial(random.randint, 3, 10)
 CORS(app, support_credentials=True)
 
+mock_data.deterministic()
+
+
+def try_deterministic(func):
+    '''Makes Mock Data deterministic'''
+
+    lookup = 'id' in func.__name__
+
+    kind = func.__name__.replace('_with_id', '')
+    assert kind in mock_data.deterministic._static_vars, (
+        f'Decorator is not applicable for {func}')
+
+    @functools.wraps(func)
+    def inner(*args, **kwargs):
+        # Only patch get requests
+        if request.method.upper() != 'GET':
+            return func(*args, **kwargs)
+
+        # Get deterministic data
+        data = mock_data.deterministic(kind=kind)
+
+        # If this was an ID function, lookup that ID
+        if lookup:
+            ID = kwargs.get(func.__name__, -1)
+            resp = list(filter(lambda x: x.ID == ID, data))
+
+            if resp:  # If ID was found, return that record
+                return jsonify(resp)
+            else:  # Else return random record
+                return func(*args, **kwargs)
+
+        # If this was not an ID function, but still marked deterministic,
+        # return deterministic list of records
+        return jsonify(data)
+
+    return inner
+
 
 @app.route('/')
 def home():
@@ -19,6 +56,7 @@ def home():
 
 
 @app.route('/component', methods=['GET', 'POST'])
+@try_deterministic
 def component():
     if request.method == 'GET':
         return jsonify(list(mock_data.component(randint())))
@@ -26,6 +64,7 @@ def component():
 
 
 @app.route('/component/<int:component_id>', methods=['GET', 'PUT', 'DELETE'])
+@try_deterministic
 def component_with_id(component_id: int):
     if request.method == 'GET':
         data: models.Component = next(mock_data.component())
@@ -38,6 +77,7 @@ def component_with_id(component_id: int):
 
 
 @app.route('/airplane', methods=['GET', 'POST'])
+@try_deterministic
 def airplane():
     if request.method == 'GET':
         return jsonify(list(mock_data.airplane(randint())))
@@ -45,6 +85,7 @@ def airplane():
 
 
 @app.route('/airplane/<int:airplane_id>', methods=['GET', 'PUT', 'DELETE'])
+@try_deterministic
 def airplane_with_id(airplane_id: int):
     if request.method == 'GET':
         data: models.Airplane = next(mock_data.airplane())
@@ -57,6 +98,7 @@ def airplane_with_id(airplane_id: int):
 
 
 @app.route('/airplanecomponent', methods=['GET', 'POST'])
+@try_deterministic
 def airplanecomponent():
     if request.method == 'GET':
         return jsonify(list(mock_data.airplane_to_component(randint())))
@@ -64,6 +106,7 @@ def airplanecomponent():
 
 
 @app.route('/airplanecomponent/<int:airplanecomponent_id>', methods=['GET', 'DELETE'])
+@try_deterministic
 def airplanecomponent_with_id(airplanecomponent_id: int):
     if request.method == 'GET':
         data: models.AirplaneToComponent = next(
@@ -77,6 +120,7 @@ def airplanecomponent_with_id(airplanecomponent_id: int):
 
 
 @app.route('/facility', methods=['GET', 'POST'])
+@try_deterministic
 def facility():
     if request.method == 'GET':
         return jsonify(list(mock_data.facility(randint())))
@@ -84,6 +128,7 @@ def facility():
 
 
 @app.route('/facility/<int:facility_id>', methods=['GET', 'PUT', 'DELETE'])
+@try_deterministic
 def facility_with_id(facility_id: int):
     if request.method == 'GET':
         data: models.Facility = next(mock_data.facility())
