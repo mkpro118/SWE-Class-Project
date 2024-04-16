@@ -97,7 +97,7 @@ class Airplane(Model):
     name: str
     city: str
     state: str
-    production_stage_name: str
+    production_stage: str
     cost: float
     date_started: str
     date_finished: str
