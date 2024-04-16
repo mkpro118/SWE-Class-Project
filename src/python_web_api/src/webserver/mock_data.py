@@ -84,7 +84,7 @@ def airplane(n: int = 1) -> Generator[Airplane, None, None]:
 
 
 @reset_faker_seed
-@static_vars(ID=1_000_000)
+@static_vars(ID=2_000_000)
 def airplane_to_component(n: int = 1) -> Generator[AirplaneToComponent, None, None]:
     '''Generate a specified number of airplane to component records.
 
@@ -107,7 +107,7 @@ def airplane_to_component(n: int = 1) -> Generator[AirplaneToComponent, None, No
 
 
 @reset_faker_seed
-@static_vars(ID=1_000_000, faker=faker.Faker())
+@static_vars(ID=3_000_000, faker=faker.Faker())
 def component(n: int = 1) -> Generator[Component, None, None]:
     '''Generate a specified number of component records.
 
@@ -136,7 +136,7 @@ def component(n: int = 1) -> Generator[Component, None, None]:
 
 
 @reset_faker_seed
-@static_vars(ID=1_000_000, faker=faker.Faker())
+@static_vars(ID=4_000_000, faker=faker.Faker())
 def customer(n: int = 1) -> Generator[Customer, None, None]:
     '''Generate a specified number of airplane records.
 
@@ -159,7 +159,7 @@ def customer(n: int = 1) -> Generator[Customer, None, None]:
 
 
 @reset_faker_seed
-@static_vars(ID=1_000_000, faker=faker.Faker())
+@static_vars(ID=6_000_000, faker=faker.Faker())
 def facility(n: int = 1) -> Generator[Facility, None, None]:
     '''Generate a specified number of facility records.
 
@@ -190,7 +190,7 @@ def facility(n: int = 1) -> Generator[Facility, None, None]:
 
 
 @reset_faker_seed
-@static_vars(ID=1_000_000, faker=faker.Faker())
+@static_vars(ID=7_000_000, faker=faker.Faker())
 def manager(n: int = 1) -> Generator[Manager, None, None]:
     '''Generate a specified number of manager records.
 
@@ -216,7 +216,7 @@ def manager(n: int = 1) -> Generator[Manager, None, None]:
 
 
 @reset_faker_seed
-@static_vars(ID=1_000_000, faker=faker.Faker())
+@static_vars(ID=8_000_000, faker=faker.Faker())
 def supplier(n: int = 1) -> Generator[Supplier, None, None]:
     '''Generate a specified number of supplier records.
 
@@ -244,7 +244,7 @@ def supplier(n: int = 1) -> Generator[Supplier, None, None]:
 
 
 @reset_faker_seed
-@static_vars(ID=1_000_000, faker=faker.Faker())
+@static_vars(ID=9_000_000, faker=faker.Faker())
 def supplier_to_facility(n: int = 1) -> Generator[SupplierToFacility, None, None]:
     '''Generate a specified number of supplier records.
 
