@@ -34,7 +34,7 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
     @Override
     public List<FacilitySchema> getAllWithAllDetails(int limit) throws SQLException {
         List<FacilitySchema> facilities = new ArrayList<>();
-        String query = "SELECT * FROM Airplane";
+        String query = "SELECT * FROM Facility";
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
