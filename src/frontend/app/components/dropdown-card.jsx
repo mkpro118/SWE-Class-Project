@@ -11,11 +11,12 @@ const DropdownCard = ({ props }) => {
   const [airplaneData, setAirplaneData] = useState([]);
 
   const host = process.env.WEBSERVER_HOST || 'localhost';
-  const port = process.env.WEBSERVER_PORT || 15000;
+  const port = process.env.WEBSERVER_PORT || 5000;
   const url = `http://${host}:${port}`;
 
   //Load in all the data from API into corresponding arrays
   useEffect(() => {
+    //load airplanes
     fetch(`${url}/airplane`)
     .then(res => res.json())
     .then(
@@ -24,6 +25,7 @@ const DropdownCard = ({ props }) => {
         console.log(data)
       }
     )
+    //load components
     fetch(`${url}/component`)
     .then(res => res.json())
     .then(
@@ -45,35 +47,50 @@ const DropdownCard = ({ props }) => {
   }
 
   return (
+    //dropdown expandable component for each facility
     <div className='rounded-b-lg shadow mb-4'>
+      
+      {/* Make this a clickable component */}
       <div
         className= 'bg-white cursor-pointer justify-between items-center rounded-lg'
         onClick={toggleExpansion}
       >
+        {/* City, State is main identifier for a facility */}
         <div className='border-b-2 px-4 py-4 '>
           <h2 className='text-lg font-semibold'>{props.city}, {props.state}</h2>
         </div>
 
+        {/* Order data headers in one row, and data in the second row */}
         <div className='flex px-4 py-2 mb-4'>
           <div className="flex flex-wrap w-1/2">
+
+            {/* Total number of airplanes at a facility is its completed airplanes + airplanes in progress */}
             <div className="flex flex-col w-1/4">
               <span className="text-md font-medium text-gray-400">Airplanes</span>
-              <span className="font-medium">{props.airplanes}</span>
+              <span className="font-medium">{props.airplanes + props.airplanesInProgress}</span>
             </div>
+
+            {/* Total number of components at a facility is its completed components + components in progress */}
             <div className="flex flex-col w-1/4">
               <span className="text-md text-gray-400">Components</span>
-              <span className="font-medium">{props.components}</span>
+              <span className="font-medium">{props.components + props.componentsInProgress}</span>
             </div>
+
+            {/* Total number of employees at a facility */}
             <div className="flex flex-col w-1/4">
               <span className="text-md text-gray-400">Employees</span>
               <span className="font-medium">{props.employees}</span>
             </div>
+
+            {/* Currently manager id, will need to change to manager name once SQL queries are done */}
             <div className="flex flex-col w-1/4">
               <span className="text-md text-gray-400">Manager</span>
               <span className="font-medium">{props.manager}</span>
             </div>
           </div>
           <div className='flex ml-auto'>
+          
+          {/* SVG of arrow to indicate component is expandable */}
           <svg
             className={`h-6 w-6 transition-transform transform ${isExpanded ? 'rotate-360' : ''
               }`}
@@ -92,6 +109,7 @@ const DropdownCard = ({ props }) => {
           </div>
         </div>
       </div>
+      
       {isExpanded && (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -128,7 +146,7 @@ const DropdownCard = ({ props }) => {
                     product={data.name}
                     type={data.type}
                     stage={data.production_stage}
-                    ID={data.ID}
+                    id={data.ID}
                     city={data.city}
                     state={data.state} />
                   }
