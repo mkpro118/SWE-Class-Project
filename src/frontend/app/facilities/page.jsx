@@ -6,18 +6,18 @@ import DropdownCard from '@/app/components/dropdown-card';
 const Facilities = () => {
 
   const host = process.env.WEBSERVER_HOST || 'localhost';
-  const port = process.env.WEBSERVER_PORT || 15000;
+  const port = process.env.WEBSERVER_PORT || 5000;
   const url = `http://${host}:${port}`;
 
   const [facilities, setFacilities] = useState([]);
 
   const mapFacilityToCard = (facility) => {
     return {
-      ID: facility.ID,
+      id: facility.ID,
       city: facility.city,
       state: facility.state,
       components: facility.components_completed,
-      componentsInProgress: facility.components_in_progress,
+      componentsInProgress: facility.components_in_production,
       description: facility.description,
       employees: facility.employee_count,
       manager: facility.manager_id,
@@ -81,7 +81,7 @@ const Facilities = () => {
       <div>
         {
           facilities.map(facility => {
-            return <DropdownCard props={facility} key={facility.ID}/>
+            return <DropdownCard props={facility} key={facility.id}/>
           })
         }
       </div>
