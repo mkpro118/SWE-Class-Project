@@ -13,17 +13,33 @@ import java.util.List;
 public class FacilityRepository implements ISQLRepository<FacilitySchema>{
     private Connection connection;
 
-    public FacilityRepository (JDBCConnection connection){
+    public FacilityRepository (Connection connection){
         //run jdbcconnection to get connection
     }
 
     /**
+     * The basic details will get the ID, City, and State columns
      *
-     *
+     * @return List of Facility Java Objects with only the basic details
      * */
     @Override
     public List<FacilitySchema> getAllWithBasicDetails(int limit) throws SQLException {
-        return null;
+        List<FacilitySchema> facilites = new ArrayList<>();
+        String query = "SELECT * FROM Facility";
+
+        try(Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query)){
+            while(resultSet.next()){
+                FacilitySchema facilitySchema = new FacilitySchema();
+
+                facilitySchema.facilityId = resultSet.getInt("FacilityID");
+                facilitySchema.city = resultSet.getString("City");
+                facilitySchema.state = resultSet.getString("State");
+
+                facilites.add(facilitySchema);
+            }
+        }
+        return facilites;
     }
 
     /**
@@ -44,15 +60,15 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
 
                 facilitySchema.facilityId = resultSet.getInt("FacilityID");
                 facilitySchema.name = resultSet.getString("Name");
-                facilitySchema.city = resultSet.getString("city");
-                facilitySchema.state = resultSet.getString("state");
-                facilitySchema.description = resultSet.getString("description");
-                facilitySchema.componentsInProduction = resultSet.getInt("componentsInProduction");
-                facilitySchema.componentsCompleted= resultSet.getInt("componentsCompleted");
-                facilitySchema.modelsInProduction = resultSet.getInt("modelsInProduction");
-                facilitySchema.modelsCompleted = resultSet.getInt("modelsCompleted");
-                facilitySchema.employeeCount = resultSet.getInt("employeeCount");
-                facilitySchema.managerId = resultSet.getInt("managerID");
+                facilitySchema.city = resultSet.getString("City");
+                facilitySchema.state = resultSet.getString("State");
+                facilitySchema.description = resultSet.getString("Description");
+                facilitySchema.componentsInProduction = resultSet.getInt("ComponentsInProduction");
+                facilitySchema.componentsCompleted= resultSet.getInt("ComponentsCompleted");
+                facilitySchema.modelsInProduction = resultSet.getInt("ModelsInProduction");
+                facilitySchema.modelsCompleted = resultSet.getInt("ModelsCompleted");
+                facilitySchema.employeeCount = resultSet.getInt("EmployeeCount");
+                facilitySchema.managerId = resultSet.getInt("ManagerID");
 
                 facilities.add(facilitySchema);
             }
@@ -80,15 +96,15 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
 
                 facilitySchema.facilityId = resultSet.getInt("FacilityID");
                 facilitySchema.name = resultSet.getString("Name");
-                facilitySchema.city = resultSet.getString("city");
-                facilitySchema.state = resultSet.getString("state");
-                facilitySchema.description = resultSet.getString("description");
-                facilitySchema.componentsInProduction = resultSet.getInt("componentsInProduction");
-                facilitySchema.componentsCompleted= resultSet.getInt("componentsCompleted");
-                facilitySchema.modelsInProduction = resultSet.getInt("modelsInProduction");
-                facilitySchema.modelsCompleted = resultSet.getInt("modelsCompleted");
-                facilitySchema.employeeCount = resultSet.getInt("employeeCount");
-                facilitySchema.managerId = resultSet.getInt("managerID");
+                facilitySchema.city = resultSet.getString("City");
+                facilitySchema.state = resultSet.getString("State");
+                facilitySchema.description = resultSet.getString("Description");
+                facilitySchema.componentsInProduction = resultSet.getInt("ComponentsInProduction");
+                facilitySchema.componentsCompleted= resultSet.getInt("ComponentsCompleted");
+                facilitySchema.modelsInProduction = resultSet.getInt("ModelsInProduction");
+                facilitySchema.modelsCompleted = resultSet.getInt("ModelsCompleted");
+                facilitySchema.employeeCount = resultSet.getInt("EmployeeCount");
+                facilitySchema.managerId = resultSet.getInt("ManagerID");
 
                 facility.add(facilitySchema);
 
