@@ -95,6 +95,7 @@ class Airplane(Model):
     '''
     ID: int
     name: str
+    description: str
     city: str
     state: str
     production_stage: str
