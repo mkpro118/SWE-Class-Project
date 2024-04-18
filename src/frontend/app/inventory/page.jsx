@@ -11,7 +11,7 @@ const MasterInventory = () => {
   const [airplaneData, setAirplaneData] = useState([])
   const [pageActive, setPageActive] = useState(1);
   const host = process.env.WEBSERVER_HOST || 'localhost';
-  const port = process.env.WEBSERVER_PORT || 15000;
+  const port = process.env.WEBSERVER_PORT || 5000;
   const url = `http://${host}:${port}`;
 
   //Load in all the data from API into corresponding arrays
@@ -120,7 +120,7 @@ const MasterInventory = () => {
               <th scope="col" className="p-4">
               </th>
               <th scope="col" className="px-6 py-3">
-                Warehouse
+                Facility
               </th>
               <th scope="col" className="px-6 py-3">
                 Product
@@ -152,7 +152,7 @@ const MasterInventory = () => {
                   product={data.name}
                   type={data.type}
                   stage={data.production_stage}
-                  ID={data.ID} />
+                  id={data.ID} />
               })
             }
           </tbody>

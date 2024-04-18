@@ -1,8 +1,23 @@
 import React from 'react'
+import Link from 'next/link';
 
 //Loads in the data mapped from inventory/page.jsx 
 //Checkboxes missing functionality 
 //Edit missing functionality
+
+export function getStageClass(stage) {
+  switch (stage) {
+    case "Unstarted":
+      return "px-2 py-1 bg-red-500 text-black rounded opacity-75";
+    case "In-Progress":
+      return "px-2 py-1 bg-yellow-500 text-black rounded opacity-75";
+    case "Finished":
+      return "px-2 py-1 bg-green-500 text-black rounded opacity-75";
+    default:
+      return "";
+  }
+}
+
 const Table = (props) => {
   return (
 
@@ -17,7 +32,14 @@ const Table = (props) => {
         {props.city + ', ' + props.state}
       </th>
       <td className="px-6 py-4">
-        {props.product}
+      {
+        props.type == "Airplane" ? 
+        <div className='text-blue-600'>
+          <Link href="../inventory/[id]" as={`../inventory/${props.id}`}>{props.product}</Link>
+        </div>
+        :
+          props.product
+        }
       </td>
       <td className="px-6 py-4">
         {props.type}
@@ -26,10 +48,12 @@ const Table = (props) => {
         {'$'}{props.cost}
       </td>
       <td className="px-6 py-4">
-        {props.stage}
+        <span className={getStageClass(props.stage)}>
+          {props.stage}
+        </span>
       </td>
       <td className="px-6 py-4">
-        {props.ID}
+        {props.id}
       </td>
       <td className="px-6 py-4">
         <a href="#" className="font-medium text-blue-600 hover:underline">Edit</a>
