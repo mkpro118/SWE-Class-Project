@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, Response
 from flask_cors import CORS
 
 import os
@@ -237,6 +237,11 @@ def manager_with_id(manager_id: int):
         f'Success on "/manager/{{ID}}" with method {request.method}\n'
         f'{manager_id = }'
     )
+
+
+@app.route('/healthcheck', methods=['GET'])
+def healtcheck():
+    return Response(status=204)
 
 
 if __name__ == '__main__':
