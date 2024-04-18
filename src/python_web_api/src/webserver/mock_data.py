@@ -69,6 +69,7 @@ def airplane(n: int = 1) -> Generator[Airplane, None, None]:
     while n > 0:
         yield Airplane(airplane.ID,
                        airplane.faker.name().split(' ')[0],
+                       airplane.faker.sentence(),
                        airplane.faker.city(),
                        airplane.faker.state(),
                        random.choice(('In-Progress', 'Finished', 'Unstarted')),
