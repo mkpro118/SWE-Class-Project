@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Table from './table';
+import Table from './table-facilities';
+import TableFacilities from './table-facilities';
 
 const DropdownCard = ({ props }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -130,10 +131,10 @@ const DropdownCard = ({ props }) => {
                   Production Stage
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Action
+                  ID
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  ID
+                  Action
                 </th>
               </tr>
             </thead>
@@ -141,7 +142,7 @@ const DropdownCard = ({ props }) => {
             {
             fullInventory.map(data => {
                   if(data.city == props.city && data.state == props.state){ // if the datas are in facility
-                    return <Table key={data.id}
+                    return <TableFacilities key={data.id}
                     cost={data.cost}
                     product={data.name}
                     type={data.type}
