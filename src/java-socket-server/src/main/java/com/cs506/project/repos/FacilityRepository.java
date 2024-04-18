@@ -13,8 +13,8 @@ import java.util.List;
 public class FacilityRepository implements ISQLRepository<FacilitySchema>{
     private Connection connection;
 
-    public FacilityRepository (Connection connection){
-        //run jdbcconnection to get connection
+    public FacilityRepository (Connection connection) throws SQLException {
+        this.connection = connection;
     }
 
     /**
@@ -25,7 +25,7 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
     @Override
     public List<FacilitySchema> getAllWithBasicDetails(int limit) throws SQLException {
         List<FacilitySchema> facilites = new ArrayList<>();
-        String query = "SELECT * FROM Facility";
+        String query = "SELECT * FROM Facility LIMIT" + limit;
 
         try(Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query)){
@@ -50,7 +50,7 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
     @Override
     public List<FacilitySchema> getAllWithAllDetails(int limit) throws SQLException {
         List<FacilitySchema> facilities = new ArrayList<>();
-        String query = "SELECT * FROM Facility";
+        String query = "SELECT * FROM Facility Limit" + limit;
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
