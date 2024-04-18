@@ -25,8 +25,12 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
     @Override
     public List<FacilitySchema> getAllWithBasicDetails(int limit) throws SQLException {
         List<FacilitySchema> facilites = new ArrayList<>();
-        String query = "SELECT * FROM Facility LIMIT" + limit;
-
+        String query = "";
+        if (limit != -1) {
+            query = "SELECT FacilityID, city, state FROM Facility LIMIT" + limit;
+        } else {
+            query = "SELECT FacilityID, city, state FROM Facility";
+        }
         try(Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query)){
             while(resultSet.next()){
@@ -50,7 +54,12 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
     @Override
     public List<FacilitySchema> getAllWithAllDetails(int limit) throws SQLException {
         List<FacilitySchema> facilities = new ArrayList<>();
-        String query = "SELECT * FROM Facility Limit" + limit;
+        String query = "";
+        if(limit != -1){
+            query = "SELECT * FROM Facility Limit" + limit;
+        } else {
+            query = "SELECT * FROM Facility";
+        }
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
@@ -86,6 +95,7 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
     @Override
     public List<FacilitySchema> getById(int facilityId) throws SQLException{
         List<FacilitySchema> facility = new ArrayList<>();
+
         String query = "SELECT * FROM Facility WHERE facilityId = " + facilityId;
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query);){
