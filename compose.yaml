@@ -8,10 +8,10 @@ services:
     volumes:
       - frontend_artifacts:/src/artifacts
     depends_on:
-      - web_server
+      web_server:
         # restart: true
         # required: true
-        # condition: service_healthy
+        condition: service_healthy
     # restart: on-failure:5
     networks:
       - front_end
@@ -27,12 +27,19 @@ services:
       context: src/python_web_api
       dockerfile: Python.Dockerfile
     volumes:
-      - .\src\python_web_api:/src
+      - python_web_api_artifacts:/src
+      # - .\src\python_web_api:/src
     # depends_on:
       # - proxy_server
         # restart: true
         # required: true
         # condition: service_healthy
+    healthcheck:
+      test: curl --fail http://localhost:5000/healthcheck || exit 1
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 5s
     # restart: on-failure:5
     networks:
       - front_end
