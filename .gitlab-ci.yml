@@ -124,3 +124,20 @@ frontend-webserver-test:
     - docker compose down
   only:
     - main
+
+webserver-proxyserver-test:
+  stage: test
+  image: docker:26.0.0
+  services:
+    - docker:26.0.0-dind
+  tags:
+    - dind
+  before_script:
+    - docker ps
+    - docker compose up -d --build web_server proxy_server
+  script:
+    - docker exec web_server bash -c "python3 -m tests.integration.integration_test"
+  after_script:
+    - docker compose down
+  only:
+    - main

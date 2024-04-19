@@ -47,8 +47,17 @@ RUN unzip mysql_connector.zip
 
 COPY . .
 
+ARG base=src/main/java/com/cs506/project
+ARG test=src/test/java/com/cs506/project
 # The following commands may be changed depending on the how
 # We decide to build and run the Java Server
-RUN javac -d bin -cp .:mysql_connector ./*.java
+# RUN javac -d bin -cp .:mysql_connector ./*.java
 
-CMD ["java", "-cp", "bin:mysql_connector", "JavaServer"]
+# For the integration tests, we will update this later
+RUN javac -d bin ${base}/configs/ListenerConfig.java ${base}/configs/ServerConfig.java ${base}/configs/WorkerConfig.java
+RUN javac -d bin ${base}/utils/ArgParser.java ${base}/utils/Option.java ${base}/utils/SocketIO.java
+RUN javac -cp bin -d bin ${base}/server/ProxyServer.java ${base}/server/ProxyServerListener.java ${base}/server/ProxyServerTask.java ${base}/server/ProxyServerWorker.java
+RUN javac -cp bin -d bin ${test}/server/IntegrationTestServer.java
+RUN jar -cvfe IntegrationTestServer.jar com.cs506.project.server.IntegrationTestServer -C bin .
+
+CMD ["java", "-jar", "IntegrationTestServer.jar"]
