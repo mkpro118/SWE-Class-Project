@@ -28,7 +28,6 @@ services:
       dockerfile: Python.Dockerfile
     volumes:
       - python_web_api_artifacts:/src
-      # - .\src\python_web_api:/src
     # depends_on:
       # - proxy_server
         # restart: true

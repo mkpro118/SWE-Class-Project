@@ -10,19 +10,31 @@ parse = functools.partial(json.loads, cls=models.ModelDecoder)
 
 
 class TestManager(unittest.TestCase):
+    server = None
+
     @classmethod
     def setUpClass(cls):
+        try:
+            with requests.get('http://127.0.0.1:5000/', timeout=5) as resp:
+                if resp.ok:
+                    return
+        except Exception:
+            pass
+
         cls.server = Server(host='0.0.0.0', port=5000)
         cls.server.start()
 
-        while True:
+        for _ in range(5):
             with requests.get('http://127.0.0.1:5000/', timeout=5) as resp:
                 if resp.ok:
                     break
+        else:
+            assert False, 'Failed to start server'
 
     @classmethod
     def tearDownClass(cls):
-        cls.server.stop()
+        if cls.server:
+            cls.server.stop()
 
     def test_manager_get(self):
         with requests.get('http://127.0.0.1:5000/manager') as resp:

@@ -80,8 +80,10 @@ webserver-test:
     - pip install -r requirements.txt
     - pip install src/extensions/
     - pip install src/webserver/
+    # Setup a Mock Echo Server for client/server tests
+    - python3 -m tests.client.echo_server 46900 46901 46903 46905 > /dev/null &
   script:
-    - coverage run --omit=tests/*,__init__.py tests/__init__.py
+    - coverage run --omit=tests/*,__init__.py "--source=app,mock_data,models,proxyclient" tests/__init__.py
   after_script:
     - cd src/python_web_api
     - coverage report
