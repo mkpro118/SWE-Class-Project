@@ -209,8 +209,9 @@ static PyObject* ps_close(PyObject* self, PyObject* args, PyObject* kwargs) {
  *
  * @note The caller is responsible for freeing the allocated buffer.
  */
-static char* read_socket(int sockfd) {
+static char* read_socket(int sockfd, int* size) {
     char* buffer = NULL;
+    *size = -1;
     size_t buffer_size = 0;
     size_t buffer_capacity = 0;
 
@@ -241,12 +242,16 @@ static char* read_socket(int sockfd) {
         // Copy the newly read data to the end of the buffer
         memcpy(buffer + buffer_size, chunk, bytes_read);
         buffer_size += bytes_read;
+
+        if (bytes_read < CHUNK_SIZE)
+            break;
     }
 
     // recv failed!
     if (bytes_read < 0)
         return NULL;
 
+    *size = buffer_size;
     return buffer;
 }
 
@@ -280,13 +285,14 @@ static PyObject* ps_recv(PyObject* self, PyObject* args, PyObject* kwargs) {
 
     // Read data from socket
     char* resp;
-    if ((resp = read_socket(socketfd)) == NULL) {
+    int size;
+    if ((resp = read_socket(socketfd, &size)) == NULL) {
         PyErr_SetFromErrno(PyExc_OSError);
         return NULL;
     }
 
     // Create Python string from C string
-    PyObject* pystr = PyUnicode_FromStringAndSize(resp, strlen(resp));
+    PyObject* pystr = PyUnicode_FromStringAndSize(resp, size);
     free(resp);
     resp = NULL; // No dangling pointers
     return pystr;

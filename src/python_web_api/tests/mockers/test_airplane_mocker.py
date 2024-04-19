@@ -1,8 +1,6 @@
 import random
 import unittest
 import types
-import sys
-sys.path.append('../../')
 import models
 import mock_data
 

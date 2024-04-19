@@ -54,9 +54,9 @@ class ProxyClient:
             raise ConnectionResetError('The ProxyClient is not configured yet')
 
         fd = ps.connect(self.hostname, next(self._port_supplier))
-        if isinstance(request, str):
-            request: bytes = bytes(request, encoding='utf-8')
-        ps.send(fd, )
+        if isinstance(request, bytes):
+            request: str = request.decode('utf-8')
+        ps.send(fd, request)
         resp = ps.recv(fd)
         ps.close(fd)
         return resp
@@ -96,6 +96,6 @@ class ProxyClient:
             return tuple((i + port_as_int for i in range(num_listeners)))
 
         if isinstance(port_hint, Iterable):
-            return tuple(port_hint)
+            return tuple(map(int, port_hint))[:num_listeners]
 
         raise TypeError('Port must be specifed as int, str or list of int/str')
