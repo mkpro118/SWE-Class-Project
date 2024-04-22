@@ -1,7 +1,6 @@
 {
     "extends": [
-      "next/core-web-vitals",
-      "plugin:testing-library/react"
+      "next/core-web-vitals"
     ]
 
   }

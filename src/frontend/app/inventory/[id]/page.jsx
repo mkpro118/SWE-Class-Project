@@ -7,7 +7,6 @@ const port = process.env.WEBSERVER_PORT || 5000;
 // console.log(port)
 const url = `http://${host}:${port}`;
 
-
 /**
  * Generates unique page for each Airplane using dynamic rendering
  * 
@@ -15,9 +14,8 @@ const url = `http://${host}:${port}`;
  * @returns An AirplaneInfo object with the passed props
  */
 export default async function AirplanePage({params}) {
-    // console.log(params)
     const props = await getAirplane(params.id)
-    // console.log(props)
+    console.log(props)
     return <AirplaneInfo {...props}/>
     
   };
@@ -25,7 +23,7 @@ export default async function AirplanePage({params}) {
 /**
  * Fetches a single airplane based on id
  * 
- * @param ID the id for a specific airplane
+ * @param id the id for a specific airplane
  * @returns the airplane object corresponding to the id
  */
 async function getAirplane(id) {
@@ -51,7 +49,7 @@ async function getAirplane(id) {
   //   // }))
   //   // console.log(ids);
   //   return airplanes.map((plane) => ({
-  //     id: plane.ID.toString(),
+  //     ID: plane.ID.toString(),
   //   }))
   // }
 
