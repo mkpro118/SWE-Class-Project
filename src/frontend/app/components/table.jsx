@@ -5,14 +5,19 @@ import Link from 'next/link';
 //Checkboxes missing functionality 
 //Edit missing functionality
 
+/**
+ * Conditionally renders a color scheme for different stages
+ * @param stage the stage the product is in - Unstarted, In-Progress, or Finished
+ * @returns 
+ */
 export function getStageClass(stage) {
   switch (stage) {
     case "Unstarted":
-      return "px-2 py-1 bg-red-500 text-black rounded opacity-75";
+      return "bg-red-500";
     case "In-Progress":
-      return "px-2 py-1 bg-yellow-500 text-black rounded opacity-75";
+      return "bg-yellow-500 ";
     case "Finished":
-      return "px-2 py-1 bg-green-500 text-black rounded opacity-75";
+      return "bg-green-500";
     default:
       return "";
   }
@@ -47,9 +52,9 @@ const Table = (props) => {
       <td className="px-6 py-4">
         {'$'}{props.cost}
       </td>
-      <td className="px-6 py-4">
-        <span className={getStageClass(props.stage)}>
-          {props.stage}
+      <td className="px-6 py-4 text-black">
+        <span className={`px-2 py-1 rounded opacity-50 ${getStageClass(props.stage)}`}>
+            {props.stage}
         </span>
       </td>
       <td className="px-6 py-4">

@@ -72,10 +72,10 @@ const AirplaneInfo = (plane) => {
             </td>
 
             {/* Conditionally render production stage color identifier for Unstarted, In-Progress, or Finished */}
-            <td className="px-6 py-4">
-              <span className={getStageClass(plane.production_stage)}>
+            <td className="px-6 py-4 text-black">
+              <span className={`px-2 py-1 rounded opacity-50 ${getStageClass(plane.production_stage)}`}>
                 {plane.production_stage}
-              </span>
+             </span>
             </td>
 
             {/* Cost of production */}
