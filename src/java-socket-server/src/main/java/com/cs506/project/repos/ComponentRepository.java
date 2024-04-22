@@ -1,8 +1,6 @@
 package com.cs506.project.repos;
 
-import com.cs506.project.JDBCConnection;
 import com.cs506.project.interfaces.ISQLRepository;
-import com.cs506.project.schemas.AirplaneSchema;
 import com.cs506.project.schemas.ComponentSchema;
 
 import java.sql.Connection;
@@ -19,8 +17,9 @@ public class ComponentRepository implements ISQLRepository<ComponentSchema> {
 
     private Connection connection;
     
-    public ComponentRepository (JDBCConnection connection) {
+    public ComponentRepository (Connection connection) {
         // Run jdbcConnection.createConnection(): Each method will be responsible for closing the connection
+        this.connection = connection;
     }
 
     /**
@@ -29,8 +28,35 @@ public class ComponentRepository implements ISQLRepository<ComponentSchema> {
      * @return List of  Java Objects.
      */
     @Override
-    public List<ComponentSchema> getAllWithBasicDetails(int limit) {
-        return null;
+    public List<ComponentSchema> getAllWithBasicDetails(int limit) throws SQLException{
+        List<ComponentSchema> components = new ArrayList<>();
+
+        String query = "";
+        if (limit != -1) {
+            query = "SELECT ComponentId, Name, ProductionStageName, Cost FROM Component LIMIT " + limit;
+        } else {
+            query = "SELECT ComponentId, Name, ProductionStageName, Cost FROM Component";
+        }
+
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) {
+
+                ComponentSchema componentSchema = new ComponentSchema();
+
+                componentSchema.componentId = resultSet.getInt("ComponentId");
+                componentSchema.name = resultSet.getString("Name");
+                componentSchema.cost = resultSet.getDouble("Cost");
+                componentSchema.productionStageName = resultSet.getString("ProductionStageName");
+
+                components.add(componentSchema);
+            }
+
+        }
+
+        return components;
+
     }
 
     /**
@@ -41,7 +67,15 @@ public class ComponentRepository implements ISQLRepository<ComponentSchema> {
     @Override
     public List<ComponentSchema> getAllWithAllDetails(int limit) throws SQLException {
         List<ComponentSchema> components = new ArrayList<>();
-        String query = "SELECT * FROM Component";
+
+        String query = "";
+
+        if (limit != -1){
+            query = "SELECT * FROM Component LIMIT " + limit;
+        } else {
+            query = "SELECT * FROM Component";
+        }
+
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {

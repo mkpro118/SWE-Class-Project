@@ -1,13 +1,9 @@
 package com.cs506.project.repos;
 
-import com.cs506.project.JDBCConnection;
 import com.cs506.project.interfaces.ISQLRepository;
 import com.cs506.project.schemas.AirplaneSchema;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +14,8 @@ public class AirplaneRepository implements ISQLRepository<AirplaneSchema> {
 
     private Connection connection;
 
-    public AirplaneRepository (JDBCConnection jdbcConnection){
-        // Run jdbcConnection.createConnection(): Each method will be responsible for closing the connection
+    public AirplaneRepository (Connection connection) throws SQLException {
+        this.connection = connection;
     }
 
     /**
@@ -28,8 +24,33 @@ public class AirplaneRepository implements ISQLRepository<AirplaneSchema> {
      * @return List of Airplane Java Objects.
      */
     @Override
-    public List<AirplaneSchema> getAllWithBasicDetails(int limit) {
-        return null;
+    public List<AirplaneSchema> getAllWithBasicDetails(int limit) throws SQLException{
+
+        List<AirplaneSchema> airplanes = new ArrayList<>();
+        String query = "";
+        if (limit != -1) {
+            query = "SELECT AirplaneId, Name, ProductionStageName, Cost FROM Airplane LIMIT " + limit;
+        } else {
+            query = "SELECT AirplaneId, Name, ProductionStageName, Cost FROM Airplane";
+        }
+
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            while (resultSet.next()) {
+
+                AirplaneSchema airplaneSchema = new AirplaneSchema();
+
+                airplaneSchema.airplaneId = resultSet.getInt("AirplaneId");
+                airplaneSchema.name = resultSet.getString("Name");
+                airplaneSchema.productionStageName = resultSet.getString("ProductionStageName");
+                airplaneSchema.cost = resultSet.getDouble("Cost");
+
+                airplanes.add(airplaneSchema);
+            }
+        }
+
+        return airplanes;
+
     }
 
     /**
@@ -40,7 +61,14 @@ public class AirplaneRepository implements ISQLRepository<AirplaneSchema> {
     @Override
     public List<AirplaneSchema> getAllWithAllDetails(int limit) throws SQLException {
         List<AirplaneSchema> airplanes = new ArrayList<>();
-        String query = "SELECT * FROM Airplane";
+
+        String query = "";
+
+        if (limit != -1) {
+            query = "SELECT * FROM Airplane LIMIT " + limit;
+        } else {
+            query = "SELEC * FROM Airplane";
+        }
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {

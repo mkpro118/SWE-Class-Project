@@ -13,3 +13,18 @@ In resposnse contract -- add error field with 'reason'
     "data": [{}, {}],
     "error": ""
 }
+Facility Basic Details:
+1. City
+2. State
+
+Component Basic Details:
+1. Name
+2. Cost
+3. Production Stage Name
+4. ID
+
+Airplane Basic Details:
+1. Name
+2. Cost
+3. Production Stage Name
+4. ID
