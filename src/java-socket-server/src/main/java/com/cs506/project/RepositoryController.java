@@ -39,17 +39,16 @@ public class RepositoryController {
         return new JDBCConnection();
     }
 
-    private SocketServerRequest createSocketServerRequest (byte[] request) {
+    public SocketServerRequest createSocketServerRequest (byte[] request) {
         try {
 
-            ByteArrayInputStream bis = new ByteArrayInputStream(request);
-            ObjectInputStream ois = new ObjectInputStream(bis);
-            Object obj = ois.readObject();
-            ois.close();
+            String jsonString = new String(request);
 
-            return (SocketServerRequest) obj;
+            SocketServerRequest result = gson.fromJson(jsonString, SocketServerRequest.class);
 
-        } catch (IOException | ClassNotFoundException e) {
+            return result;
+
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -63,15 +62,20 @@ public class RepositoryController {
      */
     private String formResponse (String responseEntities) {
 
+        String response = "";
         if (responseEntities == null) {
-            // Error Response created here.
+            response = "{\n" +
+                    "  \"entities\": [],\n" +
+                    "  \"error\": \"There was an issue processing your request. Ensure your request is a valid SocketServerRequest.\"\n" +
+                    "}";
+        } else {
+            response = "{\n" +
+                    "  \"entities\":" + responseEntities + ",\n" +
+                    "  \"error\": \"\"\n" +
+                    "}";
         }
 
-        if (responseEntities == "") {
-            // This is if none of the cases were hit in the main switch: Error
-        }
-
-        return null;
+        return response;
     }
 
     /**
@@ -83,7 +87,7 @@ public class RepositoryController {
     private List<AirplaneSchema> handleAirplaneRequest (String action, int limit, boolean readAll,
                                                         List<AirplaneSchema> requestAirplanes) throws SQLException {
 
-        AirplaneRepository repository = new AirplaneRepository(jdbcConnection);
+        AirplaneRepository repository = new AirplaneRepository(null);
 
         List<AirplaneSchema> result = null;
 
@@ -106,7 +110,6 @@ public class RepositoryController {
                 break;
 
             default:
-                // Error Case
                 break;
         }
 
@@ -122,7 +125,8 @@ public class RepositoryController {
     private List<ComponentSchema> handleComponentRequest (String action, int limit, boolean readAll,
                                                           List<ComponentSchema> requestComponents) throws SQLException {
 
-        ComponentRepository repository = new ComponentRepository(jdbcConnection);
+        // Call JDBCConnection.create before
+        ComponentRepository repository = new ComponentRepository(null);
 
         List<ComponentSchema> result = null;
 
@@ -145,7 +149,6 @@ public class RepositoryController {
                 break;
 
             default:
-                // Error Case
                 break;
         }
 
@@ -179,26 +182,38 @@ public class RepositoryController {
                     List<AirplaneSchema> responseAirplanes = handleAirplaneRequest(ssrequest.type, ssrequest.limit,
                             ssrequest.requestingAllDetails ,airplanes);
 
-                    response = formResponse(gson.toJson(responseAirplanes));
+                    if (responseAirplanes == null) {
+                        response = formResponse(null);
+                    } else{
+                        response = formResponse(gson.toJson(responseAirplanes));
+                    }
+
+                    break;
 
                 case "Component":
                     List<ComponentSchema> components = ssrequest.entities.stream()
                             .map(obj -> (ComponentSchema) obj)
                             .collect(Collectors.toList());
-                    List<ComponentSchema> responseComponent = handleComponentRequest(ssrequest.type, ssrequest.limit,
+                    List<ComponentSchema> responseComponents = handleComponentRequest(ssrequest.type, ssrequest.limit,
                             ssrequest.requestingAllDetails, components);
 
-                    response = formResponse(gson.toJson(responseComponent));
+                    if (responseComponents == null){
+                        response = formResponse(null);
+                    } else {
+                        response = formResponse(gson.toJson(responseComponents));
+                    }
+
+                    break;
 
                 default:
-                    response = formResponse("");
+                    response = formResponse(null);
                     break;
 
             }
 
-        } catch(SQLException ex){
-            // Error Response
+        } catch(Exception ex){
             ex.printStackTrace();
+            return formResponse(null);
         }
 
         return response;
