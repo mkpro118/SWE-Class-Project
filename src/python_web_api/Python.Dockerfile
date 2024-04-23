@@ -46,7 +46,6 @@ COPY . .
 
 # Install dependencies for the Web Server
 RUN pip install -r requirements.txt
-RUN pip install src/extensions/
-RUN pip install src/webserver/
+RUN pip install src/
 
-CMD ["flask", "run"]
+CMD ["python3", "app.py", "-m"]

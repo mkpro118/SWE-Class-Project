@@ -1,8 +1,9 @@
 import random
 import unittest
 import types
-import models
-import mock_data
+
+from webserver.internals import models
+from views.mock import mock_data
 
 
 class TestAirplaneMocker(unittest.TestCase):

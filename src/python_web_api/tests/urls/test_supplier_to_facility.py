@@ -1,10 +1,10 @@
 import functools
 import json
-import models
 import random
 import requests
 import unittest
 from tests.urls.url_test_utils import Server
+from webserver.internals import models
 
 parse = functools.partial(json.loads, cls=models.ModelDecoder)
 
@@ -15,17 +15,17 @@ class TestSupplierToFacility(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         try:
-            with requests.get('http://127.0.0.1:5000/', timeout=5) as resp:
+            with requests.get('http://127.0.0.1:15000/', timeout=5) as resp:
                 if resp.ok:
                     return
         except Exception:
             pass
 
-        cls.server = Server(host='0.0.0.0', port=5000)
+        cls.server = Server(host='0.0.0.0', port=15000)
         cls.server.start()
 
         for _ in range(5):
-            with requests.get('http://127.0.0.1:5000/', timeout=5) as resp:
+            with requests.get('http://127.0.0.1:15000/', timeout=5) as resp:
                 if resp.ok:
                     break
         else:
@@ -37,7 +37,7 @@ class TestSupplierToFacility(unittest.TestCase):
             cls.server.stop()
 
     def test_supplierfacility_get(self):
-        with requests.get('http://127.0.0.1:5000/supplierfacility') as resp:
+        with requests.get('http://127.0.0.1:15000/supplierfacility') as resp:
             self.assertTrue(resp.ok)
             self.assertEqual(resp.status_code, 200)
 
@@ -62,7 +62,7 @@ class TestSupplierToFacility(unittest.TestCase):
 
     def test_supplierfacility_get_with_id(self):
         x = random.randint(1, 10000)
-        with requests.get(f'http://127.0.0.1:5000/supplierfacility/{x}') as resp:
+        with requests.get(f'http://127.0.0.1:15000/supplierfacility/{x}') as resp:
             self.assertTrue(resp.ok)
             self.assertEqual(resp.status_code, 200)
 
@@ -83,7 +83,7 @@ class TestSupplierToFacility(unittest.TestCase):
         self.assertEqual(model.ID, x)
 
     def test_supplierfacility_post(self):
-        with requests.post('http://127.0.0.1:5000/supplierfacility') as resp:
+        with requests.post('http://127.0.0.1:15000/supplierfacility') as resp:
             self.assertTrue(resp.ok)
             self.assertEqual(resp.status_code, 200)
 
@@ -94,29 +94,29 @@ class TestSupplierToFacility(unittest.TestCase):
 
     def test_supplierfacility_post_with_id(self):
         x = random.randint(1, 10000)
-        with requests.post(f'http://127.0.0.1:5000/supplierfacility/{x}') as resp:
+        with requests.post(f'http://127.0.0.1:15000/supplierfacility/{x}') as resp:
             self.assertFalse(resp.ok)
             self.assertEqual(resp.status_code, 405)
 
     def test_supplierfacility_put(self):
-        with requests.put('http://127.0.0.1:5000/supplierfacility') as resp:
+        with requests.put('http://127.0.0.1:15000/supplierfacility') as resp:
             self.assertFalse(resp.ok)
             self.assertEqual(resp.status_code, 405)
 
     def test_supplierfacility_put_with_id(self):
         x = random.randint(1, 10000)
-        with requests.put(f'http://127.0.0.1:5000/supplierfacility/{x}') as resp:
+        with requests.put(f'http://127.0.0.1:15000/supplierfacility/{x}') as resp:
             self.assertFalse(resp.ok)
             self.assertEqual(resp.status_code, 405)
 
     def test_supplierfacility_delete(self):
-        with requests.delete(f'http://127.0.0.1:5000/supplierfacility') as resp:
+        with requests.delete(f'http://127.0.0.1:15000/supplierfacility') as resp:
             self.assertFalse(resp.ok)
             self.assertEqual(resp.status_code, 405)
 
     def test_supplierfacility_delete_with_id(self):
         x = random.randint(1, 10000)
-        with requests.delete(f'http://127.0.0.1:5000/supplierfacility/{x}') as resp:
+        with requests.delete(f'http://127.0.0.1:15000/supplierfacility/{x}') as resp:
             self.assertTrue(resp.ok)
             self.assertEqual(resp.status_code, 200)
 

@@ -1,5 +1,5 @@
 import unittest
-import proxyclient
+from webserver.internals import proxyclient
 
 
 class TestProxyClientConfigure(unittest.TestCase):

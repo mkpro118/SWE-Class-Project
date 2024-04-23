@@ -46,8 +46,7 @@ webserver-build:
     - cd src/python_web_api
     - pip install -r requirements.txt
   script:
-    - pip install src/extensions/
-    - pip install src/webserver/
+    - pip install src/
   only:
     - prod/webserver
 
@@ -78,12 +77,11 @@ webserver-test:
   before_script:
     - cd src/python_web_api
     - pip install -r requirements.txt
-    - pip install src/extensions/
-    - pip install src/webserver/
+    - pip install src/
     # Setup a Mock Echo Server for client/server tests
     - python3 -m tests.client.echo_server 46900 46901 46903 46905 > /dev/null &
   script:
-    - coverage run --omit=tests/*,__init__.py "--source=app,mock_data,models,proxyclient" tests/__init__.py
+    - coverage run --omit=tests/*,setup.py,__init__.py "--source=app,views.mock,webserver" tests/__init__.py
   after_script:
     - cd src/python_web_api
     - coverage report
