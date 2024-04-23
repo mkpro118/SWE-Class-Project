@@ -102,7 +102,7 @@ class Airplane(Model):
     cost: float
     date_started: str
     date_finished: str
-    customer_id: int
+    facility_id: int
     seating_capacity: int
     size: str
     has_first_class: bool
