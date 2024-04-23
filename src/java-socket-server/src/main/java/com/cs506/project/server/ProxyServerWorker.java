@@ -63,6 +63,16 @@ public class ProxyServerWorker implements Runnable {
         this.shutdownLatch = null;
     }
 
+    /**
+     * Indicates whether or not the current worker is active
+     * 
+     * @return {@code true} if the current worker is active,
+*              {@code false} otherwise
+     */
+    public boolean isActive() {
+        return active;
+    }
+
     public void useShutdownLatch(CountDownLatch latch) {
         this.shutdownLatch = latch;
     }

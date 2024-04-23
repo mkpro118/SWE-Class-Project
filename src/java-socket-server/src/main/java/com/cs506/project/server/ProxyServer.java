@@ -178,6 +178,13 @@ public class ProxyServer implements Runnable {
     }
 
     /**
+     * Returns the listeners used by this ProxyServer
+     */
+    public ProxyServerListener[] getListeners() {
+        return listeners;
+    }
+
+    /**
      * Sets up the workers automatically with the specified task to execute.
      *
      * This method will spawn the number of workers specified by
@@ -214,6 +221,13 @@ public class ProxyServer implements Runnable {
      */
     public void useWorkers(ProxyServerWorker[] workers) {
         this.workers = workers;
+    }
+
+    /**
+     * Returns the listeners used by this ProxyServer
+     */
+    public ProxyServerListener[] getListeners() {
+        return listeners;
     }
 
     /**
