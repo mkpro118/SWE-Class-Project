@@ -124,29 +124,78 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
         return facility;
     }
 
+    /**
+     * Takes a Create query and funnels it to the appropriate method within class.
+     *
+     * @param requestEntities : List of Facilities to create in database
+     * @return
+     *
+     * */
     @Override
     public List<FacilitySchema> handleCreateQuery(List<FacilitySchema> requestEntities) throws SQLException {
+        closeConnection();
         return null;
     }
 
+    /**
+     * Handles a Read query and sends it to the correct method within class.
+     *
+     * @param limit          : If not equal to -1, then adds a limit operator to final query.
+     * @param readAllDetails : Specifies whether all columns are requested from database.
+     * @return List of E read from database;
+     *
+     * */
     @Override
-    public List<FacilitySchema> handleReadQuery(int limit, boolean readAllDetails, List<FacilitySchema> requestEntities) throws SQLException {
-        return null;
+    public List<FacilitySchema> handleReadQuery(int limit, boolean readAllDetails, List<FacilitySchema> facilties) throws SQLException {
+        List<FacilitySchema> result = new ArrayList<>();
+
+        if(facilties.size() != 0){
+            for(FacilitySchema facility : facilties){
+                result.addAll(getById(facility.facilityId));
+            }
+        }
+        if(!readAllDetails){
+            result = getAllWithBasicDetails(limit);
+        } else{
+            result = getAllWithAllDetails(limit);
+        }
+        closeConnection();
+
+        return result;
     }
 
+    /**
+     * Handles the update query and sends it to the correct method in class
+     *
+     * @param request : list of facilites that need to be updated in the database
+     * @return Updated list of facilites
+     * */
     @Override
     public List<FacilitySchema> handleUpdateQuery(List<FacilitySchema> request) throws SQLException {
+        closeConnection();
         return null;
     }
 
+    /**
+     * Handles the delete query and sends it to the correct method in class
+     *
+     * @param request : list of facilites that need to be deleted from the database
+     * @return List of Airplanes removed
+     * */
     @Override
     public List<FacilitySchema> handleDeleteQuery(List<FacilitySchema> request) throws SQLException {
+
+        closeConnection();
         return null;
     }
 
+    /**
+     * Closes the connection to the datebase and must be run after each query
+     *
+     * */
     @Override
     public void closeConnection() throws SQLException {
-
+        connection.close();
     }
 
 
