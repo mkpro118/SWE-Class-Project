@@ -1,6 +1,6 @@
 import unittest
 
-from proxyclient import ProxyClient
+from webserver.internals.proxyclient import ProxyClient
 
 
 class TestProxyClientFindPorts(unittest.TestCase):

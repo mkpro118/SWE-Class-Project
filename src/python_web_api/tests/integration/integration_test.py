@@ -7,7 +7,7 @@ import unittest
 
 from concurrent.futures import ThreadPoolExecutor
 
-import proxyclient
+from webserver.internals import proxyclient
 
 
 def random_large_string():

@@ -5,7 +5,7 @@ import faker
 import functools
 from typing import Callable, Generator
 
-from models import (
+from webserver.internals.models import (
     Airplane,
     AirplaneToComponent,
     Component,

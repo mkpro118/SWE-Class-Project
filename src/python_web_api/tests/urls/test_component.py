@@ -1,10 +1,10 @@
 import functools
 import json
-import models
 import random
 import requests
 import unittest
 from tests.urls.url_test_utils import Server
+from webserver.internals import models
 
 parse = functools.partial(json.loads, cls=models.ModelDecoder)
 
