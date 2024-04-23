@@ -319,6 +319,9 @@ def deterministic(kind: str = '') -> list:
             airplane.city, airplane2.city = (facility.city,) * 2
             airplane.state, airplane2.state = (facility.state,) * 2
 
+            airplane.facility_id = facility.ID
+            airplane2.facility_id = facility.ID
+
         for atc in deterministic.airplanecomponent:
             airplane = Airplane._lookup(atc.airplane_id)
             component = Component._lookup(atc.component_id)
