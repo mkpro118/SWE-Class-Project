@@ -226,7 +226,7 @@ public class ProxyServer implements Runnable {
     /**
      * Returns the listeners used by this ProxyServer
      */
-    public ProxyServerListener[] getListeners() {
+    public ProxyServerListener[] getWorkers() {
         return listeners;
     }
 
