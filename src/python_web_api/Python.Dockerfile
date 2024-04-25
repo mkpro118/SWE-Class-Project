@@ -48,4 +48,4 @@ COPY . .
 RUN pip install -r requirements.txt
 RUN pip install src/
 
-CMD ["python3", "app.py", "-m"]
+CMD ["python3", "app.py"]

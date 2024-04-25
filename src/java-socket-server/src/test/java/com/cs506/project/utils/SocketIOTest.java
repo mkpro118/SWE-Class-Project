@@ -31,7 +31,7 @@ public class SocketIOTest {
     public void testWriteToBytes() throws IOException {
         // Setup
         Socket socket = mock(Socket.class);
-        OutputStream outputStream = new ByteArrayOutputStream();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         when(socket.getOutputStream()).thenReturn(outputStream);
         byte[] data = "Hello, World!".getBytes();
 
@@ -46,7 +46,7 @@ public class SocketIOTest {
     public void testWriteToString() throws IOException {
         // Setup
         Socket socket = mock(Socket.class);
-        OutputStream outputStream = new ByteArrayOutputStream();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         when(socket.getOutputStream()).thenReturn(outputStream);
         String data = "Hello, World!";
 

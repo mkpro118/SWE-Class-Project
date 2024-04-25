@@ -6,6 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -18,8 +19,9 @@ import static org.mockito.Mockito.*;
 
 public class ProxyServerListenerTest {
 
-    @Mock
+    // @Mock doesn't work on records
     private ListenerConfig config;
+    private static int port = 22563;
 
     @Mock
     private BlockingQueue<Socket> workQueue;
@@ -31,9 +33,11 @@ public class ProxyServerListenerTest {
 
     @BeforeEach
     public void setUp() throws IOException {
-        MockitoAnnotations.initMocks(this);
-        when(config.port()).thenReturn(8080);
+        MockitoAnnotations.openMocks(this);
+
+        config = new ListenerConfig(++port);
         listener = new ProxyServerListener(config, workQueue, logger);
+        listener.start();
     }
 
     @AfterEach
@@ -43,15 +47,13 @@ public class ProxyServerListenerTest {
 
     @Test
     public void testStart() throws IOException {
-        listener.start();
-        verify(logger).println("Bound to port " + config.port());
+        verify(logger, atLeast(1)).println("Bound to port " + config.port());
     }
 
     @Test
     public void testStop() throws IOException {
-        listener.start();
         listener.stop();
-        verify(logger).println(anyString() + " going down!");
+        verify(logger, atLeast(1)).println(anyString() + " going down!");
     }
 
     @Test
@@ -59,9 +61,16 @@ public class ProxyServerListenerTest {
         // Start the listener in a new thread
         new Thread(listener).start();
 
+        // Wait for listener to start
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            fail(e.getMessage());
+        }
+
         try {
             // Try to connect to the server
-            Socket clientSocket = new Socket("localhost", 8080);
+            Socket clientSocket = new Socket("127.0.0.1", config.port());
 
             // Check if the connection was successful
             assertTrue(clientSocket.isConnected());
@@ -69,6 +78,8 @@ public class ProxyServerListenerTest {
         } catch (IOException e) {
             fail("Failed to connect to the server", e);
         }
+
+        listener.stop();
     }
 
     @Test
@@ -77,17 +88,26 @@ public class ProxyServerListenerTest {
         // Start the listener in a new thread
         new Thread(listener).start();
 
-        Socket mockSocket = mock(Socket.class);
+        // Wait for listener to start
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            fail(e.getMessage());
+        }
+
+        final var obj = new Object() {
+            Socket clientSocket;
+        };
 
         new Thread(() -> {
             try {
                 // Try to connect to the server
-                Socket clientSocket = new Socket("localhost", 8080);
+                obj.clientSocket = new Socket("127.0.0.1", config.port());
 
                 // Check if the connection was successful
-                assertTrue(clientSocket.isConnected());
+                assertTrue(obj.clientSocket.isConnected());
 
-                clientSocket.close();
+                obj.clientSocket.close();
             } catch (IOException e) {
                 fail("Failed to connect to the server", e);
             }
@@ -97,6 +117,6 @@ public class ProxyServerListenerTest {
         Thread.sleep(1000);
 
         // Verify that a socket was added to the queue
-        verify(workQueue).put(mockSocket);
+        verify(workQueue).put(any());
     }
 }
