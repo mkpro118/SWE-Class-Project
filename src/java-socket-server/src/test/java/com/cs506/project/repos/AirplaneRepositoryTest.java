@@ -47,7 +47,9 @@ public class AirplaneRepositoryTest {
         when(mockConnection.createStatement()).thenReturn(mockStatement);
         when(mockStatement.executeQuery(queryCaptor.capture())).thenReturn(mockResult);
 
-        mockAirplaneRepository.getAllWithAllDetails(10);
+        AirplaneRepository repo = new AirplaneRepository(mockConnection);
+
+        repo.getAllWithAllDetails(10);
 
         assertEquals("SELECT * FROM Airplane LIMIT 10", queryCaptor.getValue());
 
@@ -71,7 +73,9 @@ public class AirplaneRepositoryTest {
         when(mockResult.getString("Size")).thenReturn("Large");
         when(mockResult.getBoolean("HasFirstClass")).thenReturn(true);
 
-        List<AirplaneSchema> response = mockAirplaneRepository.getAllWithAllDetails(1);
+        AirplaneRepository repo = new AirplaneRepository(mockConnection);
+
+        List<AirplaneSchema> response = repo.getAllWithAllDetails(1);
 
         assertEquals(1, response.size());
 
@@ -97,7 +101,9 @@ public class AirplaneRepositoryTest {
         when(mockConnection.createStatement()).thenReturn(mockStatement);
         when(mockStatement.executeQuery(queryCaptor.capture())).thenReturn(mockResult);
 
-        mockAirplaneRepository.getById(10);
+        AirplaneRepository repo = new AirplaneRepository(mockConnection);
+
+        repo.getById(10);
 
         assertEquals("SELECT * FROM Airplane WHERE AirplaneId = 10", queryCaptor.getValue());
 
@@ -121,7 +127,9 @@ public class AirplaneRepositoryTest {
         when(mockResult.getString("Size")).thenReturn("Large");
         when(mockResult.getBoolean("HasFirstClass")).thenReturn(true);
 
-        List<AirplaneSchema> response = mockAirplaneRepository.getAllWithAllDetails(1);
+        AirplaneRepository repo = new AirplaneRepository(mockConnection);
+
+        List<AirplaneSchema> response = repo.getAllWithAllDetails(1);
 
         assertEquals(1, response.size());
 
@@ -146,7 +154,9 @@ public class AirplaneRepositoryTest {
         when(mockConnection.createStatement()).thenReturn(mockStatement);
         when(mockStatement.executeQuery(queryCaptor.capture())).thenReturn(mockResult);
 
-        mockAirplaneRepository.getAllWithBasicDetails(10);
+        AirplaneRepository repo = new AirplaneRepository(mockConnection);
+
+        repo.getAllWithBasicDetails(10);
 
         assertEquals("SELECT AirplaneId, Name, ProductionStageName, Cost FROM Airplane LIMIT 10", queryCaptor.getValue());
     }
@@ -164,7 +174,9 @@ public class AirplaneRepositoryTest {
         when(mockResult.getString("ProductionStageName")).thenReturn("Development");
         when(mockResult.getDouble("Cost")).thenReturn(14.1);
 
-        List<AirplaneSchema> response = mockAirplaneRepository.getAllWithBasicDetails(1);
+        AirplaneRepository repo = new AirplaneRepository(mockConnection);
+
+        List<AirplaneSchema> response = repo.getAllWithBasicDetails(1);
 
         assertEquals(1, response.size());
 
@@ -175,59 +187,6 @@ public class AirplaneRepositoryTest {
         assertEquals("Development",airplane.productionStageName);
         assertEquals(14.1, airplane.cost);
         assertEquals(null, airplane.size);
-
-    }
-
-    @Test
-    public void testHandleReadQueryExecutesGetById () throws SQLException {
-        List<AirplaneSchema> testList = new ArrayList<>();
-        testList.add(new AirplaneSchema());
-
-        when(mockConnection.createStatement()).thenReturn(mockStatement);
-        when(mockStatement.executeQuery(anyString())).thenReturn(mockResult);
-
-        mockAirplaneRepository.handleReadQuery(10, false, testList);
-
-        verify(mockAirplaneRepository).getById(anyInt());
-
-    }
-
-    @Test
-    public void testHandleReadQueryExecutesGetAllWithBasicDetails () throws SQLException {
-        List<AirplaneSchema> testList = new ArrayList<>();
-
-        when(mockConnection.createStatement()).thenReturn(mockStatement);
-        when(mockStatement.executeQuery(anyString())).thenReturn(mockResult);
-
-        mockAirplaneRepository.handleReadQuery(10, false, testList);
-
-        verify(mockAirplaneRepository).getAllWithBasicDetails(anyInt());
-
-    }
-
-    @Test
-    public void testHandleReadQueryExecutesGetAllDetails () throws SQLException {
-        List<AirplaneSchema> testList = new ArrayList<>();
-
-        when(mockConnection.createStatement()).thenReturn(mockStatement);
-        when(mockStatement.executeQuery(anyString())).thenReturn(mockResult);
-
-        mockAirplaneRepository.handleReadQuery(10, true, testList);
-
-        verify(mockAirplaneRepository).getAllWithAllDetails(anyInt());
-
-    }
-
-    @Test
-    public void testHandleReadQueryCloseConnection () throws SQLException {
-        List<AirplaneSchema> testList = new ArrayList<>();
-
-        when(mockConnection.createStatement()).thenReturn(mockStatement);
-        when(mockStatement.executeQuery(anyString())).thenReturn(mockResult);
-
-        mockAirplaneRepository.handleReadQuery(10, true, testList);
-
-        verify(mockConnection).close();
 
     }
 

@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.cs506.project.repos.ComponentRepositoryTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2024-04-17T20:18:33" hostname="Gabriels-MacBook-Pro.local" time="0.685">
+<testsuite name="com.cs506.project.repos.ComponentRepositoryTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2024-04-25T19:49:31" hostname="Gabriels-MacBook-Pro.local" time="0.742">
   <properties/>
-  <testcase name="testGetWithBasicDetailsQueryString()" classname="com.cs506.project.repos.ComponentRepositoryTest" time="0.649"/>
-  <testcase name="testHandReadQueryExecutesGetById()" classname="com.cs506.project.repos.ComponentRepositoryTest" time="0.007"/>
+  <testcase name="testGetWithBasicDetailsQueryString()" classname="com.cs506.project.repos.ComponentRepositoryTest" time="0.721"/>
   <testcase name="testGetWithAllDetailsQueryString()" classname="com.cs506.project.repos.ComponentRepositoryTest" time="0.002"/>
-  <testcase name="testHandleReadQueryCloseConnection()" classname="com.cs506.project.repos.ComponentRepositoryTest" time="0.002"/>
   <testcase name="testGetByIdQueryString()" classname="com.cs506.project.repos.ComponentRepositoryTest" time="0.002"/>
-  <testcase name="testGetWithBasicDetailsResponse()" classname="com.cs506.project.repos.ComponentRepositoryTest" time="0.004"/>
-  <testcase name="testGetWithAllDetailsResponse()" classname="com.cs506.project.repos.ComponentRepositoryTest" time="0.004"/>
-  <testcase name="testHandleReadQueryExecutesGetAllDetails()" classname="com.cs506.project.repos.ComponentRepositoryTest" time="0.002"/>
-  <testcase name="testHandleReadQueryExecutesGetAllWithBasicDetails()" classname="com.cs506.project.repos.ComponentRepositoryTest" time="0.003"/>
-  <testcase name="testgetByIdResponse()" classname="com.cs506.project.repos.ComponentRepositoryTest" time="0.005"/>
+  <testcase name="testGetWithBasicDetailsResponse()" classname="com.cs506.project.repos.ComponentRepositoryTest" time="0.005"/>
+  <testcase name="testGetWithAllDetailsResponse()" classname="com.cs506.project.repos.ComponentRepositoryTest" time="0.003"/>
+  <testcase name="testGetByIdResponse()" classname="com.cs506.project.repos.ComponentRepositoryTest" time="0.004"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

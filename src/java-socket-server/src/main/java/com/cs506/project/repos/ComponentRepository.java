@@ -163,9 +163,7 @@ public class ComponentRepository implements ISQLRepository<ComponentSchema> {
             for ( ComponentSchema component : components ){
                 result.addAll(getById(component.componentId));
             }
-        }
-        
-        if (!readAllDetails) {
+        } else if (!readAllDetails) {
             result = getAllWithBasicDetails(limit);
         } else {
             result = getAllWithAllDetails(limit);
