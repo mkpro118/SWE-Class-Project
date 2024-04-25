@@ -158,9 +158,7 @@ public class AirplaneRepository implements ISQLRepository<AirplaneSchema> {
             for ( AirplaneSchema airplane: airplanes  ){
                 result.addAll(getById(airplane.airplaneId));
             }
-        }
-
-        if (!readAllDetails){
+        } else if (!readAllDetails){
             result = getAllWithBasicDetails(limit);
         } else{
             result = getAllWithAllDetails(limit);

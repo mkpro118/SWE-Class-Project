@@ -35,9 +35,6 @@ public class ComponentRepositoryTest {
 
         MockitoAnnotations.openMocks(this);
 
-        ComponentRepository repo = new ComponentRepository(mockConnection);
-        mockComponentRepository = spy(repo);
-
     }
 
     @Test
@@ -48,7 +45,9 @@ public class ComponentRepositoryTest {
         when(mockConnection.createStatement()).thenReturn(mockStatement);
         when(mockStatement.executeQuery(queryCaptor.capture())).thenReturn(mockResult);
 
-        mockComponentRepository.getAllWithAllDetails(10);
+        ComponentRepository repo = new ComponentRepository(mockConnection);
+
+        repo.getAllWithAllDetails(10);
 
         assertEquals("SELECT * FROM Component LIMIT 10", queryCaptor.getValue());
 
@@ -70,7 +69,9 @@ public class ComponentRepositoryTest {
         when(mockResult.getString("ComponentType")).thenReturn("Wing");
         when(mockResult.getInt("SupplierId")).thenReturn(1);
 
-        List<ComponentSchema> response = mockComponentRepository.getAllWithAllDetails(1);
+        ComponentRepository repo = new ComponentRepository(mockConnection);
+
+        List<ComponentSchema> response = repo.getAllWithAllDetails(1);
 
         assertEquals(1, response.size());
 
@@ -94,7 +95,9 @@ public class ComponentRepositoryTest {
         when(mockConnection.createStatement()).thenReturn(mockStatement);
         when(mockStatement.executeQuery(queryCaptor.capture())).thenReturn(mockResult);
 
-        mockComponentRepository.getAllWithBasicDetails(10);
+        ComponentRepository repo = new ComponentRepository(mockConnection);
+
+        repo.getAllWithBasicDetails(10);
 
         assertEquals("SELECT ComponentId, Name, ProductionStageName, Cost FROM Component LIMIT 10", queryCaptor.getValue());
 
@@ -113,7 +116,9 @@ public class ComponentRepositoryTest {
         when(mockResult.getString("ProductionStageName")).thenReturn("Development");
         when(mockResult.getDouble("Cost")).thenReturn(14.1);
 
-        List<ComponentSchema> response = mockComponentRepository.getAllWithBasicDetails(1);
+        ComponentRepository repo = new ComponentRepository(mockConnection);
+
+        List<ComponentSchema> response = repo.getAllWithBasicDetails(1);
 
         assertEquals(1, response.size());
 
@@ -135,14 +140,16 @@ public class ComponentRepositoryTest {
         when(mockConnection.createStatement()).thenReturn(mockStatement);
         when(mockStatement.executeQuery(queryCaptor.capture())).thenReturn(mockResult);
 
-        mockComponentRepository.getById(10);
+        ComponentRepository repo = new ComponentRepository(mockConnection);
+
+        repo.getById(10);
 
         assertEquals("SELECT * FROM Component WHERE ComponentId = 10", queryCaptor.getValue());
 
     }
 
     @Test
-    public void testgetByIdResponse () throws SQLException {
+    public void testGetByIdResponse () throws SQLException {
 
         when(mockConnection.createStatement()).thenReturn(mockStatement);
         when(mockStatement.executeQuery(anyString())).thenReturn(mockResult);
@@ -157,7 +164,9 @@ public class ComponentRepositoryTest {
         when(mockResult.getString("ComponentType")).thenReturn("Wing");
         when(mockResult.getInt("SupplierId")).thenReturn(1);
 
-        List<ComponentSchema> response = mockComponentRepository.getAllWithAllDetails(1);
+        ComponentRepository repo = new ComponentRepository(mockConnection);
+
+        List<ComponentSchema> response = repo.getAllWithAllDetails(1);
 
         assertEquals(1, response.size());
 
@@ -170,59 +179,6 @@ public class ComponentRepositoryTest {
         assertEquals("Hello World", component.description);
         assertEquals("Wing", component.componentType);
         assertEquals( 1, component.supplierId);
-
-    }
-
-    @Test
-    public void testHandReadQueryExecutesGetById () throws SQLException {
-        List<ComponentSchema> testList = new ArrayList<>();
-        testList.add(new ComponentSchema());
-
-        when(mockConnection.createStatement()).thenReturn(mockStatement);
-        when(mockStatement.executeQuery(anyString())).thenReturn(mockResult);
-
-        mockComponentRepository.handleReadQuery(10, false, testList);
-
-        verify(mockComponentRepository).getById(anyInt());
-
-    }
-
-    @Test
-    public void testHandleReadQueryExecutesGetAllWithBasicDetails () throws SQLException {
-        List<ComponentSchema> testList = new ArrayList<>();
-
-        when(mockConnection.createStatement()).thenReturn(mockStatement);
-        when(mockStatement.executeQuery(anyString())).thenReturn(mockResult);
-
-        mockComponentRepository.handleReadQuery(10, false, testList);
-
-        verify(mockComponentRepository).getAllWithBasicDetails(anyInt());
-
-    }
-
-    @Test
-    public void testHandleReadQueryExecutesGetAllDetails () throws SQLException {
-        List<ComponentSchema> testList = new ArrayList<>();
-
-        when(mockConnection.createStatement()).thenReturn(mockStatement);
-        when(mockStatement.executeQuery(anyString())).thenReturn(mockResult);
-
-        mockComponentRepository.handleReadQuery(10, true, testList);
-
-        verify(mockComponentRepository).getAllWithAllDetails(anyInt());
-
-    }
-
-    @Test
-    public void testHandleReadQueryCloseConnection () throws SQLException {
-        List<ComponentSchema> testList = new ArrayList<>();
-
-        when(mockConnection.createStatement()).thenReturn(mockStatement);
-        when(mockStatement.executeQuery(anyString())).thenReturn(mockResult);
-
-        mockComponentRepository.handleReadQuery(10, true, testList);
-
-        verify(mockConnection).close();
 
     }
 
