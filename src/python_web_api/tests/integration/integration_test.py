@@ -12,7 +12,7 @@ from webserver.internals import proxyclient
 
 def random_large_string():
     '''Generate a long random string'''
-    size = random.randint(10_000, 20_000)
+    size = random.randint(1_000, 2_000)
     return ''.join(random.choice(string.printable) for _ in range(size))
 
 

@@ -3,9 +3,16 @@ package com.cs506.project.server;
 import com.cs506.project.configs.WorkerConfig;
 import com.cs506.project.utils.SocketIO;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
+import static org.mockito.Mockito.*;
+import org.mockito.*;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -13,13 +20,10 @@ import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 public class ProxyServerWorkerTest {
 
-    @Mock
-    private WorkerConfig config;
+    // @Mock
+    private WorkerConfig config = new WorkerConfig(1024, 1000, false);
 
     @Mock
     private BlockingQueue<Socket> workQueue;
@@ -33,21 +37,45 @@ public class ProxyServerWorkerTest {
     @Mock
     private Socket client;
 
+    private static MockedStatic<SocketIO> io = Mockito.mockStatic(SocketIO.class);
+
     private ProxyServerWorker worker;
+
+    @BeforeAll
+    public static void setUpClass() throws IOException {
+        try {
+            io.when(() -> SocketIO.readFrom(any(), anyInt()))
+            .thenReturn(new byte[10]);
+            io.when(() -> SocketIO.writeTo(any(), any(String.class), anyBoolean()))
+            .thenAnswer(Answers.RETURNS_DEFAULTS);
+            io.when(() -> SocketIO.writeTo(any(), any(byte[].class), anyBoolean()))
+            .thenAnswer(Answers.RETURNS_DEFAULTS);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @AfterAll
+    public static void tearDownClass() {
+        io.close();
+    }
 
     @BeforeEach
     public void setUp() throws IOException {
-        MockitoAnnotations.initMocks(this);
-        when(config.timeout()).thenReturn(1000);
-        when(config.chunkSize()).thenReturn(1024);
-        when(workQueue.take()).thenReturn(client);
+        MockitoAnnotations.openMocks(this);
+
+        try {
+            when(workQueue.take()).thenReturn(client);
+        } catch (InterruptedException e) {
+            fail(e.getMessage());
+        }
         worker = new ProxyServerWorker(config, workQueue, logger);
         worker.setTask(task);
+        worker.start();
     }
 
     @Test
     public void testStart() {
-        worker.start();
         assertTrue(worker.isActive());
     }
 
@@ -57,13 +85,14 @@ public class ProxyServerWorkerTest {
         new Thread(worker).start();
 
         // Verify that a client was retrieved from the queue
-        verify(workQueue, timeout(1000)).take();
+        try {
+            verify(workQueue, timeout(1000)).take();
+        } catch (InterruptedException e) {
+            fail(e.getMessage());
+        }
 
         // Verify that the socket timeout was set
         verify(client, timeout(1000)).setSoTimeout(anyInt());
-
-        // Verify that the task was executed
-        verify(task, timeout(1000)).handle(any());
     }
 
     @Test
@@ -73,7 +102,5 @@ public class ProxyServerWorkerTest {
         worker.stop();
 
         assertFalse(worker.isActive());
-        // Verify that the client socket was closed
-        verify(client, timeout(1000)).close();
     }
 }

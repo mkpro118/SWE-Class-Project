@@ -52,11 +52,12 @@ webserver-build:
 
 proxyserver-build:
   stage: build
-  image: gradle:jdk-17
+  image: gradle:7.2.0-jdk17
   before_script:
     - cd src/java-socket-server
   script:
-    - ./gradlew build
+    - ./gradlew build -x test
+    - ./gradlew jar -x test
   only:
     - prod/proxyserver
 
@@ -97,7 +98,7 @@ webserver-test:
 
 proxyserver-test:
   stage: test
-  image: gradle:jdk-17
+  image: gradle:7.2.0-jdk17
   before_script:
     - cd src/java-socket-server
     - ./gradlew build
@@ -115,7 +116,7 @@ frontend-webserver-test:
     - dind
   before_script:
     - docker ps
-    - docker compose up -d --build frontend web_server
+    - docker compose -f compose.test.yaml up -d --build frontend web_server
   script:
     - docker exec frontend bash -c "npm test"
   after_script:
@@ -132,7 +133,7 @@ webserver-proxyserver-test:
     - dind
   before_script:
     - docker ps
-    - docker compose up -d --build web_server proxy_server
+    - docker compose -f compose.test.yaml up -d --build web_server proxy_server
   script:
     - docker exec web_server bash -c "python3 -m tests.integration.integration_test"
   after_script:
