@@ -71,7 +71,10 @@ public class Main {
               .alias("--timeout")
 
               .addOption("-f", "string", "Path to log file.")
-              .alias("--log-file");
+              .alias("--log-file")
+
+              .addOption("-m", "boolean", "Run the mock server.")
+              .alias("--mock");
 
 
         ////////////////////// SET DEFAULT CONFIGURATION ///////////////////////
@@ -296,6 +299,12 @@ public class Main {
         // Check for the help option
         if (parser.get("-h")) {
             printHelpMsg();
+            return;
+        }
+
+        // Check for mock option
+        if (parser.get("-m")) {
+            MockServer.main(args);
             return;
         }
 

@@ -1,29 +1,28 @@
 package com.cs506.project;
 
+import com.cs506.project.repos.AirplaneRepository;
+import com.cs506.project.schemas.AirplaneSchema;
 import com.cs506.project.schemas.SocketServerRequest;
+import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.spy;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 public class RepositoryControllerTest {
-
-    @Mock
-    private RepositoryController mockRepositoryController;
-
-    @BeforeEach
-    public void setUp () {
-
-        MockitoAnnotations.openMocks(this);
-
-        RepositoryController controller = new RepositoryController();
-        mockRepositoryController = spy(controller);
-
-    }
 
     @Test
     public void testCreateSocketServerRequest () {
@@ -36,7 +35,8 @@ public class RepositoryControllerTest {
                 "  \"entities\": []\n" +
                 "}";
 
-        Object ans = mockRepositoryController.createSocketServerRequest(request.getBytes());
+        RepositoryController controller = new RepositoryController();
+        Object ans = controller.createSocketServerRequest(request.getBytes());
 
         assertTrue(ans instanceof SocketServerRequest);
 
@@ -47,5 +47,6 @@ public class RepositoryControllerTest {
         assertEquals(((SocketServerRequest) ans).entities.size(), 0);
 
     }
+
 
 }

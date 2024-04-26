@@ -19,8 +19,6 @@ This software management platform is meant to serve the aircraft industry specif
 | R02  | The user should be able to see where a particular plane is in its development lifecycle. | High     | Done   |
 | R03  | The user should be able to see all warehouses and their inventory/staff . | High     | In Progress   |
 | R04  | The user should be able to order new parts from suppliers and understand the finances required. | High      | In Progress   |
-| R05  | The user should be able to view warehouse/model performances as KPIs. | High     | Open   |
-| R06  | The user should be able to view customer orders and prioritize them | High     | Open   |
 
 ### Use Cases & User Stories
 
@@ -36,12 +34,6 @@ This software management platform is meant to serve the aircraft industry specif
 
 > As a user, I want the ability to put in orders with suppliers based on current inventory KPIs and counts. I also want the abiity to add new suppliers if the business facilitates a good connection.
 > AC: Use a form to place order and another form to add suppliers R04
-
-> As a user, I need the ability to view KPIs on warehouse production line metrics, model preferences based on customer orders/requirements and and price fluctuation KPIs of parts, models and other key elements of an aircraft manufacturing process. 
-> AC: Build charts and graphs of useful metrics and display them on a webpage. Have them update based on inventory, orders and feedback. R05
-
-> As a user, I want to be able to view customer orders as a list based on filters such as most recent, more important and reprioritize them if need be.
-> AC: View orders on a webpage. R06
 
 
 ### User Interface Requirements

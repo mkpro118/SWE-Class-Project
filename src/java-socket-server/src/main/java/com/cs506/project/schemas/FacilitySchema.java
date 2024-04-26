@@ -16,14 +16,14 @@ public class FacilitySchema {
     public String name;
 
     /**
-     * This is the latitude location for the facility queried.
+     * This is the city for the facility queried.
      */
-    public double latitude;
+    public String city;
 
     /**
-     * This is the longtitude location for the facility queried.
+     * This is the state for the facility queried.
      */
-    public double longitude;
+    public String state;
 
     /**
      * This is the description of the facility queried.

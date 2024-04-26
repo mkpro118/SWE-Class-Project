@@ -1,4 +1,4 @@
-package com.cs506.project.server;
+package com.cs506.project;
 
 import com.cs506.project.configs.ServerConfig;
 import com.cs506.project.server.ProxyServer;
@@ -8,7 +8,7 @@ import com.cs506.project.server.ProxyServerWorker;
 import java.io.IOException;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class IntegrationTestServer {
+public class MockServer {
     public static void main(String[] args) {
         ServerConfig serverConfig = new ServerConfig(
             /* num_listeners */     4,

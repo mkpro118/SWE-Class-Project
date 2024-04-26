@@ -53,7 +53,7 @@ def try_deterministic(func: Callable) -> Callable:
         # If this was an ID function, lookup that ID
         if lookup:
             ID = kwargs.get(f'{kind}_id', -1)
-            resp = list(filter(lambda x: x.ID == ID, data))
+            resp = next(filter(lambda x: x.ID == ID, data), None)
 
             if resp:  # If ID was found, return that record
                 return jsonify(resp)

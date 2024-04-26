@@ -1,6 +1,5 @@
 from flask import Flask, request, Response
 from flask_cors import CORS
-from typing import Callable, Sequence
 
 import argparse
 import functools
@@ -10,7 +9,6 @@ import random
 
 from webserver.internals import models
 from webserver.internals import proxyclient
-from webserver.internals import proxyrequest
 
 jsonify = functools.partial(json.dumps, cls=models.ModelEncoder)
 randint = functools.partial(random.randint, 3, 10)
