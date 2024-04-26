@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.cs506.project.RepositoryControllerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-04-25T19:49:32" hostname="Gabriels-MacBook-Pro.local" time="0.029">
-  <properties/>
-  <testcase name="testCreateSocketServerRequest()" classname="com.cs506.project.RepositoryControllerTest" time="0.029"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
