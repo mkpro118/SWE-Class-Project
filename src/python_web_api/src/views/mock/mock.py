@@ -1,4 +1,5 @@
 from typing import Callable
+from flask import Response
 
 import random
 import functools
@@ -44,11 +45,13 @@ def try_deterministic(func: Callable) -> Callable:
     @functools.wraps(func)
     def inner(request, *args, **kwargs):
         # Only patch get requests
-        if request.method.upper() != 'GET':
+        method = request.method.upper()
+        if method not in ['GET', 'DELETE']:
             return func(request, *args, **kwargs)
 
         # Get deterministic data
         data = mock_data.deterministic(kind=kind)
+        deleted = mock_data.deterministic.deleted
 
         # If this was an ID function, lookup that ID
         if lookup:
@@ -56,8 +59,16 @@ def try_deterministic(func: Callable) -> Callable:
             resp = next(filter(lambda x: x.ID == ID, data), None)
 
             if resp:  # If ID was found, return that record
-                return jsonify(resp)
+                if method == 'DELETE':
+                    data.remove(resp)
+                    deleted.append(resp)
+                    return jsonify({'success': True})
+                else:
+                    return jsonify(resp)
             else:  # Else return random record
+                if next(filter(lambda x: x.ID == ID, deleted), None):
+                    return Response(response=f'{kind} with {ID = } not found',
+                                    status=404)
                 return func(request, *args, **kwargs)
 
         # If this was not an ID function, but still marked deterministic,

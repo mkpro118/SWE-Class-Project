@@ -20,7 +20,7 @@ class ServerThread(threading.Thread):
 
         host = kwargs.get('host', '0.0.0.0')
         port = int(kwargs.get('port', 5000))
-        setup_routes(MockNamespace())
+        setup_routes(MockNamespace())  # type:ignore[arg-type]
         self.server = make_server(host, port, app)
         self.ctx = app.app_context()
         self.ctx.push()

@@ -24,7 +24,7 @@ webserver-lint:
     - pip install -r requirements.txt
     - pip install mypy
   script:
-    - mypy --ignore-missing-imports --disable-error-code=import-untyped --exclude setup.py --exclude build/* .
+    - mypy --ignore-missing-imports --disable-error-code=import-untyped --exclude setup.py --exclude build/* --explicit-package-bases .
   only:
     - prod/webserver
 
