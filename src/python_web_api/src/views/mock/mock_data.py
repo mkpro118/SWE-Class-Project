@@ -273,6 +273,7 @@ control = static_vars(**{
     'airplanecomponent': list(airplane_to_component(20)),
     'component': list(component(20)),
     'facility': list(facility(5)),
+    'deleted': list(),
     'dry_run': True,
 })
 
