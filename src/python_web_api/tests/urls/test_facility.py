@@ -123,18 +123,23 @@ class TestFacility(unittest.TestCase):
             self.assertEqual(resp.status_code, 405)
 
     def test_facility_delete_with_id(self):
-        x = random.randint(1, 10000)
-        with requests.delete(f'http://127.0.0.1:15000/facility/{x}') as resp:
+        with requests.get('http://127.0.0.1:15000/facility') as resp:
             self.assertTrue(resp.ok)
             self.assertEqual(resp.status_code, 200)
+            decoded_models = parse(resp.text)
 
-            text = resp.text.lower()
+        rand_model = random.choice(decoded_models)
+        _id = rand_model.ID
 
-            expected_msg = r'success\s+on\s+"/facility/[{]id[}]"\s+with\s+method\s+delete'
-            self.assertRegex(text, expected_msg)
+        with requests.delete(f'http://127.0.0.1:15000/facility/{_id}') as resp:
+            self.assertTrue(resp.ok)
+            self.assertEqual(resp.status_code, 200)
+            self.assertDictEqual({'success': True}, resp.json())
 
-            expected_id = f'facility_id\\s+=\\s+{x}'
-            self.assertRegex(text, expected_id)
+        with requests.get(f'http://127.0.0.1:15000/facility/{_id}') as resp:
+            self.assertFalse(resp.ok)
+            self.assertEqual(resp.status_code, 404)
+            self.assertIn('not found', resp.text)
 
 
 if __name__ == '__main__':
