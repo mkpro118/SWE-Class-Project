@@ -2,8 +2,10 @@ package com.cs506.project;
 
 import com.cs506.project.repos.AirplaneRepository;
 import com.cs506.project.repos.ComponentRepository;
+import com.cs506.project.repos.FacilityRepository;
 import com.cs506.project.schemas.AirplaneSchema;
 import com.cs506.project.schemas.ComponentSchema;
+import com.cs506.project.schemas.FacilitySchema;
 import com.cs506.project.schemas.SocketServerRequest;
 import jdk.net.Sockets;
 
@@ -117,10 +119,10 @@ public class RepositoryController {
     }
 
     /**
-     * Chooses which method to run within the Airplane SQL Repository.
+     * Chooses which method to run within the Components SQL Repository.
      *
      * @param requestComponents : List of Components
-     * @return List of Airplane Objects (even if one is just requested).
+     * @return List of Component Objects (even if one is just requested).
      */
     private List<ComponentSchema> handleComponentRequest (String action, int limit, boolean readAll,
                                                           List<ComponentSchema> requestComponents) throws SQLException {
@@ -152,6 +154,38 @@ public class RepositoryController {
                 break;
         }
 
+        return result;
+    }
+
+    /**
+     * Chooses which method to run within the Facility SQL Repository.
+     *
+     * @param requestFacilities : List of Components
+     * @return List of Facility Objects (even if one is just requested).
+     */
+    public List<FacilitySchema> handleFacilityRequest (String action, int limit, boolean readAll,
+                                                        List<FacilitySchema> requestFacilities) throws SQLException {
+        FacilityRepository repository = new FacilityRepository(null);
+        List<FacilitySchema> result = null;
+        switch (action) {
+            case "CREATE":
+                result = repository.handleCreateQuery(requestFacilities);
+                break;
+            case "READ":
+                result = repository.handleReadQuery(limit, readAll, requestFacilities);
+                break;
+
+            case "UPDATE":
+                result = repository.handleUpdateQuery(requestFacilities);
+                break;
+
+            case "DELETE":
+                result = repository.handleDeleteQuery(requestFacilities);
+                break;
+
+            default:
+                break;
+        }
         return result;
     }
 
@@ -202,6 +236,17 @@ public class RepositoryController {
                         response = formResponse(gson.toJson(responseComponents));
                     }
 
+                case "Facility":
+                    List<FacilitySchema>  facilities = ssrequest.entities.stream()
+                            .map(obj -> (FacilitySchema) obj)
+                            .collect(Collectors.toList());
+                    List<FacilitySchema> responseFacilities = handleFacilityRequest(ssrequest.type, ssrequest.limit,
+                            ssrequest.requestingAllDetails,facilities);
+                    if (responseFacilities == null){
+                        response = formResponse(null);
+                    } else {
+                        response = formResponse(gson.toJson(responseFacilities));
+                    }
                     break;
 
                 default:
