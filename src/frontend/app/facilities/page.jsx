@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import DropdownCard from '@/app/components/dropdown-card';
+import FacilityModal from "@/app/components/facility-modal";
 
 const Facilities = () => {
 
@@ -10,6 +11,7 @@ const Facilities = () => {
   const url = `http://${host}:${port}`;
 
   const [facilities, setFacilities] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   const mapFacilityToCard = (facility) => {
     return {
@@ -40,6 +42,26 @@ const Facilities = () => {
     console.log(facilities);
   }, [facilities]);
 
+  const handleOnClose = () => {
+    setShowModal(false);
+  }
+
+  const handleDelete = (id) => {
+    console.log(`Deleted item with ID: ${id}`);
+
+    const updatedFacilities = facilities.filter((facility) => facility.id !== id);
+    setFacilities(updatedFacilities);
+
+    // fetch(`${url}/facility/${id}`, {
+    //   method: 'DELETE'
+    // })
+    //     .then(() => {
+    //       setFacilities((prevFacilities) => prevFacilities.filter((facility) => facility.id !== id));
+    //     })
+    //     .catch((error) => console.error('Error deleting item:', error));
+
+  }
+
   return (
     <>
       <header className="mt-6 mb-4">
@@ -48,31 +70,20 @@ const Facilities = () => {
             <h2 className="text-2xl font-medium leading-7 text-gray-900">All Facilities ({facilities.length})</h2>
           </div>
           <div className="mt-5 flex lg:ml-4 lg:mt-0">
-            {/* <span className="hidden sm:block">
-              <button type="button" className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                <span className="sr-only">Action button</span>
-                Sort
-                <svg className="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                  <path stroke="currentColor" strokeWidth="2" d="m1 1 4 4 4-4" />
-                </svg>
+            <div className="flex justify-center">
+              <button className="font-medium bg-indigo-300 hover:bg-indigo-400 rounded-md px-4 py-2"
+                      onClick={() => setShowModal(true)}>
+                Add Facility
               </button>
-            </span>
-            <span className="ml-3 hidden sm:block mr-2">
-              <button type="button" className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                <span className="sr-only">Action button</span>
-                Filter
-                <svg className="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                  <path stroke="currentColor" strokeWidth="2" d="m1 1 4 4 4-4" />
-                </svg>
-              </button>
-            </span> */}
+            </div>
           </div>
         </div>
       </header>
+      <FacilityModal showModal={showModal} onClose={handleOnClose} />
       <div>
         {
           facilities.map(facility => {
-            return <DropdownCard props={facility} key={facility.id}/>
+            return <DropdownCard props={facility} onDelete={handleDelete} key={facility.id}/>
           })
         }
       </div>
