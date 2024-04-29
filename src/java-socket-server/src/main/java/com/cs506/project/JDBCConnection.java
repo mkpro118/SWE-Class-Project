@@ -12,11 +12,11 @@ public class JDBCConnection {
     private static final String USER = System.getenv().getOrDefault("USERNAME","user");
     private static final String PASS = System.getenv().getOrDefault("PASSWORD","password");
     private static Connection connection;
-    /*
+    /**
      * Actual connection method that will use the variables above and if it succeeded will return a connection
      *
      * @return connection object
-     * */
+     */
     public static Connection getConnection(){
         if (connection == null){
             try{
