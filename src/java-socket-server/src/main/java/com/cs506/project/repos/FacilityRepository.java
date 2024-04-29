@@ -125,6 +125,34 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
     }
 
     /**
+     * Adds a facility into the database
+     *
+     * @param facilitySchema : The facility that needs to be added to the database
+     */
+    public void addFacility(FacilitySchema facilitySchema) throws SQLException{
+        try(Statement statement = connection.createStatement();) {
+
+            String query = "INSERT INTO appdb"
+                    + "(FacilityId, Name, City, State, Description, ComponentsInProduction, ComponentsCompleted, ModelsInProduction, ModelsCompleted, EmployeeCount, ManagerID)"
+                    + "Values(" + facilitySchema.facilityId + ", "
+                    + facilitySchema.name + ", "
+                    + facilitySchema.city + ", "
+                    + facilitySchema.state + ", "
+                    + facilitySchema.description + ", "
+                    + facilitySchema.componentsInProduction + ", "
+                    + facilitySchema.componentsCompleted + ", "
+                    + facilitySchema.modelsInProduction + ", "
+                    + facilitySchema.modelsCompleted + ", "
+                    + facilitySchema.employeeCount + ", "
+                    + facilitySchema.managerId + ")";
+            statement.executeUpdate(query);
+            System.out.println("Facility added successfully");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Takes a Create query and funnels it to the appropriate method within class.
      *
      * @param requestEntities : List of Facilities to create in database
