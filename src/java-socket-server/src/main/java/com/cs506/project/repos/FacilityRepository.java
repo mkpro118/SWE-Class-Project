@@ -134,7 +134,7 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
 
             String query = "INSERT INTO appdb"
                     + "(FacilityId, Name, City, State, Description, ComponentsInProduction, ComponentsCompleted, ModelsInProduction, ModelsCompleted, EmployeeCount, ManagerID)"
-                    + "Values(" + facilitySchema.facilityId + ", "
+                    + "VALUES (" + facilitySchema.facilityId + ", "
                     + facilitySchema.name + ", "
                     + facilitySchema.city + ", "
                     + facilitySchema.state + ", "
@@ -145,7 +145,7 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
                     + facilitySchema.modelsCompleted + ", "
                     + facilitySchema.employeeCount + ", "
                     + facilitySchema.managerId + ")";
-            statement.executeUpdate(query);
+            statement.executeQuery(query);
             System.out.println("Facility added successfully");
         } catch (SQLException e) {
             e.printStackTrace();
