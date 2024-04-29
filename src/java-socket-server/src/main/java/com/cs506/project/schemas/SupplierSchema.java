@@ -25,4 +25,9 @@ public class SupplierSchema {
      */
     public String componentTypeList;
 
+    /**
+     * This is a comma delimited list of the IDs of the facilities that are supplied
+     */
+    public String facilitesSupplying;
+
 }
