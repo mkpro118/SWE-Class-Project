@@ -18,6 +18,21 @@ public class AirplaneSchema {
     public String name;
 
     /**
+     * This is the description of the plane queried
+     */
+    public String description;
+
+    /**
+     *This is the city of the plane queried
+     */
+    public String city;
+
+    /**
+     * This is the state of the plane queried
+     */
+    public String state;
+
+    /**
      * This is the stage of production the airplane queried is currently in.
      */
     public String productionStageName;
@@ -38,9 +53,14 @@ public class AirplaneSchema {
     public Date dateFinished;
 
     /**
-     * This is the id of the customer that purchased the airplane queried.
+     * This is the id of the facility that contains the airplane.
      */
-    public int customerId;
+    public int facilityID;
+
+    /**
+     * This is the seating capacity of airplane queried
+     */
+    public int seatingCapacity;
 
     /**
      * This is the size category of the airplane queried.

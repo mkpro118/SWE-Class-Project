@@ -77,15 +77,18 @@ public class AirplaneRepository implements ISQLRepository<AirplaneSchema> {
                 AirplaneSchema airplaneSchema = new AirplaneSchema();
 
                 airplaneSchema.airplaneId = resultSet.getInt("AirplaneId");
+                airplaneSchema.city = resultSet.getString("City");
+                airplaneSchema.state = resultSet.getString("State");
+                airplaneSchema.seatingCapacity = resultSet.getInt("SeatingCapacity");
+                airplaneSchema.description = resultSet.getString("Description");
                 airplaneSchema.name = resultSet.getString("Name");
                 airplaneSchema.productionStageName = resultSet.getString("ProductionStageName");
                 airplaneSchema.cost = resultSet.getDouble("Cost");
                 airplaneSchema.dateStarted = resultSet.getDate("DateStarted");
                 airplaneSchema.dateFinished = resultSet.getDate("DateFinished");
-                airplaneSchema.customerId = resultSet.getInt("CustomerId");
+                airplaneSchema.facilityID = resultSet.getInt("FacilityId");
                 airplaneSchema.size = resultSet.getString("Size");
                 airplaneSchema.hasFirstClass = resultSet.getBoolean("HasFirstClass");
-
                 airplanes.add(airplaneSchema);
             }
         }
@@ -111,12 +114,16 @@ public class AirplaneRepository implements ISQLRepository<AirplaneSchema> {
                 AirplaneSchema airplaneSchema = new AirplaneSchema();
 
                 airplaneSchema.airplaneId = resultSet.getInt("AirplaneId");
+                airplaneSchema.city = resultSet.getString("City");
+                airplaneSchema.state = resultSet.getString("State");
+                airplaneSchema.seatingCapacity = resultSet.getInt("SeatingCapacity");
+                airplaneSchema.description = resultSet.getString("Description");
                 airplaneSchema.name = resultSet.getString("Name");
                 airplaneSchema.productionStageName = resultSet.getString("ProductionStageName");
                 airplaneSchema.cost = resultSet.getDouble("Cost");
                 airplaneSchema.dateStarted = resultSet.getDate("DateStarted");
                 airplaneSchema.dateFinished = resultSet.getDate("DateFinished");
-                airplaneSchema.customerId = resultSet.getInt("CustomerId");
+                airplaneSchema.facilityID = resultSet.getInt("FacilityId");
                 airplaneSchema.size = resultSet.getString("Size");
                 airplaneSchema.hasFirstClass = resultSet.getBoolean("HasFirstClass");
 

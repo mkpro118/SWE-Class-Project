@@ -16,6 +16,16 @@ public class ComponentSchema {
     public String name;
 
     /**
+     * This is the city of the component queried
+     */
+    public String city;
+
+    /**
+     * This is the state of the component queried
+     */
+    public String state;
+
+    /**
      * This is the description of the component queried.
      */
     public String description;
