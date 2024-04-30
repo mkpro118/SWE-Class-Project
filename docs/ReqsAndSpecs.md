@@ -25,12 +25,20 @@ This software management platform is meant to serve the aircraft industry specif
 <!--Use cases and user stories that support the user requirements in the previous section. The use cases should be based off user stories. Every major scenario should be represented by a use case, and every use case should say something not already illustrated by the other use cases. Diagrams (such as sequence charts) are encouraged. Ask the customer what are the most important use cases to implement by the deadline. You can have a total ordering, or mark use cases with “must have,” “useful,” or “optional.” For each use case you may list one or more concrete acceptance tests (concrete scenarios that the customer will try to see if the use case is implemented).-->
 
 
-> As a user, I want to be able to view the inventory of planes in design, production, finished and sold on a per warehouse per model basis.
-> I also want to view current parts on a per warehouse per model basis so I can determine if I need to order more or hold off. 
-> AC: Aggregated/filter data should be viewable on a webpage. R01
+> As a user, I want to be able to view the inventory of planes in single page to see how the production is processed as a whole.
+> AC: Aggregated/filter data should be viewable with production stages labeled on a master inventory webpage. R01
+
+> As a user, I want to be able to view current parts on a per warehouse per model basis so I can determine if I need to order more or hold off. 
+> AC: Aggregated/filter data should be viewable on a warehouse inventory webpage. R01
 
 > As a user, I want to be able to click on a particular plane in development and view necessary metadata such as model, size, ID, and production stage.
 > AC: Create a unique 'plane' webpage where plane metadata is displayed. R01 & R02
+
+> As a user, I want to be able to sort and search the inventory of planes by different categories of invetory.
+> AC: Sort/search data should be enabled on both master and warehouse inventory webpage.
+
+> As a user, I want to be able to add new warehouse(s) or delete existing warehouse(s).
+> AC: Create or delete warehouse(s) on the warehouse inventory webpage.  R04
 
 > As a user, I want the ability to put in orders with suppliers based on current inventory KPIs and counts. I also want the abiity to add new suppliers if the business facilitates a good connection.
 > AC: Use a form to place order and another form to add suppliers R04
