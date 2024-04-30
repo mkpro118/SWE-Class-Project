@@ -3,48 +3,22 @@
 import React, { useState, useEffect } from 'react';
 import TableFacilities from './table-facilities';
 
-const DropdownCard = ({ props }) => {
+const DropdownCard = ({ props, airplaneData, componentData }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [sortBy, setSortBy] = useState(null);
   const [sortOrder, setSortOrder] = useState('asc');
 
   const [fullInventory, setFullInventory] = useState([]);
-  const [componentData, setComponentData] = useState([]);
-  const [airplaneData, setAirplaneData] = useState([]);
 
   const host = process.env.WEBSERVER_HOST || 'localhost';
   const port = process.env.WEBSERVER_PORT || 5000;
   const url = `http://${host}:${port}`;
-
-  //Load in all the data from API into corresponding arrays
-  useEffect(() => {
-    //load airplanes
-    fetch(`${url}/airplane`)
-    .then(res => res.json())
-    .then(
-      data => {
-        setAirplaneData(data)
-        console.log(data)
-      }
-    )
-    //load components
-    fetch(`${url}/component`)
-    .then(res => res.json())
-    .then(
-      data => {
-        setComponentData(data)
-        console.log(data)
-      }
-    )
-  }, [url]);
 
   useEffect(() => {
     if (airplaneData && componentData) {
       setFullInventory([...airplaneData, ...componentData])
     }
   }, [airplaneData, componentData]);
-
-  
 
   const toggleExpansion = () => {
     setIsExpanded(!isExpanded);
@@ -166,7 +140,7 @@ const DropdownCard = ({ props }) => {
             {
             fullInventory.map(data => {
                   if(data.city == props.city && data.state == props.state){ // if the datas are in facility
-                    return <TableFacilities key={data.id}
+                    return <TableFacilities key={data.ID}
                     cost={data.cost}
                     product={data.name}
                     type={data.type}
