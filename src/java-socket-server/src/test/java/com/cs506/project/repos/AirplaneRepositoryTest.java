@@ -65,11 +65,11 @@ public class AirplaneRepositoryTest {
 
         when(mockResult.getInt("AirplaneId")).thenReturn(1);
         when(mockResult.getString("Name")).thenReturn("Boeing 747");
-        when(mockResult.getString("ProductionStageName")).thenReturn("Development");
+        when(mockResult.getString("ProductionStage")).thenReturn("Development");
         when(mockResult.getDouble("Cost")).thenReturn(14.1);
         when(mockResult.getDate("DateStarted")).thenReturn(new Date(2024, 11, 11));
         when(mockResult.getDate("DateFinished")).thenReturn(new Date(2024, 12, 12));
-        when(mockResult.getInt("CustomerId")).thenReturn(1);
+        when(mockResult.getInt("FacilityId")).thenReturn(1);
         when(mockResult.getString("Size")).thenReturn("Large");
         when(mockResult.getBoolean("HasFirstClass")).thenReturn(true);
 
@@ -83,11 +83,11 @@ public class AirplaneRepositoryTest {
 
         assertEquals(1,airplane.airplaneId);
         assertEquals("Boeing 747",airplane.name);
-        assertEquals("Development",airplane.productionStageName);
+        assertEquals("Development",airplane.productionStage);
         assertEquals(14.1, airplane.cost);
         assertEquals(new Date(2024, 11, 11), airplane.dateStarted);
         assertEquals(new Date(2024, 12, 12), airplane.dateFinished);
-        assertEquals( 1, airplane.customerId);
+        assertEquals( 1, airplane.facilityID);
         assertEquals("Large",airplane.size);
         assertEquals(true, airplane.hasFirstClass);
 
@@ -119,11 +119,11 @@ public class AirplaneRepositoryTest {
 
         when(mockResult.getInt("AirplaneId")).thenReturn(1);
         when(mockResult.getString("Name")).thenReturn("Boeing 747");
-        when(mockResult.getString("ProductionStageName")).thenReturn("Development");
+        when(mockResult.getString("ProductionStage")).thenReturn("Development");
         when(mockResult.getDouble("Cost")).thenReturn(14.1);
         when(mockResult.getDate("DateStarted")).thenReturn(new Date(2024, 11, 11));
         when(mockResult.getDate("DateFinished")).thenReturn(new Date(2024, 12, 12));
-        when(mockResult.getInt("CustomerId")).thenReturn(1);
+        when(mockResult.getInt("FacilityId")).thenReturn(1);
         when(mockResult.getString("Size")).thenReturn("Large");
         when(mockResult.getBoolean("HasFirstClass")).thenReturn(true);
 
@@ -137,11 +137,11 @@ public class AirplaneRepositoryTest {
 
         assertEquals(1,airplane.airplaneId);
         assertEquals("Boeing 747",airplane.name);
-        assertEquals("Development",airplane.productionStageName);
+        assertEquals("Development",airplane.productionStage);
         assertEquals(14.1, airplane.cost);
         assertEquals(new Date(2024, 11, 11), airplane.dateStarted);
         assertEquals(new Date(2024, 12, 12), airplane.dateFinished);
-        assertEquals( 1, airplane.customerId);
+        assertEquals( 1, airplane.facilityID);
         assertEquals("Large",airplane.size);
         assertEquals(true, airplane.hasFirstClass);
 
@@ -171,7 +171,7 @@ public class AirplaneRepositoryTest {
 
         when(mockResult.getInt("AirplaneId")).thenReturn(1);
         when(mockResult.getString("Name")).thenReturn("Boeing 747");
-        when(mockResult.getString("ProductionStageName")).thenReturn("Development");
+        when(mockResult.getString("ProductionStage")).thenReturn("Development");
         when(mockResult.getDouble("Cost")).thenReturn(14.1);
 
         AirplaneRepository repo = new AirplaneRepository(mockConnection);
@@ -184,7 +184,7 @@ public class AirplaneRepositoryTest {
 
         assertEquals(1,airplane.airplaneId);
         assertEquals("Boeing 747",airplane.name);
-        assertEquals("Development",airplane.productionStageName);
+        assertEquals("Development",airplane.productionStage);
         assertEquals(14.1, airplane.cost);
         assertEquals(null, airplane.size);
 

@@ -95,8 +95,8 @@ public class FacilityRepositoryTest {
         assertEquals(12,facility.componentsInProduction);
         assertEquals(10,facility.componentsCompleted);
         assertEquals(4,facility.modelsInProduction);
-        assertEquals(30,facility.modelsCompleted);
-        assertEquals(3,facility.employeeCount);
+        assertEquals(3,facility.modelsCompleted);
+        assertEquals(30,facility.employeeCount);
         assertEquals(100000,facility.managerId);
 
     }
@@ -116,7 +116,7 @@ public class FacilityRepositoryTest {
 
         repo.getById(10);
 
-        assertEquals("SELECT * FROM Facility WHERE FacilityID = 10", queryCaptor.getValue());
+        assertEquals("SELECT * FROM Facility WHERE facilityId = 10", queryCaptor.getValue());
 
     }
     /**
@@ -158,8 +158,8 @@ public class FacilityRepositoryTest {
         assertEquals(12,facility.componentsInProduction);
         assertEquals(10,facility.componentsCompleted);
         assertEquals(4,facility.modelsInProduction);
-        assertEquals(30,facility.modelsCompleted);
-        assertEquals(3,facility.employeeCount);
+        assertEquals(3,facility.modelsCompleted);
+        assertEquals(30,facility.employeeCount);
         assertEquals(100000,facility.managerId);
 
     }
@@ -177,7 +177,7 @@ public class FacilityRepositoryTest {
 
         repo.getAllWithBasicDetails(10);
 
-        assertEquals("SELECT FacilityID, city, state FROM Facility LIMIT 10", queryCaptor.getValue());
+        assertEquals("SELECT facilityId, city, state FROM Facility LIMIT 10", queryCaptor.getValue());
     }
 
     /**
