@@ -80,51 +80,46 @@ const DropdownCard = ({ props, airplaneData, componentData, onDelete }) => {
 
 
         {/* Order data headers in one row, and data in the second row */}
-        <div className='flex px-4 py-2 mb-4 cursor-pointer ' onClick={toggleExpansion}>
-          <div className="flex flex-wrap w-1/2">
-
-            {/* Total number of airplanes at a facility is its completed airplanes + airplanes in progress */}
-            <div className="flex flex-col w-1/4">
-              <span className="text-md font-medium text-gray-400">Airplanes</span>
+        <div className='flex flex-col sm:flex-row px-4 py-2 mb-4 cursor-pointer' onClick={toggleExpansion}>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 w-9/12">
+            <div className="flex flex-col">
+              <span className="text-md text-gray-400">Airplanes</span>
               <span className="font-medium">{props.airplanes + props.airplanesInProgress}</span>
             </div>
 
-            {/* Total number of components at a facility is its completed components + components in progress */}
-            <div className="flex flex-col w-1/4">
+            <div className="flex flex-col">
               <span className="text-md text-gray-400">Components</span>
               <span className="font-medium">{props.components + props.componentsInProgress}</span>
             </div>
 
-            {/* Total number of employees at a facility */}
-            <div className="flex flex-col w-1/4">
+            <div className="flex flex-col">
               <span className="text-md text-gray-400">Employees</span>
               <span className="font-medium">{props.employees}</span>
             </div>
 
-            {/* Currently manager id, will need to change to manager name once SQL queries are done */}
-            <div className="flex flex-col w-1/4">
+            <div className="flex flex-col">
               <span className="text-md text-gray-400">Manager</span>
               <span className="font-medium">{props.manager}</span>
             </div>
           </div>
-          <div className='flex ml-auto'>
-          
+
           {/* SVG of arrow to indicate component is expandable */}
-          <svg
-            className={`h-6 w-6 transition-transform transform ${isExpanded ? 'rotate-360' : ''
-              }`}
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d={isExpanded ? 'M5 15l7-7 7 7' : 'M19 9l-7 7-7-7'}
-            />
-          </svg>
+          <div className='flex ml-auto'>
+            <svg
+              className={`h-6 w-6 transition-transform transform ${isExpanded ? 'rotate-360' : ''
+                }`}
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d={isExpanded ? 'M5 15l7-7 7 7' : 'M19 9l-7 7-7-7'}
+              />
+            </svg>
           </div>
         </div>
       </div>
