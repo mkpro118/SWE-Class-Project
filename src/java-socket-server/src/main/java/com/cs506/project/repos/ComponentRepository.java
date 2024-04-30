@@ -40,7 +40,6 @@ public class ComponentRepository implements ISQLRepository<ComponentSchema> {
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
-            System.out.println("Query Ran: " + query);
 
             while (resultSet.next()) {
 
@@ -80,7 +79,6 @@ public class ComponentRepository implements ISQLRepository<ComponentSchema> {
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
-            System.out.println("Query Ran: " + query);
 
             while (resultSet.next()) {
 
@@ -116,7 +114,6 @@ public class ComponentRepository implements ISQLRepository<ComponentSchema> {
         String query = "SELECT * FROM Component WHERE ComponentId = " + componentId;
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)){
-            System.out.println("Query Ran: " + query);
 
             while (resultSet.next()) {
                 
@@ -165,20 +162,15 @@ public class ComponentRepository implements ISQLRepository<ComponentSchema> {
         
         List<ComponentSchema> result = new ArrayList<>();
 
-        System.out.println("Reading Component table in database");
 
         if (components.size() != 0){
             for ( ComponentSchema component : components ){
                 result.addAll(getById(component.componentId));
             }
         } else if (!readAllDetails) {
-            System.out.println("Read with basic details query received!");
             result = getAllWithBasicDetails(limit);
-            System.out.println("Read with basic details query result: " + result.toString());
         } else {
-            System.out.println("Read with all details query received!");
             result = getAllWithAllDetails(limit);
-            System.out.println("Read with all details query result: " + result.toString());
         }
         
         return result;

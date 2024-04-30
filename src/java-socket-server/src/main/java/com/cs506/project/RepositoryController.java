@@ -334,22 +334,4 @@ public class RepositoryController {
 
         return response;
     }
-
-    public static void main (String[] arg) {
-
-        RepositoryController controller = new RepositoryController();
-
-        String request = "{\n" +
-                "  \"type\": \"READ\",\n" +
-                "  \"entityName\": \"Airplane\",\n" +
-                "  \"limit\": -1,\n" +
-                "  \"requestingAllDetails\": \"true\",\n" +
-                "  \"entities\": []\n" +
-                "}";
-
-        var response = controller.handleRequest(request.getBytes());
-
-        System.out.println("Response Given: " + response);
-    }
-
 }

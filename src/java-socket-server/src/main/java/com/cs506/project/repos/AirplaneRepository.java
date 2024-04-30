@@ -36,7 +36,6 @@ public class AirplaneRepository implements ISQLRepository<AirplaneSchema> {
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
-            System.out.println("Query Ran: " + query);
             while (resultSet.next()) {
 
                 AirplaneSchema airplaneSchema = new AirplaneSchema();
@@ -73,7 +72,6 @@ public class AirplaneRepository implements ISQLRepository<AirplaneSchema> {
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
-            System.out.println("Query Ran: " + query);
             while (resultSet.next()) {
 
                 AirplaneSchema airplaneSchema = new AirplaneSchema();
@@ -110,8 +108,6 @@ public class AirplaneRepository implements ISQLRepository<AirplaneSchema> {
         String query = "SELECT * FROM Airplane WHERE AirplaneId = " + airplaneId + ";";
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query);){
-            System.out.println("Query Ran: " + query);
-
             while (resultSet.next()) {
 
                 AirplaneSchema airplaneSchema = new AirplaneSchema();
@@ -162,22 +158,16 @@ public class AirplaneRepository implements ISQLRepository<AirplaneSchema> {
             throws SQLException {
 
         List<AirplaneSchema> result = new ArrayList<>();
-        System.out.println("Reading Airplane table in database");
         if (airplanes.size() != 0){
             for ( AirplaneSchema airplane: airplanes  ){
                 result.addAll(getById(airplane.airplaneId));
             }
         } else if (!readAllDetails){
-            System.out.println("Read with basic details query received!");
             result = getAllWithBasicDetails(limit);
-            System.out.println("Read with basic details query result: " + result.toString());
         } else{
-            System.out.println("Read with all details query received!");
             result = getAllWithAllDetails(limit);
-            System.out.println("Read with basic details query result: " + result.toString());
         }
 
-        System.out.println("Closing connection...");
 
         return result;
     }

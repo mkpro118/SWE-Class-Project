@@ -147,7 +147,6 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
                         + facilitySchema1.employeeCount + ", "
                         + facilitySchema1.managerId + ")";
                 statement.executeQuery(query);
-                System.out.println("Facility added successfully");
             }
         } catch (SQLException e){
             e.printStackTrace();
