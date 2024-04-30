@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import DropdownCard from '@/app/components/dropdown-card';
+import FacilityModal from "@/app/components/facility-modal";
 
 const Facilities = () => {
 
@@ -12,6 +13,7 @@ const Facilities = () => {
   const [facilities, setFacilities] = useState([]);
   const [componentData, setComponentData] = useState([]);
   const [airplaneData, setAirplaneData] = useState([]);
+
 
   const mapFacilityToCard = (facility) => {
     return {
@@ -42,6 +44,22 @@ const Facilities = () => {
     console.log(facilities);
   }, [facilities]);
 
+  const handleDelete = (id) => {
+    console.log(`Deleted item with ID: ${id}`);
+
+    const updatedFacilities = facilities.filter((facility) => facility.id !== id);
+    setFacilities(updatedFacilities);
+
+    // fetch(`${url}/facility/${id}`, {
+    //   method: 'DELETE'
+    // })
+    //     .then(() => {
+    //       setFacilities((prevFacilities) => prevFacilities.filter((facility) => facility.id !== id));
+    //     })
+    //     .catch((error) => console.error('Error deleting item:', error));
+
+  }
+
   //Load in all the data from API into corresponding arrays
   useEffect(() => {
     //load airplanes
@@ -69,8 +87,17 @@ const Facilities = () => {
           <div className="min-w-0 flex-1 ml-4">
             <h2 className="text-2xl font-medium leading-7 text-gray-900">All Facilities ({facilities.length})</h2>
           </div>
+          <div className="mt-5 flex lg:ml-4 lg:mt-0">
+            <div className="flex justify-center">
+              <button className="font-medium bg-indigo-300 hover:bg-indigo-400 rounded-md px-4 py-2"
+                      onClick={() => setShowModal(true)}>
+                Add Facility
+              </button>
+            </div>
+          </div>
         </div>
       </header>
+      <FacilityModal showModal={showModal} onClose={handleOnClose} />
       <div>
         {
           facilities.map(facility => {

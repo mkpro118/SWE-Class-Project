@@ -3,10 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import TableFacilities from './table-facilities';
 
-const DropdownCard = ({ props, airplaneData, componentData }) => {
+const DropdownCard = ({ props, airplaneData, componentData, onDelete }) => {
+
   const [isExpanded, setIsExpanded] = useState(false);
   const [sortBy, setSortBy] = useState(null);
   const [sortOrder, setSortOrder] = useState('asc');
+  const [confirmEdit, setConfirmEdit] = useState(false);
 
   const [fullInventory, setFullInventory] = useState([]);
 
@@ -45,22 +47,40 @@ const DropdownCard = ({ props, airplaneData, componentData }) => {
     );
   }
 
+  const handleEdit = (confirmDelete) => {
+    if (confirmDelete) {
+      onDelete(props.id);
+    }
+    setConfirmEdit(false);
+  };
+
   return (
     //dropdown expandable component for each facility
     <div className='rounded-b-lg shadow mb-4'>
       
       {/* Make this a clickable component */}
       <div
-        className= 'bg-white cursor-pointer justify-between items-center rounded-lg'
-        onClick={toggleExpansion}
+        className= 'bg-white justify-between items-center rounded-lg'
       >
         {/* City, State is main identifier for a facility */}
-        <div className='border-b-2 px-4 py-4 '>
+        <div className='border-b-2 px-4 py-4 flex justify-between'>
           <h2 className='text-lg font-semibold'>{props.city}, {props.state}</h2>
+          {confirmEdit ? (
+              <div className="font-medium flex flex-col items-end">
+                <div>
+                  <button className="mr-2 bg-red-400 p-1 rounded" onClick={() => handleEdit(true)}>Delete</button>
+                  <button className="mr-2 bg-slate-200 p-1 rounded" onClick={() => handleEdit(false)}>Cancel</button>
+                </div>
+              </div>
+          ) : (
+              <button className="bg-slate-200 rounded p-1" onClick={() => setConfirmEdit(true)}>Edit</button>
+          )}
         </div>
 
+
+
         {/* Order data headers in one row, and data in the second row */}
-        <div className='flex px-4 py-2 mb-4'>
+        <div className='flex px-4 py-2 mb-4 cursor-pointer ' onClick={toggleExpansion}>
           <div className="flex flex-wrap w-1/2">
 
             {/* Total number of airplanes at a facility is its completed airplanes + airplanes in progress */}
