@@ -13,6 +13,7 @@ const Facilities = () => {
   const [facilities, setFacilities] = useState([]);
   const [componentData, setComponentData] = useState([]);
   const [airplaneData, setAirplaneData] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
 
   const mapFacilityToCard = (facility) => {
@@ -60,6 +61,10 @@ const Facilities = () => {
 
   }
 
+  const handleOnModalClose = () => {
+    setShowModal(false)
+  }
+
   //Load in all the data from API into corresponding arrays
   useEffect(() => {
     //load airplanes
@@ -97,7 +102,7 @@ const Facilities = () => {
           </div>
         </div>
       </header>
-      <FacilityModal showModal={showModal} onClose={handleOnClose} />
+      <FacilityModal showModal={showModal} onClose={handleOnModalClose} />
       <div>
         {
           facilities.map(facility => {
@@ -105,6 +110,7 @@ const Facilities = () => {
                 props={facility}
                 airplaneData={airplaneData}
                 componentData={componentData}
+                onDelete={handleDelete}
                 key={facility.id}
             />
           })
