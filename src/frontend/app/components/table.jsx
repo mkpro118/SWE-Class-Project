@@ -23,6 +23,10 @@ export function getStageClass(stage) {
   }
 }
 
+const formatCost = (cost) => {
+    return cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+}
+
 const Table = (props) => {
   return (
 
@@ -49,7 +53,7 @@ const Table = (props) => {
         {props.type}
       </td>
       <td className="px-6 py-4">
-        {'$'}{props.cost}
+        {'$'}{formatCost(props.cost.toFixed(2))}
       </td>
       <td className="px-6 py-4 text-black">
         <span className={`px-2 py-1 rounded opacity-50 ${getStageClass(props.stage)}`}>

@@ -11,7 +11,9 @@ const Facilities = () => {
   const url = `http://${host}:${port}`;
 
   const [facilities, setFacilities] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  const [componentData, setComponentData] = useState([]);
+  const [airplaneData, setAirplaneData] = useState([]);
+
 
   const mapFacilityToCard = (facility) => {
     return {
@@ -36,15 +38,11 @@ const Facilities = () => {
     .then(res => res.json())
     .then(data => data.map(mapFacilityToCard))
     .then((facility) => setFacilities(facility))
-  }, [url]);
+  }, []);
 
   useEffect(() => {
     console.log(facilities);
   }, [facilities]);
-
-  const handleOnClose = () => {
-    setShowModal(false);
-  }
 
   const handleDelete = (id) => {
     console.log(`Deleted item with ID: ${id}`);
@@ -61,6 +59,26 @@ const Facilities = () => {
     //     .catch((error) => console.error('Error deleting item:', error));
 
   }
+
+  //Load in all the data from API into corresponding arrays
+  useEffect(() => {
+    //load airplanes
+    fetch(`${url}/airplane`)
+    .then(res => res.json())
+    .then(
+      data => {
+        setAirplaneData(data)
+      }
+    )
+    //load components
+    fetch(`${url}/component`)
+    .then(res => res.json())
+    .then(
+      data => {
+        setComponentData(data)
+      }
+    )
+  }, []);
 
   return (
     <>
@@ -83,7 +101,12 @@ const Facilities = () => {
       <div>
         {
           facilities.map(facility => {
-            return <DropdownCard props={facility} onDelete={handleDelete} key={facility.id}/>
+            return <DropdownCard
+                props={facility}
+                airplaneData={airplaneData}
+                componentData={componentData}
+                key={facility.id}
+            />
           })
         }
       </div>

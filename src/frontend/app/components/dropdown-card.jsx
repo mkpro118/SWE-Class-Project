@@ -3,49 +3,24 @@
 import React, { useState, useEffect } from 'react';
 import TableFacilities from './table-facilities';
 
-const DropdownCard = ({ props, onDelete }) => {
+const DropdownCard = ({ props, airplaneData, componentData, onDelete }) => {
+
   const [isExpanded, setIsExpanded] = useState(false);
   const [sortBy, setSortBy] = useState(null);
   const [sortOrder, setSortOrder] = useState('asc');
   const [confirmEdit, setConfirmEdit] = useState(false);
 
   const [fullInventory, setFullInventory] = useState([]);
-  const [componentData, setComponentData] = useState([]);
-  const [airplaneData, setAirplaneData] = useState([]);
 
   const host = process.env.WEBSERVER_HOST || 'localhost';
   const port = process.env.WEBSERVER_PORT || 5000;
   const url = `http://${host}:${port}`;
-
-  //Load in all the data from API into corresponding arrays
-  useEffect(() => {
-    //load airplanes
-    fetch(`${url}/airplane`)
-    .then(res => res.json())
-    .then(
-      data => {
-        setAirplaneData(data)
-        // console.log(data)
-      }
-    )
-    //load components
-    fetch(`${url}/component`)
-    .then(res => res.json())
-    .then(
-      data => {
-        setComponentData(data)
-        // console.log(data)
-      }
-    )
-  }, [url]);
 
   useEffect(() => {
     if (airplaneData && componentData) {
       setFullInventory([...airplaneData, ...componentData])
     }
   }, [airplaneData, componentData]);
-
-  
 
   const toggleExpansion = () => {
     setIsExpanded(!isExpanded);

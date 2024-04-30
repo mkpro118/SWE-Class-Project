@@ -1,5 +1,22 @@
 import React from 'react'
 
+export function getStageClass(stage) {
+    switch (stage) {
+        case "Unstarted":
+            return "bg-red-500";
+        case "In-Progress":
+            return "bg-yellow-500 ";
+        case "Finished":
+            return "bg-green-500";
+        default:
+            return "";
+    }
+}
+
+const formatCost = (cost) => {
+    return cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+}
+
 //Loads in the data mapped from inventory/page.jsx 
 //Checkboxes missing functionality 
 //Edit missing functionality
@@ -20,13 +37,15 @@ const TableFacilities = (props) => {
         {props.type}
       </td>
       <td className="px-6 py-4">
-        {'$'}{props.cost}
+          {'$'}{formatCost(props.cost.toFixed(2))}
+      </td>
+      <td className="px-6 py-4 text-black">
+        <span className={`px-2 py-1 rounded opacity-50 ${getStageClass(props.stage)}`}>
+            {props.stage}
+        </span>
       </td>
       <td className="px-6 py-4">
-        {props.stage}
-      </td>
-      <td className="px-6 py-4">
-        {props.ID}
+        {props.id}
       </td>
       <td className="px-6 py-4">
         <a href="#" className="font-medium text-blue-600 hover:underline">Edit</a>
