@@ -9,22 +9,22 @@ import ComponentModal from '@/app/components/inventory-modal-component';
 
 const MasterInventory = () => {
 
+  //Data loading
   const [fullInventory, setFullInventory] = useState([]);
   const [fullInventoryDisplay, setFullInventoryDisplay] = useState([]);
   const [componentData, setComponentData] = useState([]);
   const [airplaneData, setAirplaneData] = useState([]);
-  
+  //Modal toggling
   const [showAirplaneModal, setShowAirplaneModal] = useState(false);
   const [showComponentModal, setShowComponentModal] = useState(false);
-
+  //Pagination (active page state)
   const [pageActive, setPageActive] = useState(1);
-
+  //Sort, Filter, and Search variables
   const [prodLookup, setProdLookup] = useState("");
   const [filterIsOpen, setFilterIsOpen] = useState(false);
-
   const [sortBy, setSortBy] = useState(null);
   const [sortOrder, setSortOrder] = useState('asc');
-
+  //Declares the filter checkboxes as unchecked by default
   const [filters, setFilters] = useState({
     finished: false,
     inProgress: false,
@@ -37,7 +37,6 @@ const MasterInventory = () => {
     between1mAnd10m: false,
     greaterThan10m: false
   })
-
   const host = process.env.WEBSERVER_HOST || 'localhost';
   const port = process.env.WEBSERVER_PORT || 5000;
   const url = `http://${host}:${port}`;
@@ -49,11 +48,11 @@ const MasterInventory = () => {
 
     //simultaneously get airplane and component data
     Promise.all([fetchAirplaneData, fetchComponentData])
-        .then(([airplaneData, componentData]) => {
-          setAirplaneData(airplaneData);
-          setComponentData(componentData);
-        })
-        .catch(error => console.error('Error fetching airplane and component data:', error));
+      .then(([airplaneData, componentData]) => {
+        setAirplaneData(airplaneData);
+        setComponentData(componentData);
+      })
+      .catch(error => console.error('Error fetching airplane and component data:', error));
   }, [url]);
 
   // Merge fetched data into one array at runtime
@@ -95,13 +94,14 @@ const MasterInventory = () => {
     setFullInventory(results);
   }, [prodLookup, filters, fullInventoryDisplay]);
 
+
   const handleModalAirplaneClose = () => {
     setShowAirplaneModal(false)
   }
   const handleModalComponentClose = () => {
     setShowComponentModal(false)
   }
-  
+
   const handleSearchReset = () => {
     setProdLookup("");
   }
@@ -145,9 +145,9 @@ const MasterInventory = () => {
     setPageActive(prevPage => prevPage - 1);
   }
 
-  // sort handler
+  //Sort handler
   const handleSort = (columnName) => {
-    if(sortBy === columnName) {
+    if (sortBy === columnName) {
       setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
     } else {
       setSortBy(columnName);
@@ -157,12 +157,12 @@ const MasterInventory = () => {
       let valueA = a[sortBy];
       let valueB = b[sortBy];
 
-      if(typeof valueA === 'number' && typeof valueB === 'number') {
+      if (typeof valueA === 'number' && typeof valueB === 'number') {
         return sortOrder === 'asc' ? valueA - valueB : valueB - valueA;
       } else {
-        return sortOrder === 'asc' ? 
-        String(valueA).localeCompare(String(valueB)) : String(valueB).localeCompare(String(valueA));
-      }      
+        return sortOrder === 'asc' ?
+          String(valueA).localeCompare(String(valueB)) : String(valueB).localeCompare(String(valueA));
+      }
     })
     );
   }
@@ -187,7 +187,7 @@ const MasterInventory = () => {
                 </svg>
               </button>
 
-              {/*Dropdown from filter*/}
+              {/*Dropdown from filter to select what you want to filter by*/}
               {filterIsOpen && (
                 <div className="z-10 w-48 p-3 bg-white rounded-lg shadow absolute top-full mt-1 right-0">
                   <h6 className="mb-2 text-md font-bold text-gray-700">Production Stage</h6>
@@ -304,7 +304,7 @@ const MasterInventory = () => {
             </div>
 
 
-            {/*Search bar - add in search by name*/}
+            {/*Search bar - search by ID and/or Product Name*/}
             <div className="flex items-center flex-column flex-wrap md:flex-row ml-3 hidden sm:block mr-4">
               <div className="relative">
                 <input id="search" className="block w-full rounded-md bg-white px-3 py-1.5 text-base font-normal text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 transition duration-200 ease-in-out placeholder:text-gray-400 focus:border-primary focus:shadow-inset focus:outline-none motion-reduce:transition-none"
@@ -313,7 +313,7 @@ const MasterInventory = () => {
                   onChange={(e) => setProdLookup(e.target.value)}
                   value={prodLookup} />
 
-                {/*Reset button*/}
+                {/*Reset search button*/}
                 <button className="text-white absolute end-1 bottom-1 bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-3 py-1"
                   onClick={handleSearchReset}>
                   Reset
@@ -382,26 +382,32 @@ const MasterInventory = () => {
               </button>
             </ul>
           </nav>
-          {/*Add product button*/}
+
+          {/*Add product buttons*/}
           <div className="flex">
-          <button className="mr-2 inline-flex items-center rounded-md bg-blue-300 px-3 py-1.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-blue-300 hover:bg-blue-700"
-                  onClick={() => setShowAirplaneModal(true)}>
-            <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-            </svg>
-            Add Airplane
-          </button>
-          <button className="inline-flex items-center rounded-md bg-blue-300 px-3 py-1.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-blue-300 hover:bg-blue-700"
-                  onClick={() => setShowComponentModal(true)}>
-            <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-            </svg>
-            Add Component
-          </button>
+
+            {/*Add new airplane to full inventory (opens modal from components/inventory-modal-airplane.jsx to enter information)*/}
+            <button className="mr-2 inline-flex items-center rounded-md bg-blue-300 px-3 py-1.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-blue-300 hover:bg-blue-700"
+              onClick={() => setShowAirplaneModal(true)}>
+              <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
+              </svg>
+              Add Airplane
+            </button>
+
+            {/*Add new component to full inventory (opens modal from components/inventory-modal-component.jsx to enter information)*/}
+            <button className="inline-flex items-center rounded-md bg-blue-300 px-3 py-1.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-blue-300 hover:bg-blue-700"
+              onClick={() => setShowComponentModal(true)}>
+              <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
+              </svg>
+              Add Component
+            </button>
+          </div>
+
         </div>
-        </div>
-        <AirplaneModal showAirplaneModal={showAirplaneModal} onClose={handleModalAirplaneClose}/>
-        <ComponentModal showComponentModal={showComponentModal} onClose={handleModalComponentClose}/>
+        <AirplaneModal showAirplaneModal={showAirplaneModal} onClose={handleModalAirplaneClose} />
+        <ComponentModal showComponentModal={showComponentModal} onClose={handleModalComponentClose} />
       </div>
     </>
   )

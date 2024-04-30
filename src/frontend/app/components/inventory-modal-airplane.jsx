@@ -57,6 +57,8 @@ const InventoryModal = (props) => {
                         <label htmlFor="has first class" className="block text-gray-700">Has First Class:</label>
                         <input type="boolean" id="has first class" placeholder="Seating Capacity" name="seating capacity" className="form-input mt-1 pl-2 block w-full rounded" />
                     </div>
+
+                    {/*When full implemented this would submit a POST request to API given the data inputed in the modal*/}
                     <button type="submit" className="float-right text-white inline-flex items-center bg-green-700 hover:bg-green-800 font-semibold rounded-lg text-sm px-3 py-1.5 text-center">
                         <svg className="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd"></path></svg>
                         Add New Airplane
