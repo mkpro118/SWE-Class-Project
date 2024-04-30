@@ -24,9 +24,6 @@ const Staff = () => {
       ) 
   })
 
-  useEffect(() => {
-    setStaff(mockStaffData);
-  }, []);
 
   const handleDelete = (id) => {
     const updatedStaff = staff.filter((staffMember) => staffMember.id !== id);
