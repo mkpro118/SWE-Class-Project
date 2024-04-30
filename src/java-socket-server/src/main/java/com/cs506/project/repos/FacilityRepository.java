@@ -128,28 +128,31 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
      * Adds a facility into the database
      *
      * @param facilitySchema : The facility that needs to be added to the database
+     * @return result : returns true if successful
      */
-    public void addFacility(FacilitySchema facilitySchema) throws SQLException{
+    public List<FacilitySchema> handleAddFacility(List<FacilitySchema> facilitySchema) throws SQLException{
         try(Statement statement = connection.createStatement();) {
-
-            String query = "INSERT INTO appdb"
-                    + "(FacilityId, Name, City, State, Description, ComponentsInProduction, ComponentsCompleted, ModelsInProduction, ModelsCompleted, EmployeeCount, ManagerID)"
-                    + "VALUES (" + facilitySchema.facilityId + ", "
-                    + facilitySchema.name + ", "
-                    + facilitySchema.city + ", "
-                    + facilitySchema.state + ", "
-                    + facilitySchema.description + ", "
-                    + facilitySchema.componentsInProduction + ", "
-                    + facilitySchema.componentsCompleted + ", "
-                    + facilitySchema.modelsInProduction + ", "
-                    + facilitySchema.modelsCompleted + ", "
-                    + facilitySchema.employeeCount + ", "
-                    + facilitySchema.managerId + ")";
-            statement.executeQuery(query);
-            System.out.println("Facility added successfully");
-        } catch (SQLException e) {
+            for (FacilitySchema facilitySchema1 : facilitySchema) {
+                String query = "INSERT INTO appdb"
+                        + "(FacilityId, Name, City, State, Description, ComponentsInProduction, ComponentsCompleted, ModelsInProduction, ModelsCompleted, EmployeeCount, ManagerID)"
+                        + "VALUES (" + facilitySchema1.facilityId + ", "
+                        + facilitySchema1.name + ", "
+                        + facilitySchema1.city + ", "
+                        + facilitySchema1.state + ", "
+                        + facilitySchema1.description + ", "
+                        + facilitySchema1.componentsInProduction + ", "
+                        + facilitySchema1.componentsCompleted + ", "
+                        + facilitySchema1.modelsInProduction + ", "
+                        + facilitySchema1.modelsCompleted + ", "
+                        + facilitySchema1.employeeCount + ", "
+                        + facilitySchema1.managerId + ")";
+                statement.executeQuery(query);
+                System.out.println("Facility added successfully");
+            }
+        } catch (SQLException e){
             e.printStackTrace();
         }
+        return null;
     }
 
     /**

@@ -197,6 +197,9 @@ public class RepositoryController {
                 result = repository.handleDeleteQuery(requestFacilities);
                 break;
 
+            case "ADD":
+                result = repository.handleAddFacility(requestFacilities);
+
             default:
                 break;
         }
