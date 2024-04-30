@@ -27,8 +27,7 @@ COPY . .
 EXPOSE 5000
 
 # Uncomment these when you want to build the project
-# RUN npm run build
-# ENV NODE_ENV production
+RUN npm run build
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "start"]
 # CMD ["sleep", "infinity"]
