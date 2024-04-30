@@ -22,6 +22,9 @@ const MasterInventory = () => {
   const [prodLookup, setProdLookup] = useState("");
   const [filterIsOpen, setFilterIsOpen] = useState(false);
 
+  const [sortBy, setSortBy] = useState(null);
+  const [sortOrder, setSortOrder] = useState('asc');
+
   const [filters, setFilters] = useState({
     finished: false,
     inProgress: false,
@@ -140,6 +143,28 @@ const MasterInventory = () => {
   }
   const handlePreviousPage = () => {
     setPageActive(prevPage => prevPage - 1);
+  }
+
+  // sort handler
+  const handleSort = (columnName) => {
+    if(sortBy === columnName) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortBy(columnName);
+      setSortOrder('asc');
+    }
+    setFullInventory(fullInventory.sort((a, b) => {
+      let valueA = a[sortBy];
+      let valueB = b[sortBy];
+
+      if(typeof valueA === 'number' && typeof valueB === 'number') {
+        return sortOrder === 'asc' ? valueA - valueB : valueB - valueA;
+      } else {
+        return sortOrder === 'asc' ? 
+        String(valueA).localeCompare(String(valueB)) : String(valueB).localeCompare(String(valueA));
+      }      
+    })
+    );
   }
 
   return (
@@ -308,23 +333,23 @@ const MasterInventory = () => {
             <tr>
               <th scope="col" className="p-4">
               </th>
-              <th scope="col" className="px-6 py-3">
-                Product
+              <th scope="col" className="px-6 py-3" onClick={() => handleSort('name')}>
+                Product {sortBy === 'name' && (sortOrder === 'asc' ? '▲' : '▼')}
               </th>
               <th scope="col" className="px-6 py-3">
                 Facility
               </th>
-              <th scope="col" className="px-6 py-3">
-                Type
+              <th scope="col" className="px-6 py-3" onClick={() => handleSort('type')}>
+                Type {sortBy === 'type' && (sortOrder === 'asc' ? '▲' : '▼')}
               </th>
-              <th scope="col" className="px-6 py-3">
-                Cost
+              <th scope="col" className="px-6 py-3" onClick={() => handleSort('cost')}>
+                Cost {sortBy === 'cost' && (sortOrder === 'asc' ? '▲' : '▼')}
               </th>
-              <th scope="col" className="px-6 py-3">
-                Production Stage
+              <th scope="col" className="px-6 py-3" onClick={() => handleSort('production_stage')}>
+                Production Stage {sortBy === 'production_stage' && (sortOrder === 'asc' ? '▲' : '▼')}
               </th>
-              <th scope="col" className="px-6 py-3">
-                ID
+              <th scope="col" className="px-6 py-3" onClick={() => handleSort('ID')}>
+                ID {sortBy === 'ID' && (sortOrder === 'asc' ? '▲' : '▼')}
               </th>
             </tr>
           </thead>
