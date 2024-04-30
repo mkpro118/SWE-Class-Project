@@ -27,9 +27,9 @@ public class ManagerRepository implements ISQLRepository<ManagerSchema>{
         List<ManagerSchema> manager = new ArrayList<>();
         String query = "";
         if (limit != -1) {
-            query = "SELECT ManagerID, position, state FROM Manager LIMIT" + limit;
+            query = "SELECT managerId, name, position, accessLevel FROM Manager LIMIT " + limit;
         } else {
-            query = "SELECT ManagerID, position, state FROM Manager";
+            query = "SELECT managerId, name, position, accessLevel FROM Manager";
         }
         try(Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query)){
@@ -57,7 +57,7 @@ public class ManagerRepository implements ISQLRepository<ManagerSchema>{
         List<ManagerSchema> facilities = new ArrayList<>();
         String query = "";
         if(limit != -1){
-            query = "SELECT * FROM Manager Limit" + limit;
+            query = "SELECT * FROM Manager LIMIT " + limit;
         } else {
             query = "SELECT * FROM Manager";
         }
@@ -125,7 +125,7 @@ public class ManagerRepository implements ISQLRepository<ManagerSchema>{
         try(Statement statement = connection.createStatement();) {
             for (ManagerSchema managerSchema1 : managerSchema) {
                 String query = "INSERT INTO appdb"
-                        + "(ManagerId, Name, Password, Position, AccessLevel, FacilityID)"
+                        + "(managerId, Name, Password, Position, AccessLevel, FacilityID)"
                         + "VALUES (" + managerSchema1.managerId + ", "
                         + managerSchema1.name + ", "
                         + managerSchema1.password + ", "

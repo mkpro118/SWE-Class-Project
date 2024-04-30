@@ -134,7 +134,7 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
         try(Statement statement = connection.createStatement();) {
             for (FacilitySchema facilitySchema1 : facilitySchema) {
                 String query = "INSERT INTO appdb"
-                        + "(FacilityId, Name, City, State, Description, ComponentsInProduction, ComponentsCompleted, ModelsInProduction, ModelsCompleted, EmployeeCount, ManagerID)"
+                        + "(facilityId, Name, City, State, Description, ComponentsInProduction, ComponentsCompleted, ModelsInProduction, ModelsCompleted, EmployeeCount, ManagerID)"
                         + "VALUES (" + facilitySchema1.facilityId + ", "
                         + facilitySchema1.name + ", "
                         + facilitySchema1.city + ", "
