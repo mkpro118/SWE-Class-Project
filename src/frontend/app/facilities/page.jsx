@@ -48,17 +48,14 @@ const Facilities = () => {
   const handleDelete = (id) => {
     console.log(`Deleted item with ID: ${id}`);
 
-    const updatedFacilities = facilities.filter((facility) => facility.id !== id);
-    setFacilities(updatedFacilities);
-
-    // fetch(`${url}/facility/${id}`, {
-    //   method: 'DELETE'
-    // })
-    //     .then(() => {
-    //       setFacilities((prevFacilities) => prevFacilities.filter((facility) => facility.id !== id));
-    //     })
-    //     .catch((error) => console.error('Error deleting item:', error));
-
+    fetch(`${url}/facility/${id}`, {
+      method: 'DELETE'
+    })
+        .then(() => {
+          const updatedFacilities = facilities.filter((facility) => facility.id !== id);
+          setFacilities(updatedFacilities);
+        })
+        .catch((error) => console.error('Error deleting item:', error));
   }
 
   const handleOnModalClose = () => {
