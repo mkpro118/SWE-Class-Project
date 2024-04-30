@@ -23,7 +23,7 @@ public class ManagerSchema {
     /**
      * This is the position title for the manager queried.
      */
-    public String positionTitle;
+    public String position;
 
     /**
      * This is the access tier level the manager queried has.
