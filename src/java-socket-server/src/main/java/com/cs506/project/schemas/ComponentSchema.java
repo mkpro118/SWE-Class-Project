@@ -38,7 +38,7 @@ public class ComponentSchema {
     /**
      * This is the id of the supplier that supplied the component queried.
      */
-    public int supplierId;
+    public int facilityId;
 
     /**
      * This is the total cost of the component queried.

@@ -140,7 +140,10 @@ def auto_handle_get(with_id: bool = False) -> Callable:
                     decoded = func.decoder.decode(resp)
                     data = decoded['data']
                     with _cache_metadata['lock']:
-                        _cache_metadata['cache'][func.__name__] = data
+                        if func.__name__ not in _cache_metadata['cache']:
+                            _cache_metadata['cache'][func.__name__] = data
+                        else:
+                            _cache_metadata['cache'].extend(data)
 
                     threading.Thread(target=save_cache).start()
                     return jsonify(data)
@@ -199,19 +202,61 @@ def auto_handle_delete(func: Callable) -> Callable:
     return inner
 
 
-@auto_handle_get()
-@handler.register
-@add_decoder('Component')
-@add_encoders(models.Component, types=['READ', 'UPDATE'])
+def auto_handle_post(func: Callable) -> Callable:
+    '''Add a handler for POST requests, as most views have the same operations.
+
+    Args:
+        func (Callable): Intercept and handle POST requests for this view
+    '''
+    # Safety check, POSTs work without IDs
+    if '_with_id' in func.__name__:
+        return func
+
+    kind: str = func.__name__
+
+    @functools.wraps(func)
+    def inner(request, *args, **kwargs):
+        # Non POST requests handled by default implementation
+        if request.method != 'POST':
+            return func(request, *args, **kwargs)
+
+        data = request.get_json()
+        _type = data.pop('type', kind).lower()
+
+        curr_max = max(_cache_metadata['cache'][_type], key=lambda x: x.ID)
+
+        if curr_max:
+            data['ID'] = curr_max.ID + 1
+        else:
+            data['ID'] = 1
+
+        model = models.decoder_mapping[_type.capitalize()](**data)
+
+        with _cache_metadata['lock']:
+            if _type not in _cache_metadata['cache']:
+                _cache_metadata['cache'][_type] = []
+
+            _cache_metadata['cache'][_type].append(model)
+            threading.Thread(target=save_cache).start()
+
+        return jsonify({'success': True})
+    return inner
+
+
+@ auto_handle_post
+@ auto_handle_get()
+@ handler.register
+@ add_decoder('Component')
+@ add_encoders(models.Component, types=['READ', 'UPDATE'])
 def component(request):
     return f'Success on "/component" with method {request.method}'
 
 
-@auto_handle_delete
-@auto_handle_get(with_id=True)
-@handler.register
-@add_decoder('Component')
-@add_encoders(models.Component, types=['READ', 'UPDATE', 'DELETE'])
+@ auto_handle_delete
+@ auto_handle_get(with_id=True)
+@ handler.register
+@ add_decoder('Component')
+@ add_encoders(models.Component, types=['READ', 'UPDATE', 'DELETE'])
 def component_with_id(request, component_id: int):
     return (
         f'Success on "/component/{{ID}}" with method {request.method}\n'
@@ -219,19 +264,20 @@ def component_with_id(request, component_id: int):
     )
 
 
-@auto_handle_get()
-@handler.register
-@add_decoder('Airplane')
-@add_encoders(models.Airplane, types=['READ', 'DELETE'])
+@ auto_handle_post
+@ auto_handle_get()
+@ handler.register
+@ add_decoder('Airplane')
+@ add_encoders(models.Airplane, types=['READ', 'DELETE'])
 def airplane(request):
     return f'Success on "/airplane" with method {request.method}'
 
 
-@auto_handle_delete
-@auto_handle_get(with_id=True)
-@handler.register
-@add_decoder('Airplane')
-@add_encoders(models.Airplane, types=['READ', 'UPDATE', 'DELETE'])
+@ auto_handle_delete
+@ auto_handle_get(with_id=True)
+@ handler.register
+@ add_decoder('Airplane')
+@ add_encoders(models.Airplane, types=['READ', 'UPDATE', 'DELETE'])
 def airplane_with_id(request, airplane_id: int):
     return (
         f'Success on "/airplane/{{ID}}" with method {request.method}\n'
@@ -239,19 +285,19 @@ def airplane_with_id(request, airplane_id: int):
     )
 
 
-@auto_handle_get()
-@handler.register
-@add_decoder('AirplaneToComponent')
-@add_encoders(models.AirplaneToComponent, types=['READ', 'UPDATE'])
+@ auto_handle_get()
+@ handler.register
+@ add_decoder('AirplaneToComponent')
+@ add_encoders(models.AirplaneToComponent, types=['READ', 'UPDATE'])
 def airplanecomponent(request):
     return f'Success on "/airplanecomponent" with method {request.method}'
 
 
-@auto_handle_delete
-@auto_handle_get(with_id=True)
-@handler.register
-@add_decoder('AirplaneToComponent')
-@add_encoders(models.AirplaneToComponent, types=['READ', 'DELETE'])
+@ auto_handle_delete
+@ auto_handle_get(with_id=True)
+@ handler.register
+@ add_decoder('AirplaneToComponent')
+@ add_encoders(models.AirplaneToComponent, types=['READ', 'DELETE'])
 def airplanecomponent_with_id(request, airplanecomponent_id: int):
     return (
         f'Success on "/airplanecomponent/{{ID}}" with method {request.method}\n'
@@ -259,19 +305,20 @@ def airplanecomponent_with_id(request, airplanecomponent_id: int):
     )
 
 
-@auto_handle_get()
-@handler.register
-@add_decoder('Facility')
-@add_encoders(models.Facility, types=['READ', 'UPDATE'])
+@ auto_handle_post
+@ auto_handle_get()
+@ handler.register
+@ add_decoder('Facility')
+@ add_encoders(models.Facility, types=['READ', 'UPDATE'])
 def facility(request):
     return f'Success on "/facility" with method {request.method}'
 
 
-@auto_handle_delete
-@auto_handle_get(with_id=True)
-@handler.register
-@add_decoder('Facility')
-@add_encoders(models.Facility, types=['READ', 'CREATE', 'DELETE'])
+@ auto_handle_delete
+@ auto_handle_get(with_id=True)
+@ handler.register
+@ add_decoder('Facility')
+@ add_encoders(models.Facility, types=['READ', 'CREATE', 'DELETE'])
 def facility_with_id(request, facility_id: int):
     return (
         f'Success on "/facility/{{ID}}" with method {request.method}\n'
@@ -279,18 +326,18 @@ def facility_with_id(request, facility_id: int):
     )
 
 
-@auto_handle_get()
-@handler.register
-@add_decoder('Customer')
-@add_encoders(models.Customer, types=['READ', 'UPDATE'])
+@ auto_handle_get()
+@ handler.register
+@ add_decoder('Customer')
+@ add_encoders(models.Customer, types=['READ', 'UPDATE'])
 def customer(request):
     return f'Success on "/customer" with method {request.method}'
 
 
-@auto_handle_get(with_id=True)
-@handler.register
-@add_decoder('Customer')
-@add_encoders(models.Customer, types=['READ', 'DELETE'])
+@ auto_handle_get(with_id=True)
+@ handler.register
+@ add_decoder('Customer')
+@ add_encoders(models.Customer, types=['READ', 'DELETE'])
 def customer_with_id(request, customer_id: int):
     return (
         f'Success on "/customer/{{ID}}" with method {request.method}\n'
@@ -298,18 +345,18 @@ def customer_with_id(request, customer_id: int):
     )
 
 
-@auto_handle_get()
-@handler.register
-@add_decoder('Supplier')
-@add_encoders(models.Supplier, types=['READ', 'UPDATE'])
+@ auto_handle_get()
+@ handler.register
+@ add_decoder('Supplier')
+@ add_encoders(models.Supplier, types=['READ', 'UPDATE'])
 def supplier(request):
     return f'Success on "/supplier" with method {request.method}'
 
 
-@auto_handle_get(with_id=True)
-@handler.register
-@add_decoder('Supplier')
-@add_encoders(models.Supplier, types=['READ', 'DELETE'])
+@ auto_handle_get(with_id=True)
+@ handler.register
+@ add_decoder('Supplier')
+@ add_encoders(models.Supplier, types=['READ', 'DELETE'])
 def supplier_with_id(request, supplier_id: int):
     return (
         f'Success on "/supplier/{{ID}}" with method {request.method}\n'
@@ -317,18 +364,18 @@ def supplier_with_id(request, supplier_id: int):
     )
 
 
-@auto_handle_get()
-@handler.register
-@add_decoder('SupplierToFacility')
-@add_encoders(models.SupplierToFacility, types=['READ', 'UPDATE'])
+@ auto_handle_get()
+@ handler.register
+@ add_decoder('SupplierToFacility')
+@ add_encoders(models.SupplierToFacility, types=['READ', 'UPDATE'])
 def supplierfacility(request):
     return f'Success on "/supplierfacility" with method {request.method}'
 
 
-@auto_handle_get(with_id=True)
-@handler.register
-@add_decoder('SupplierToFacility')
-@add_encoders(models.SupplierToFacility, types=['READ', 'DELETE'])
+@ auto_handle_get(with_id=True)
+@ handler.register
+@ add_decoder('SupplierToFacility')
+@ add_encoders(models.SupplierToFacility, types=['READ', 'DELETE'])
 def supplierfacility_with_id(request, supplierfacility_id: int):
     return (
         f'Success on "/supplierfacility/{{ID}}" with method {request.method}\n'
@@ -336,18 +383,18 @@ def supplierfacility_with_id(request, supplierfacility_id: int):
     )
 
 
-@auto_handle_get()
-@handler.register
-@add_decoder('Manager')
-@add_encoders(models.Manager, types=['READ', 'UPDATE'])
+@ auto_handle_get()
+@ handler.register
+@ add_decoder('Manager')
+@ add_encoders(models.Manager, types=['READ', 'UPDATE'])
 def manager(request):
     return f'Success on "/manager" with method {request.method}'
 
 
-@auto_handle_get(with_id=True)
-@handler.register
-@add_decoder('Manager')
-@add_encoders(models.Manager, types=['READ', 'DELETE'])
+@ auto_handle_get(with_id=True)
+@ handler.register
+@ add_decoder('Manager')
+@ add_encoders(models.Manager, types=['READ', 'DELETE'])
 def manager_with_id(request, manager_id: int):
     return (
         f'Success on "/manager/{{ID}}" with method {request.method}\n'
