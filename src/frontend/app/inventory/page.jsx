@@ -2,6 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import Table from '@/app/components/table';
+import AirplaneModal from '@/app/components/inventory-modal-airplane';
+import ComponentModal from '@/app/components/inventory-modal-component';
+
+
 
 const MasterInventory = () => {
 
@@ -9,6 +13,9 @@ const MasterInventory = () => {
   const [fullInventoryDisplay, setFullInventoryDisplay] = useState([]);
   const [componentData, setComponentData] = useState([]);
   const [airplaneData, setAirplaneData] = useState([]);
+  
+  const [showAirplaneModal, setShowAirplaneModal] = useState(false);
+  const [showComponentModal, setShowComponentModal] = useState(false);
 
   const [pageActive, setPageActive] = useState(1);
 
@@ -85,6 +92,13 @@ const MasterInventory = () => {
     setFullInventory(results);
   }, [prodLookup, filters, fullInventoryDisplay]);
 
+  const handleModalAirplaneClose = () => {
+    setShowAirplaneModal(false)
+  }
+  const handleModalComponentClose = () => {
+    setShowComponentModal(false)
+  }
+  
   const handleSearchReset = () => {
     setProdLookup("");
   }
@@ -344,13 +358,25 @@ const MasterInventory = () => {
             </ul>
           </nav>
           {/*Add product button*/}
-          <button type="button" className="inline-flex items-center rounded-md bg-blue-300 px-3 py-1.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-blue-300 hover:bg-blue-700">
+          <div className="flex">
+          <button className="mr-2 inline-flex items-center rounded-md bg-blue-300 px-3 py-1.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-blue-300 hover:bg-blue-700"
+                  onClick={() => setShowAirplaneModal(true)}>
             <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
             </svg>
-            Add Product
+            Add Airplane
+          </button>
+          <button className="inline-flex items-center rounded-md bg-blue-300 px-3 py-1.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-blue-300 hover:bg-blue-700"
+                  onClick={() => setShowComponentModal(true)}>
+            <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
+            </svg>
+            Add Component
           </button>
         </div>
+        </div>
+        <AirplaneModal showAirplaneModal={showAirplaneModal} onClose={handleModalAirplaneClose}/>
+        <ComponentModal showComponentModal={showComponentModal} onClose={handleModalComponentClose}/>
       </div>
     </>
   )

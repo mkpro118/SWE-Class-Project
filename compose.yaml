@@ -33,7 +33,7 @@ services:
       context: src/python_web_api
       dockerfile: Python.Dockerfile
     volumes:
-      - python_web_api_artifacts:/src
+      - python_web_api_artifacts:/src/artifacts
     depends_on:
       proxy_server:
         # restart: true
