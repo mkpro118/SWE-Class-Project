@@ -63,11 +63,11 @@ public class ComponentRepositoryTest {
 
         when(mockResult.getInt("ComponentId")).thenReturn(1);
         when(mockResult.getString("Name")).thenReturn("Wing");
-        when(mockResult.getString("ProductionStageName")).thenReturn("Development");
+        when(mockResult.getString("ProductionStage")).thenReturn("Development");
         when(mockResult.getDouble("Cost")).thenReturn(14.1);
         when(mockResult.getString("Description")).thenReturn("Hello World");
         when(mockResult.getString("ComponentType")).thenReturn("Wing");
-        when(mockResult.getInt("SupplierId")).thenReturn(1);
+        when(mockResult.getInt("FacilityId")).thenReturn(1);
 
         ComponentRepository repo = new ComponentRepository(mockConnection);
 
@@ -79,11 +79,11 @@ public class ComponentRepositoryTest {
 
         assertEquals(1,component.componentId);
         assertEquals("Wing",component.name);
-        assertEquals("Development",component.productionStageName);
+        assertEquals("Development",component.productionStage);
         assertEquals(14.1, component.cost);
         assertEquals("Hello World", component.description);
         assertEquals("Wing", component.componentType);
-        assertEquals( 1, component.supplierId);
+        assertEquals( 1, component.facilityId);
 
     }
 
@@ -99,7 +99,7 @@ public class ComponentRepositoryTest {
 
         repo.getAllWithBasicDetails(10);
 
-        assertEquals("SELECT ComponentId, Name, ProductionStageName, Cost FROM Component LIMIT 10", queryCaptor.getValue());
+        assertEquals("SELECT ComponentId, Name, ProductionStage, Cost FROM Component LIMIT 10", queryCaptor.getValue());
 
     }
 
@@ -113,7 +113,7 @@ public class ComponentRepositoryTest {
 
         when(mockResult.getInt("ComponentId")).thenReturn(1);
         when(mockResult.getString("Name")).thenReturn("Wing");
-        when(mockResult.getString("ProductionStageName")).thenReturn("Development");
+        when(mockResult.getString("ProductionStage")).thenReturn("Development");
         when(mockResult.getDouble("Cost")).thenReturn(14.1);
 
         ComponentRepository repo = new ComponentRepository(mockConnection);
@@ -126,7 +126,7 @@ public class ComponentRepositoryTest {
 
         assertEquals(1,component.componentId);
         assertEquals("Wing",component.name);
-        assertEquals("Development",component.productionStageName);
+        assertEquals("Development",component.productionStage);
         assertEquals(14.1, component.cost);
         assertEquals(null, component.description);
 
@@ -158,11 +158,11 @@ public class ComponentRepositoryTest {
 
         when(mockResult.getInt("ComponentId")).thenReturn(1);
         when(mockResult.getString("Name")).thenReturn("Wing");
-        when(mockResult.getString("ProductionStageName")).thenReturn("Development");
+        when(mockResult.getString("ProductionStage")).thenReturn("Development");
         when(mockResult.getDouble("Cost")).thenReturn(14.1);
         when(mockResult.getString("Description")).thenReturn("Hello World");
         when(mockResult.getString("ComponentType")).thenReturn("Wing");
-        when(mockResult.getInt("SupplierId")).thenReturn(1);
+        when(mockResult.getInt("FacilityId")).thenReturn(1);
 
         ComponentRepository repo = new ComponentRepository(mockConnection);
 
@@ -174,11 +174,11 @@ public class ComponentRepositoryTest {
 
         assertEquals(1,component.componentId);
         assertEquals("Wing",component.name);
-        assertEquals("Development",component.productionStageName);
+        assertEquals("Development",component.productionStage);
         assertEquals(14.1, component.cost);
         assertEquals("Hello World", component.description);
         assertEquals("Wing", component.componentType);
-        assertEquals( 1, component.supplierId);
+        assertEquals( 1, component.facilityId);
 
     }
 

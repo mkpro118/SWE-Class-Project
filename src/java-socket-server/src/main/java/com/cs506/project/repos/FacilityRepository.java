@@ -27,9 +27,9 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
         List<FacilitySchema> facilites = new ArrayList<>();
         String query = "";
         if (limit != -1) {
-            query = "SELECT FacilityID, city, state FROM Facility LIMIT" + limit;
+            query = "SELECT facilityId, city, state FROM Facility LIMIT" + limit;
         } else {
-            query = "SELECT FacilityID, city, state FROM Facility";
+            query = "SELECT facilityId, city, state FROM Facility";
         }
         try(Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query)){
@@ -56,7 +56,7 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
         List<FacilitySchema> facilities = new ArrayList<>();
         String query = "";
         if(limit != -1){
-            query = "SELECT * FROM Facility Limit" + limit;
+            query = "SELECT * FROM Facility LIMIT " + limit;
         } else {
             query = "SELECT * FROM Facility";
         }
