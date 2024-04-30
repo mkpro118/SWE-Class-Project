@@ -39,6 +39,10 @@ public class AirplaneRepositoryTest {
 
     }
 
+    /**
+     * Tests to see that the query string is correcy with a specified  limit input for getWithAllDetails
+     * @throws SQLException
+     */
     @Test
     public void testGetWithAllDetailsQueryString () throws SQLException {
 
@@ -55,6 +59,10 @@ public class AirplaneRepositoryTest {
 
     }
 
+    /**
+     * tests to see that the correct airplane is returned and that all the details of the airplane are correct
+     * @throws SQLException
+     */
     @Test
     public void testGetWithAllDetailsResponse () throws SQLException {
 
@@ -93,6 +101,10 @@ public class AirplaneRepositoryTest {
 
     }
 
+    /**
+     * Tests to see if the Query string for getById is correct with a specified input
+     * @throws SQLException
+     */
     @Test
     public void testGetByIdQueryString () throws SQLException {
 
@@ -109,6 +121,10 @@ public class AirplaneRepositoryTest {
 
     }
 
+    /**
+     * tests to see that the correct airplane and all of it's details are retained when using getById
+     * @throws SQLException
+     */
     @Test
     public void testGetByIdResponse () throws SQLException {
 
@@ -147,6 +163,10 @@ public class AirplaneRepositoryTest {
 
     }
 
+    /**
+     * Tests to see that the query string for getWithBasicDetails is correct with a specified limit
+     * @throws SQLException
+     */
     @Test
     public void testGetWithBasicDetailsQueryString () throws SQLException {
         ArgumentCaptor<String> queryCaptor = ArgumentCaptor.forClass(String.class);
@@ -158,9 +178,13 @@ public class AirplaneRepositoryTest {
 
         repo.getAllWithBasicDetails(10);
 
-        assertEquals("SELECT AirplaneId, Name, ProductionStageName, Cost FROM Airplane LIMIT 10;", queryCaptor.getValue());
+        assertEquals("SELECT AirplaneId, Name, ProductionStage, Cost FROM Airplane LIMIT 10;", queryCaptor.getValue());
     }
 
+    /**
+     * Tests to see if only the specified fields are returned with the correct airplane when called
+     * @throws SQLException
+     */
     @Test
     public void testGetWithBasicDetailsResponse () throws SQLException {
 
