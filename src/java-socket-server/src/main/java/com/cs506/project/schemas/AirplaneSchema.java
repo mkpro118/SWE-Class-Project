@@ -35,7 +35,7 @@ public class AirplaneSchema {
     /**
      * This is the stage of production the airplane queried is currently in.
      */
-    public String productionStageName;
+    public String productionStage;
 
     /**
      * This is the total cost of producing the airplane queried.

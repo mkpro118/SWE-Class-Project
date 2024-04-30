@@ -69,11 +69,11 @@ services:
       timeout: 15s
       retries: 3
       start_period: 5s
-    # depends_on:
-    #   sql_server:
+    depends_on:
+      sql_server:
     #     restart: true
     #     required: true
-    #     condition: service_healthy
+        condition: service_healthy
     # restart: on-failure:5
     networks:
       - back_end

@@ -59,6 +59,8 @@ class ProxyClient:
         ps.send(fd, request)
         resp = ps.recv(fd)
         ps.close(fd)
+        if resp[-1] == '\0':
+            resp = resp[:-1]
         return resp
 
     def register(self, func: Callable) -> Callable:

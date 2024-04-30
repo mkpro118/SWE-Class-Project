@@ -12,6 +12,7 @@ VOLUME /src/artifacts
 # Testing purposes only
 ENV MYSQL_ROOT_PASSWORD=pass
 ENV MYSQL_DATABASE=appdb
+ENV MYSQL_ROOT_HOST=%
 
 COPY Dump.sql /docker-entrypoint-initdb.d/Dump.sql
 

@@ -5,6 +5,19 @@ from typing import Any, Iterable, Optional
 from webserver.internals import models
 import json
 import functools
+import re
+
+
+def change_case(key: str) -> str:
+    '''Convert camel case to snake case
+    Args:
+        key (str): string in camel case
+
+    Returns:
+        str: string in snake case
+    '''
+    s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', key)
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
 
 
 class ProxyRequestType(Enum):
@@ -59,10 +72,27 @@ class ProxyRequestEncoder:
 class ProxyRequestDecoder:
     parse = functools.partial(json.loads, cls=models.ModelDecoder)
 
-    def decode(self, request: str) -> dict[str, Any]:
-        parsed = ProxyRequestDecoder.parse(request)
+    def __init__(self, model_name: str):
+        self.model_name = model_name
 
-        if 'error' in parsed:
+    def decode(self, request: str) -> dict[str, Any]:
+        initial_parse = json.loads(request)
+        if initial_parse['error'].strip():
             return {'error': True}
 
-        return {'data': parsed['entities']}
+        for entity in initial_parse['entities']:
+            original_keyset = set(entity.keys())
+
+            # Switch from camel case to snake case
+            for key in original_keyset:
+                entity[change_case(key)] = entity.pop(key)
+
+            # Add type field to parse as model
+            entity['type'] = self.model_name
+            if (_id := f'{self.model_name.lower()}_id') in entity:
+                entity['ID'] = entity.pop(_id)
+
+        entities = json.dumps(initial_parse['entities'])
+        parsed = ProxyRequestDecoder.parse(entities)
+
+        return {'data': parsed}

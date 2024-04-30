@@ -48,6 +48,6 @@ public class ComponentSchema {
     /**
      * This is the current stage of production the component queried is in.
      */
-    public String productionStageName;
+    public String productionStage;
 
 }

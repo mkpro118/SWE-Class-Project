@@ -161,7 +161,6 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
      * */
     @Override
     public List<FacilitySchema> handleCreateQuery(List<FacilitySchema> requestEntities) throws SQLException {
-        closeConnection();
         return null;
     }
 
@@ -187,7 +186,6 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
         } else{
             result = getAllWithAllDetails(limit);
         }
-        closeConnection();
 
         return result;
     }
@@ -200,7 +198,6 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
      * */
     @Override
     public List<FacilitySchema> handleUpdateQuery(List<FacilitySchema> request) throws SQLException {
-        closeConnection();
         return null;
     }
 
@@ -213,18 +210,6 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
     @Override
     public List<FacilitySchema> handleDeleteQuery(List<FacilitySchema> request) throws SQLException {
 
-        closeConnection();
         return null;
     }
-
-    /**
-     * Closes the connection to the datebase and must be run after each query
-     *
-     * */
-    @Override
-    public void closeConnection() throws SQLException {
-        connection.close();
-    }
-
-
 }

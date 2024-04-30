@@ -33,13 +33,14 @@ public class ComponentRepository implements ISQLRepository<ComponentSchema> {
 
         String query = "";
         if (limit != -1) {
-            query = "SELECT ComponentId, Name, ProductionStageName, Cost FROM Component LIMIT " + limit;
+            query = "SELECT ComponentId, Name, ProductionStage, Cost FROM Component LIMIT " + limit;
         } else {
-            query = "SELECT ComponentId, Name, ProductionStageName, Cost FROM Component";
+            query = "SELECT ComponentId, Name, ProductionStage, Cost FROM Component";
         }
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
+            System.out.println("Query Ran: " + query);
 
             while (resultSet.next()) {
 
@@ -48,7 +49,7 @@ public class ComponentRepository implements ISQLRepository<ComponentSchema> {
                 componentSchema.componentId = resultSet.getInt("ComponentId");
                 componentSchema.name = resultSet.getString("Name");
                 componentSchema.cost = resultSet.getDouble("Cost");
-                componentSchema.productionStageName = resultSet.getString("ProductionStageName");
+                componentSchema.productionStage = resultSet.getString("ProductionStage");
 
                 components.add(componentSchema);
             }
@@ -79,6 +80,7 @@ public class ComponentRepository implements ISQLRepository<ComponentSchema> {
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
+            System.out.println("Query Ran: " + query);
 
             while (resultSet.next()) {
 
@@ -92,7 +94,7 @@ public class ComponentRepository implements ISQLRepository<ComponentSchema> {
                 componentSchema.componentType = resultSet.getString("ComponentType");
                 componentSchema.supplierId = resultSet.getInt("SupplierId");
                 componentSchema.cost = resultSet.getDouble("Cost");
-                componentSchema.productionStageName = resultSet.getString("ProductionStageName");
+                componentSchema.productionStage = resultSet.getString("ProductionStage");
 
                 components.add(componentSchema);
             }
@@ -114,7 +116,8 @@ public class ComponentRepository implements ISQLRepository<ComponentSchema> {
         String query = "SELECT * FROM Component WHERE ComponentId = " + componentId;
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)){
-            
+            System.out.println("Query Ran: " + query);
+
             while (resultSet.next()) {
                 
                 ComponentSchema componentSchema = new ComponentSchema();
@@ -127,7 +130,7 @@ public class ComponentRepository implements ISQLRepository<ComponentSchema> {
                 componentSchema.componentType = resultSet.getString("ComponentType");
                 componentSchema.supplierId = resultSet.getInt("SupplierId");
                 componentSchema.cost = resultSet.getDouble("Cost");
-                componentSchema.productionStageName = resultSet.getString("ProductionStageName");
+                componentSchema.productionStage = resultSet.getString("ProductionStage");
 
                 component.add(componentSchema);
                 
@@ -147,7 +150,6 @@ public class ComponentRepository implements ISQLRepository<ComponentSchema> {
     @Override
     public List<ComponentSchema> handleCreateQuery(List<ComponentSchema> requestEntities) throws SQLException {
         
-        closeConnection();
         return null;
     }
 
@@ -162,18 +164,23 @@ public class ComponentRepository implements ISQLRepository<ComponentSchema> {
     public List<ComponentSchema> handleReadQuery(int limit, boolean readAllDetails, List<ComponentSchema> components) throws SQLException {
         
         List<ComponentSchema> result = new ArrayList<>();
-        
+
+        System.out.println("Reading Component table in database");
+
         if (components.size() != 0){
             for ( ComponentSchema component : components ){
                 result.addAll(getById(component.componentId));
             }
         } else if (!readAllDetails) {
+            System.out.println("Read with basic details query received!");
             result = getAllWithBasicDetails(limit);
+            System.out.println("Read with basic details query result: " + result.toString());
         } else {
+            System.out.println("Read with all details query received!");
             result = getAllWithAllDetails(limit);
+            System.out.println("Read with all details query result: " + result.toString());
         }
         
-        closeConnection();
         return result;
     }
 
@@ -186,7 +193,6 @@ public class ComponentRepository implements ISQLRepository<ComponentSchema> {
     @Override
     public List<ComponentSchema> handleUpdateQuery(List<ComponentSchema> request) throws SQLException {
         
-        closeConnection();
         return null;
     }
 
@@ -199,15 +205,7 @@ public class ComponentRepository implements ISQLRepository<ComponentSchema> {
     @Override
     public List<ComponentSchema> handleDeleteQuery(List<ComponentSchema> request) throws SQLException {
         
-        closeConnection();
         return null;
     }
 
-    /**
-     * Closes connection to the database. Must be run after every query method.
-     */
-    @Override
-    public void closeConnection() throws SQLException {
-        connection.close();
-    }
 }

@@ -11,6 +11,14 @@ services:
       - 5000
     ports:
       - "80:3000"
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /src
+          ignore:
+            - ./frontend/node_modules
+            - ./frontend/artifacts
 
   web_server:
     container_name: web_server
@@ -33,6 +41,17 @@ services:
       - 8000
     ports:
       - "5000:5000"
+    develop:
+      watch:
+        - action: sync
+          path: ./python_web_api
+          target: /src
+          ignore:
+            - ./python_web_api/artifacts
+            - ./python_web_api/.mypy_cache
+            - ./python_web_api/__pycache__
+            - ./python_web_api/src/build
+            - ./python_web_api/src/webserver.egg-info
 
   proxy_server:
     container_name: proxy_server
@@ -47,19 +66,26 @@ services:
     expose:
       - 8000
       - 3306
+    develop:
+      watch:
+        - action: sync
+          path: ./java-socket-server
+          target: /src
+          ignore:
+            - ./java-socket-server/artifacts
 
-  # sql_server:
-  #   container_name: sql_server
-  #   image: sql_server
-  #   build:
-  #     context: src/mysql-db-repo
-  #     dockerfile: SQL.Dockerfile
-  #   networks:
-  #     - database
-  #   expose:
-  #     - 3306
+  sql_server:
+    container_name: sql_server
+    image: sql_server
+    build:
+      context: src/mysql-db-repo
+      dockerfile: SQL.Dockerfile
+    networks:
+      - database
+    expose:
+      - 3306
 
 networks:
   front_end:
   back_end:
-  # database:
+  database:

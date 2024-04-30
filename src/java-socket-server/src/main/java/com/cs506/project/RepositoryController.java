@@ -8,6 +8,7 @@ import com.cs506.project.schemas.ComponentSchema;
 import com.cs506.project.schemas.FacilitySchema;
 import com.cs506.project.schemas.SocketServerRequest;
 import jdk.net.Sockets;
+import java.sql.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -24,12 +25,16 @@ import com.google.gson.Gson;
  */
 public class RepositoryController {
 
-    private JDBCConnection jdbcConnection;
+    private Connection conn;
 
     private static final Gson gson = new Gson();
 
-    public RepositoryController () {
-        jdbcConnection = createConnection();
+    private static final String sql_host = System.getenv().getOrDefault("SQL_SERVER_HOST", "localhost");
+
+    private static final String sql_port = System.getenv().getOrDefault("SQL_SERVER_PORT", "3306");
+
+   public RepositoryController () {
+        createConnection();
     }
 
     /**
@@ -37,8 +42,13 @@ public class RepositoryController {
      *
      * @return JDBCConnection object.
      */
-    private JDBCConnection createConnection () {
-        return new JDBCConnection();
+    private void createConnection () {
+        try {
+            conn = DriverManager.getConnection("jdbc:mysql://" + sql_host + ":" + sql_port + "/appdb", "root", "pass");
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        ;
     }
 
     public SocketServerRequest createSocketServerRequest (byte[] request) {
@@ -89,7 +99,7 @@ public class RepositoryController {
     private List<AirplaneSchema> handleAirplaneRequest (String action, int limit, boolean readAll,
                                                         List<AirplaneSchema> requestAirplanes) throws SQLException {
 
-        AirplaneRepository repository = new AirplaneRepository(null);
+        AirplaneRepository repository = new AirplaneRepository(conn);
 
         List<AirplaneSchema> result = null;
 
@@ -100,7 +110,9 @@ public class RepositoryController {
                 break;
 
             case "READ":
+                System.out.println("Airplane Read Request Received");
                 result = repository.handleReadQuery(limit, readAll, requestAirplanes);
+                System.out.println("Airplane Read Response: " + result.toString());
                 break;
 
             case "UPDATE":
@@ -128,7 +140,7 @@ public class RepositoryController {
                                                           List<ComponentSchema> requestComponents) throws SQLException {
 
         // Call JDBCConnection.create before
-        ComponentRepository repository = new ComponentRepository(null);
+        ComponentRepository repository = new ComponentRepository(conn);
 
         List<ComponentSchema> result = null;
 
@@ -139,7 +151,9 @@ public class RepositoryController {
                 break;
 
             case "READ":
+                System.out.println("Component Read Request Received");
                 result = repository.handleReadQuery(limit, readAll, requestComponents);
+                System.out.println("Component Read Response: " + result.toString());
                 break;
 
             case "UPDATE":
@@ -165,7 +179,7 @@ public class RepositoryController {
      */
     public List<FacilitySchema> handleFacilityRequest (String action, int limit, boolean readAll,
                                                         List<FacilitySchema> requestFacilities) throws SQLException {
-        FacilityRepository repository = new FacilityRepository(null);
+        FacilityRepository repository = new FacilityRepository(conn);
         List<FacilitySchema> result = null;
         switch (action) {
             case "CREATE":
@@ -197,7 +211,11 @@ public class RepositoryController {
      */
     public String handleRequest (byte[] request) {
 
+        System.out.println("Request Received!");
+
         SocketServerRequest ssrequest = createSocketServerRequest(request);
+
+        System.out.println("SocketServerRequest Received: " + ssrequest.entityName + " " + ssrequest.type + " " +ssrequest.entities );
 
         if (ssrequest == null) {
             return formResponse(null);
@@ -210,9 +228,12 @@ public class RepositoryController {
             switch (ssrequest.entityName) {
 
                 case "Airplane":
+                    System.out.println("Airplane Request Received");
                     List<AirplaneSchema> airplanes = ssrequest.entities.stream()
                             .map(obj -> (AirplaneSchema) obj)
                             .collect(Collectors.toList());
+
+                    System.out.println("Calling handle method for Airplane Request...");
                     List<AirplaneSchema> responseAirplanes = handleAirplaneRequest(ssrequest.type, ssrequest.limit,
                             ssrequest.requestingAllDetails ,airplanes);
 
@@ -224,6 +245,7 @@ public class RepositoryController {
                     break;
 
                 case "Component":
+                    System.out.println("Component Request Received");
                     List<ComponentSchema> components = ssrequest.entities.stream()
                             .map(obj -> (ComponentSchema) obj)
                             .collect(Collectors.toList());
@@ -235,6 +257,7 @@ public class RepositoryController {
                     } else {
                         response = formResponse(gson.toJson(responseComponents));
                     }
+                    break;
 
                 case "Facility":
                     List<FacilitySchema>  facilities = ssrequest.entities.stream()
@@ -261,6 +284,23 @@ public class RepositoryController {
         }
 
         return response;
+    }
+
+    public static void main (String[] arg) {
+
+        RepositoryController controller = new RepositoryController();
+
+        String request = "{\n" +
+                "  \"type\": \"READ\",\n" +
+                "  \"entityName\": \"Airplane\",\n" +
+                "  \"limit\": -1,\n" +
+                "  \"requestingAllDetails\": \"true\",\n" +
+                "  \"entities\": []\n" +
+                "}";
+
+        var response = controller.handleRequest(request.getBytes());
+
+        System.out.println("Response Given: " + response);
     }
 
 }

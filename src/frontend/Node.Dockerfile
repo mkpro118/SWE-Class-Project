@@ -10,15 +10,17 @@ ENV WEBSERVER_PORT=5000
 RUN mkdir src
 WORKDIR /src
 
+# Install packages required by the react app
+COPY package-lock.json .
+COPY package.json .
+RUN npm install
+
 # Preserve any files generated within the container
 RUN mkdir -p artifacts
 VOLUME /src/artifacts
 ENV ARTIFACTS_ROOT=/src/artifacts
 
 COPY . .
-
-# Install packages required by the react app
-RUN npm install
 
 # These don't really do much, but allow readers to know these ports will be
 # exposed

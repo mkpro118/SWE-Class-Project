@@ -66,9 +66,4 @@ public interface ISQLRepository<E> {
      */
     public List<E> handleDeleteQuery(List<E> request) throws SQLException;
 
-    /**
-     * Closes connection to the database. Must be run after every query method.
-     */
-    public void closeConnection () throws SQLException;
-
 }
