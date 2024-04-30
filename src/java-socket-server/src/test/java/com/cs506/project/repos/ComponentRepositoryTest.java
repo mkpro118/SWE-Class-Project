@@ -37,6 +37,10 @@ public class ComponentRepositoryTest {
 
     }
 
+    /**
+     * Tests to see if the correct Query string is returned when calling getWithAllDetails with a specified limit
+     * @throws SQLException
+     */
     @Test
     public void testGetWithAllDetailsQueryString () throws SQLException {
 
@@ -53,6 +57,10 @@ public class ComponentRepositoryTest {
 
     }
 
+    /**
+     * Tests to see if the correct component and all it's information is returned when called getWithAllDetails
+     * @throws SQLException
+     */
     @Test
     public void testGetWithAllDetailsResponse () throws SQLException {
 
@@ -87,6 +95,10 @@ public class ComponentRepositoryTest {
 
     }
 
+    /**
+     * Tests to see if the Query string for getWithBasicDetails is correct
+     * @throws SQLException
+     */
     @Test
     public void testGetWithBasicDetailsQueryString () throws SQLException {
 
@@ -103,6 +115,10 @@ public class ComponentRepositoryTest {
 
     }
 
+    /**
+     * Tests to see if the specific details and the correct component are returned for getWithBasicDetails
+     * @throws SQLException
+     */
     @Test
     public void testGetWithBasicDetailsResponse () throws SQLException {
 
@@ -132,6 +148,10 @@ public class ComponentRepositoryTest {
 
     }
 
+    /**
+     * Tests to see if the Query string is correct for getById with a specified input
+     * @throws SQLException
+     */
     @Test
     public void testGetByIdQueryString () throws SQLException {
 
@@ -148,6 +168,10 @@ public class ComponentRepositoryTest {
 
     }
 
+    /**
+     * Tests to see that the correct component is returned when using getByID
+     * @throws SQLException
+     */
     @Test
     public void testGetByIdResponse () throws SQLException {
 

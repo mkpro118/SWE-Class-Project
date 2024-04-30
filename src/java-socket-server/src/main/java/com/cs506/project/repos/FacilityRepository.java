@@ -27,7 +27,7 @@ public class FacilityRepository implements ISQLRepository<FacilitySchema>{
         List<FacilitySchema> facilites = new ArrayList<>();
         String query = "";
         if (limit != -1) {
-            query = "SELECT facilityId, city, state FROM Facility LIMIT" + limit;
+            query = "SELECT facilityId, city, state FROM Facility LIMIT " + limit;
         } else {
             query = "SELECT facilityId, city, state FROM Facility";
         }

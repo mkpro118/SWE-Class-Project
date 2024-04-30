@@ -39,6 +39,7 @@ public class FacilityRepositoryTest {
     }
     /**
      * Tests to make sure correct query string is correct with specified input
+     * @throws SQLException
      * */
     @Test
     public void testGetWithAllDetailsQueryString () throws SQLException {
@@ -58,6 +59,7 @@ public class FacilityRepositoryTest {
     /**
      * tests to make sure that the GetWithAllDetails returns the correct amount of facilities
      * tests to make sure the values in the facility are correct
+     * @throws SQLException
      * */
     @Test
     public void testGetWithAllDetailsResponse () throws SQLException {
@@ -102,7 +104,8 @@ public class FacilityRepositoryTest {
     }
 
     /**
-     *
+     *Tests to see if the Query string for getById is correct with a specified input
+     * @throws SQLException
      * */
     @Test
     public void testGetByIdQueryString () throws SQLException {
@@ -120,7 +123,8 @@ public class FacilityRepositoryTest {
 
     }
     /**
-     *
+     * Tests to see if the actual facility is returned from getById and that all fields have the correct data
+     * @throws SQLException
      * */
     @Test
     public void testGetByIDResponse () throws SQLException {
@@ -164,7 +168,8 @@ public class FacilityRepositoryTest {
 
     }
     /**
-     *
+     * Tests to see if the Query string for getWithBasicDetails is correct with a specified input
+     * @throws SQLException
      */
     @Test
     public void testGetWithBasicDetailsQueryString () throws SQLException {
@@ -181,7 +186,8 @@ public class FacilityRepositoryTest {
     }
 
     /**
-     *
+     * Tests to see if the GetWithBasicDetails returns the correct facility and that it only has the specific fields
+     * @throws SQLException
      * */
     @Test
     public void testGetWithBasicDetailsResponse () throws SQLException {
