@@ -9,21 +9,30 @@ const Staff = () => {
   const [staff, setStaff] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
-  const host = process.env.WEBSERVER_HOST || 'localhost';
-  const port = process.env.WEBSERVER_PORT || 5000;
-  const url = `http://${host}:${port}`;
+  const mockStaffData = [
+    {
+      id: 1,
+      name: "John Doe",
+      position: "Warehouse Manager",
+      department: "Management",
+      email: "john.doe@example.com",
+      phone: "+1234567890",
+      address: "123 Main St, City, Country"
+    },
+    {
+      id: 2,
+      name: "Jane Smith",
+      position: "Marketing Manager",
+      department: "Marketing",
+      email: "jane.smith@example.com",
+      phone: "+0987654321",
+      address: "456 Elm St, City, Country"
+    },
+  ];
 
   useEffect(() => {
-    fetch(`${url}/manager`)
-      .then(res => res.json())
-      .then(
-        data => {
-          setStaff(data)
-          console.log(data)
-        }
-      ) 
-  })
-
+    setStaff(mockStaffData);
+  }, []);
 
   const handleDelete = (id) => {
     const updatedStaff = staff.filter((staffMember) => staffMember.id !== id);
@@ -73,5 +82,3 @@ const Staff = () => {
     </>
   )
 }
-
-export default Staff;
