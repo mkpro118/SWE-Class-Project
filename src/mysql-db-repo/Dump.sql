@@ -90,7 +90,7 @@ ALTER TABLE Customer AUTO_INCREMENT=3001;
 ALTER TABLE Airplane AUTO_INCREMENT=1001;
 ALTER TABLE Facility AUTO_INCREMENT=6001;
 ALTER TABLE Manager AUTO_INCREMENT=8001;
-g
+
 
 -- AIRPLANE
 INSERT INTO Airplane (`Name`, Description, City, State, ProductionStage, Cost, DateStarted, DateFinished, FacilityId, SeatingCapacity, `Size`, HasFirstClass)
@@ -151,7 +151,7 @@ INSERT INTO Component (`Name`, `Description`, City, State, ComponentType, Facili
 VALUES ('Engine', 'Jet engine for propulsion', 'Seattle', 'Washington', 'Propulsion', 6001, 1000000.00, 'Unstarted');
 
 INSERT INTO Component (`Name`, `Description`, City, State, ComponentType, FacilityId, Cost, ProductionStage)
-VALUES ('Wing', 'Aircraft wing for lift', 'Dallas', 'Texas', 'Structure', 6002, 500000.00, 'Unstarted');
+VALUES ('Wing', 'Aircraft wing for lift', 'Dallas', 'Texas', 'Structure', 6002, 500000.00, 'In-Progress');
 
 INSERT INTO Component (`Name`, `Description`, City, State, ComponentType, FacilityId, Cost, ProductionStage)
 VALUES ('Landing Gear', 'Aircraft landing system', 'Miami', 'Florida', 'System', 6003, 200000.00, 'Unstarted');
@@ -160,31 +160,31 @@ INSERT INTO Component (`Name`, `Description`, City, State, ComponentType, Facili
 VALUES ('Avionics', 'Electronic systems for navigation and communication', 'Chicago', 'Illinois', 'Electronics', 6004, 300000.00, 'Unstarted');
 
 INSERT INTO Component (`Name`, `Description`, City, State, ComponentType, FacilityId, Cost, ProductionStage)
-VALUES ('Cockpit', 'Aircraft control and monitoring', 'Los Angeles', 'California', 'System', 6005, 400000.00, 'Unstarted');
+VALUES ('Cockpit', 'Aircraft control and monitoring', 'Los Angeles', 'California', 'System', 6005, 400000.00, 'In-Progress');
 
 INSERT INTO Component (`Name`, `Description`, City, State, ComponentType, FacilityId, Cost, ProductionStage)
 VALUES ('Fuel System', 'Aircraft fuel storage and delivery', 'Houston', 'Texas', 'System', 6006, 150000.00, 'Unstarted');
 
 INSERT INTO Component (`Name`, `Description`, City, State, ComponentType, FacilityId, Cost, ProductionStage)
-VALUES ('Interior', 'Aircraft cabin and seating', 'New York', 'New York', 'Interior', 6007, 200000.00, 'Unstarted');
+VALUES ('Interior', 'Aircraft cabin and seating', 'New York', 'New York', 'Interior', 6007, 200000.00, 'Finished');
 
 INSERT INTO Component (`Name`, `Description`, City, State, ComponentType, FacilityId, Cost, ProductionStage)
-VALUES ('Tail Unstarted', 'Aircraft tail section', 'Atlanta', 'Georgia', 'Structure', 6008, 250000.00, 'Unstarted');
+VALUES ('Tail Unstarted', 'Aircraft tail section', 'Atlanta', 'Georgia', 'Structure', 6008, 250000.00, 'In-Progress');
 
 INSERT INTO Component (`Name`, `Description`, City, State, ComponentType, FacilityId, Cost, ProductionStage)
 VALUES ('Navigation Lights', 'Aircraft navigation lighting', 'Atlanta', 'Georgia', 'Lighting', 6008, 10000.00, 'Unstarted');
 
 INSERT INTO Component (`Name`, `Description`, City, State, ComponentType, FacilityId, Cost, ProductionStage)
-VALUES ('Hydraulic System', 'Aircraft hydraulic systems', 'New York', 'New York', 'System', 6007, 100000.00, 'Unstarted');
+VALUES ('Hydraulic System', 'Aircraft hydraulic systems', 'New York', 'New York', 'System', 6007, 100000.00, 'Finished');
 
 INSERT INTO Component (`Name`, `Description`, City, State, ComponentType, FacilityId, Cost, ProductionStage)
 VALUES ('Oxygen System', 'Aircraft oxygen supply', 'Houston', 'Texas', 'System', 6006, 50000.00, 'Unstarted');
 
 INSERT INTO Component (`Name`, `Description`, City, State, ComponentType, FacilityId, Cost, ProductionStage)
-VALUES ('Aircraft Tires', 'Aircraft tire set', 'Los Angeles', 'California', 'Tires', 6005, 20000.00, 'Unstarted');
+VALUES ('Aircraft Tires', 'Aircraft tire set', 'Los Angeles', 'California', 'Tires', 6005, 20000.00, 'In-Progress');
 
 INSERT INTO Component (`Name`, `Description`, City, State, ComponentType, FacilityId, Cost, ProductionStage)
-VALUES ('Control Surfaces', 'Aircraft control surfaces', 'Chicago', 'Illinois', 'Structure', 6004, 150000.00, 'Unstarted');
+VALUES ('Control Surfaces', 'Aircraft control surfaces', 'Chicago', 'Illinois', 'Structure', 6004, 150000.00, 'In-Progress');
 
 INSERT INTO Component (`Name`, `Description`, City, State, ComponentType, FacilityId, Cost, ProductionStage)
 VALUES ('Communication Systems', 'Aircraft communication equipment', 'Miami', 'Florida', 'Electronics', 6003, 250000.00, 'Unstarted');
@@ -193,16 +193,16 @@ INSERT INTO Component (`Name`, `Description`, City, State, ComponentType, Facili
 VALUES ('Seating', 'Aircraft seating', 'Dallas', 'Texas', 'Interior', 6002, 100000.00, 'Unstarted');
 
 INSERT INTO Component (`Name`, `Description`, City, State, ComponentType, FacilityId, Cost, ProductionStage)
-VALUES ('Windows', 'Aircraft windows', 'Seattle', 'Washington', 'Windows', 6001, 50000.00, 'Unstarted');
+VALUES ('Windows', 'Aircraft windows', 'Seattle', 'Washington', 'Windows', 6001, 50000.00, 'Finished');
 
 INSERT INTO Component (`Name`, `Description`, City, State, ComponentType, FacilityId, Cost, ProductionStage)
-VALUES ('Emergency Systems', 'Aircraft emergency systems', 'Seattle', 'Washington', 'Safety', 6001, 200000.00, 'Unstarted');
+VALUES ('Emergency Systems', 'Aircraft emergency systems', 'Seattle', 'Washington', 'Safety', 6001, 200000.00, 'Finished');
 
 INSERT INTO Component (`Name`, `Description`, City, State, ComponentType, FacilityId, Cost, ProductionStage)
 VALUES ('Engine Controls', 'Aircraft engine control systems', 'Dallas', 'Texas', 'System', 6002, 100000.00, 'Unstarted');
 
 INSERT INTO Component (`Name`, `Description`, City, State, ComponentType, FacilityId, Cost, ProductionStage)
-VALUES ('Cargo Bay', 'Aircraft cargo storage', 'Miami', 'Florida', 'Cargo', 6003, 300000.00, 'Unstarted');
+VALUES ('Cargo Bay', 'Aircraft cargo storage', 'Miami', 'Florida', 'Cargo', 6003, 300000.00, 'Finished');
 
 INSERT INTO Component (`Name`, `Description`, City, State, ComponentType, FacilityId, Cost, ProductionStage)
 VALUES ('Lavatory', 'Aircraft lavatory facilities', 'Chicago', 'Illinois', 'Interior', 6004, 50000.00, 'Unstarted');

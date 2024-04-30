@@ -26,7 +26,7 @@ ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=${SERVICE_PORT}
 
 # Change this to False for production
-ENV FLASK_DEBUG=true
+ENV FLASK_DEBUG=False
 
 # These don't really do much, but allow readers to know these ports will be
 # exposed
