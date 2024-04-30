@@ -32,24 +32,19 @@ const MasterInventory = () => {
   const port = process.env.WEBSERVER_PORT || 5000;
   const url = `http://${host}:${port}`;
 
-  //Load in all the data from API into corresponding arrays
+  //Load in all the data from API into corresponding arrays using concurrent fetching
+  // noinspection DuplicatedCode
   useEffect(() => {
-    fetch(`${url}/airplane`)
-      .then(res => res.json())
-      .then(
-        data => {
-          setAirplaneData(data)
-          console.log(data)
-        }
-      )
-    fetch(`${url}/component`)
-      .then(res => res.json())
-      .then(
-        data => {
-          setComponentData(data)
-          console.log(data)
-        }
-      )
+    const fetchAirplaneData = fetch(`${url}/airplane`).then(res => res.json());
+    const fetchComponentData = fetch(`${url}/component`).then(res => res.json());
+
+    //simultaneously get airplane and component data
+    Promise.all([fetchAirplaneData, fetchComponentData])
+        .then(([airplaneData, componentData]) => {
+          setAirplaneData(airplaneData);
+          setComponentData(componentData);
+        })
+        .catch(error => console.error('Error fetching airplane and component data:', error));
   }, [url]);
 
   // Merge fetched data into one array at runtime

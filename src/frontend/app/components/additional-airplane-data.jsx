@@ -1,7 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
 import planeBlueprint from '../icons/PlaneBlueprint.jpeg'
-import { getStageClass } from './table';
+import {getStageClass} from "@/app/styles/get-stage-class";
+import {formatCost} from "@/app/styles/format-cost";
 
 /**
  * Generates page for each plane with its additional information
@@ -22,7 +23,7 @@ const AirplaneInfo = (plane) => {
 
     {/* Generate table headers with all fields from airplane object*/}
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <table className="w-full text-sm text-left rtl:text-right text-gray-500 bg-white">
 
         {/* Plane name (model) and short description above the main table */}
         <caption className="p-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
@@ -56,9 +57,6 @@ const AirplaneInfo = (plane) => {
             <th scope="col" className="px-6 py-3">
               First Class
             </th>
-            <th scope="col" className="px-6 py-3">
-              Customer ID
-            </th>
           </tr>
         </thead>
 
@@ -80,7 +78,7 @@ const AirplaneInfo = (plane) => {
 
             {/* Cost of production */}
             <td className="px-6 py-4">
-              {'$'}{plane.cost}
+              {'$'}{formatCost(plane.cost)}
             </td>
 
             <td className="px-6 py-4">
@@ -104,11 +102,6 @@ const AirplaneInfo = (plane) => {
             {/* Boolean for if plane has first class */}
             <td className="px-6 py-4">
               {`${plane.has_first_class}`}
-            </td>
-
-            {/*Customer who is buying the plane, will need to replace with actual customer name once SQL server is up */}
-            <td className="px-6 py-4">
-              {plane.customer_id}
             </td>
           </tr>
         </tbody>

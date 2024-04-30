@@ -1,21 +1,6 @@
 import React from 'react'
-
-export function getStageClass(stage) {
-    switch (stage) {
-        case "Unstarted":
-            return "bg-red-500";
-        case "In-Progress":
-            return "bg-yellow-500 ";
-        case "Finished":
-            return "bg-green-500";
-        default:
-            return "";
-    }
-}
-
-const formatCost = (cost) => {
-    return cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-}
+import {getStageClass} from "@/app/styles/get-stage-class";
+import {formatCost} from "@/app/styles/format-cost";
 
 //Loads in the data mapped from inventory/page.jsx 
 //Checkboxes missing functionality 
