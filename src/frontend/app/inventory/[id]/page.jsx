@@ -1,9 +1,9 @@
 import React from 'react';
 import AirplaneInfo from '../../components/additional-airplane-data.jsx'
 
-const host = process.env.WEBSERVER_HOST || 'localhost';
+const host = 'localhost';
 // console.log(host);
-const port = process.env.WEBSERVER_PORT || 5000;
+const port = 5000;
 // console.log(port)
 const url = `http://${host}:${port}`;
 
@@ -14,8 +14,9 @@ const url = `http://${host}:${port}`;
  * @returns An AirplaneInfo object with the passed props
  */
 export default async function AirplanePage({params}) {
+    // console.log(params);
     const props = await getAirplane(params.id)
-    console.log(props)
+    // console.log(props)
     return <AirplaneInfo {...props}/>
     
   };
@@ -29,7 +30,8 @@ export default async function AirplanePage({params}) {
 async function getAirplane(id) {
   const res = await fetch(`${url}/airplane/${id}`);
   const data = await res.json();
-  return data[0];
+  // console.log(data);
+  return data;
 }
 
   /**
@@ -47,9 +49,9 @@ async function getAirplane(id) {
   //   // const ids = airplanes.map((plane) => ({
   //   //   id: plane.ID.toString(),
   //   // }))
-  //   // console.log(ids);
+  //   console.log(airplanes);
   //   return airplanes.map((plane) => ({
-  //     ID: plane.ID.toString(),
+  //     id: plane.ID.toString(),
   //   }))
   // }
 
