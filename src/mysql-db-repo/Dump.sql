@@ -210,28 +210,28 @@ VALUES ('Lavatory', 'Aircraft lavatory facilities', 'Chicago', 'Illinois', 'Inte
 
 -- FACILITY
 INSERT INTO Facility (`Name`, City, State, `Description`, ComponentsInProduction, ComponentsCompleted, ModelsInProduction, ModelsCompleted, EmployeeCount, ManagerId)
-VALUES ('Seattle Plant', 'Seattle', 'Washington', 'Main production facility in Seattle', 15, 25, 3, 5, 200, 1);
+VALUES ('Seattle Plant', 'Seattle', 'Washington', 'Main production facility in Seattle', 15, 25, 3, 5, 200, 8001);
 
 INSERT INTO Facility (`Name`, City, State, `Description`, ComponentsInProduction, ComponentsCompleted, ModelsInProduction, ModelsCompleted, EmployeeCount, ManagerId)
-VALUES ('Dallas Facility', 'Dallas', 'Texas', 'Secondary facility in Dallas', 10, 20, 2, 4, 150, 2);
+VALUES ('Dallas Facility', 'Dallas', 'Texas', 'Secondary facility in Dallas', 10, 20, 2, 4, 150, 8002);
 
 INSERT INTO Facility (`Name`, City, State, `Description`, ComponentsInProduction, ComponentsCompleted, ModelsInProduction, ModelsCompleted, EmployeeCount, ManagerId)
-VALUES ('Miami Plant', 'Miami', 'Florida', 'Production facility in Miami', 8, 15, 1, 3, 100, 3);
+VALUES ('Miami Plant', 'Miami', 'Florida', 'Production facility in Miami', 8, 15, 1, 3, 100, 8003);
 
 INSERT INTO Facility (`Name`, City, State, `Description`, ComponentsInProduction, ComponentsCompleted, ModelsInProduction, ModelsCompleted, EmployeeCount, ManagerId)
-VALUES ('Chicago Facility', 'Chicago', 'Illinois', 'Secondary facility in Chicago', 12, 18, 2, 4, 120, 4);
+VALUES ('Chicago Facility', 'Chicago', 'Illinois', 'Secondary facility in Chicago', 12, 18, 2, 4, 120, 8004);
 
 INSERT INTO Facility (`Name`, City, State, `Description`, ComponentsInProduction, ComponentsCompleted, ModelsInProduction, ModelsCompleted, EmployeeCount, ManagerId)
-VALUES ('Los Angeles Plant', 'Los Angeles', 'California', 'Main production facility in Los Angeles', 18, 30, 4, 6, 250, 5);
+VALUES ('Los Angeles Plant', 'Los Angeles', 'California', 'Main production facility in Los Angeles', 18, 30, 4, 6, 250, 8005);
 
 INSERT INTO Facility (`Name`, City, State, `Description`, ComponentsInProduction, ComponentsCompleted, ModelsInProduction, ModelsCompleted, EmployeeCount, ManagerId)
-VALUES ('Houston Facility', 'Houston', 'Texas', 'Secondary facility in Houston', 10, 20, 3, 5, 180, 6);
+VALUES ('Houston Facility', 'Houston', 'Texas', 'Secondary facility in Houston', 10, 20, 3, 5, 180, 8006);
 
 INSERT INTO Facility (`Name`, City, State, `Description`, ComponentsInProduction, ComponentsCompleted, ModelsInProduction, ModelsCompleted, EmployeeCount, ManagerId)
-VALUES ('New York Plant', 'New York', 'New York', 'Main production facility in New York', 20, 35, 5, 7, 300, 7);
+VALUES ('New York Plant', 'New York', 'New York', 'Main production facility in New York', 20, 35, 5, 7, 300, 8007);
 
 INSERT INTO Facility (`Name`, City, State, `Description`, ComponentsInProduction, ComponentsCompleted, ModelsInProduction, ModelsCompleted, EmployeeCount, ManagerId)
-VALUES ('Atlanta Facility', 'Atlanta', 'Georgia', 'Secondary facility in Atlanta', 12, 22, 2, 4, 160, 8);
+VALUES ('Atlanta Facility', 'Atlanta', 'Georgia', 'Secondary facility in Atlanta', 12, 22, 2, 4, 160, 8008);
 -- FACILITY
 
 -- MANAGER
@@ -258,41 +258,4 @@ VALUES ('Emily Wilson', 'emily123', 'Supervisor', 2, 6007);
 
 INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
 VALUES ('David Rodriguez', 'davidpass', 'Assistant', 1, 6008);
-
-INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
-VALUES ('Karen Thompson', 'karen456', 'Manager', 3, 6008);
-
-INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
-VALUES ('Christopher Lee', 'chrispass', 'Supervisor', 2, 6007);
-
-INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
-VALUES ('Jennifer White', 'jennifer789', 'Assistant', 1, 6001);
-
-INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
-VALUES ('Mark Thompson', 'markpass', 'Manager', 3, 6002);
-
-INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
-VALUES ('Laura Davis', 'laura456', 'Supervisor', 2, 6003);
-
-INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
-VALUES ('Ryan Brown', 'ryanpass', 'Manager', 3, 6004);
-
-INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
-VALUES ('Stephanie Clark', 'stephanie789', 'Assistant', 1, 6001);
-
-INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
-VALUES ('Jessica Garcia', 'jessica789', 'Manager', 3, 6001);
-
-INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
-VALUES ('Daniel Martinez', 'danielpass', 'Supervisor', 2, 6002);
-
-INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
-VALUES ('Megan Taylor', 'megan123', 'Assistant', 1, 6003);
-
-INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
-VALUES ('Steven Anderson', 'andersonpass', 'Manager', 3, 6004);
-
-INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
-VALUES ('Amanda Thomas', 'amanda456', 'Supervisor', 2, 6005);
-
 -- MANAGER
