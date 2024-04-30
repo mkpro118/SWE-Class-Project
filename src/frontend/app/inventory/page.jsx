@@ -33,7 +33,6 @@ const MasterInventory = () => {
   const url = `http://${host}:${port}`;
 
   //Load in all the data from API into corresponding arrays using concurrent fetching
-  // noinspection DuplicatedCode
   useEffect(() => {
     const fetchAirplaneData = fetch(`${url}/airplane`).then(res => res.json());
     const fetchComponentData = fetch(`${url}/component`).then(res => res.json());
