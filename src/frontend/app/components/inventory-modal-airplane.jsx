@@ -5,7 +5,7 @@ const InventoryModal = (props) => {
 
     return (
         <div className='fixed inset-0 flex backdrop-blur-sm justify-center items-center'>
-            <div className='bg-indigo-100 p-4 w-full max-w-md max-h-full shadow-2xl rounded-lg'>
+            <div className='bg-indigo-200 p-4 w-full max-w-md max-h-full shadow-2xl rounded-lg'>
                 <div className="flex items-center justify-between pb-4">
                     <h3 className="text-lg font-semibold text-gray-900">
                         Add Airplane
