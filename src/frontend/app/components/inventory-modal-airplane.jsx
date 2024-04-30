@@ -46,16 +46,12 @@ const InventoryModal = (props) => {
                         <input type="text" id="end date" placeholder="End Date" name="end date" className="form-input mt-1 pl-2 block w-full rounded" />
                     </div>
                     <div className="mb-4">
-                        <label htmlFor="facility id" className="block text-gray-700">Facility ID:</label>
-                        <input type="number" id="facility id" placeholder="Facility ID" min='0' name="facility id" className="form-input mt-1 pl-2 block w-full rounded" />
-                    </div>
-                    <div className="mb-4">
                         <label htmlFor="seating capacity" className="block text-gray-700">Seating Capacity:</label>
                         <input type="number" id="seating capacity" placeholder="Seating Capacity" min='0' name="seating capacity" className="form-input mt-1 pl-2 block w-full rounded" />
                     </div>
                     <div className="mb-6">
                         <label htmlFor="has first class" className="block text-gray-700">Has First Class:</label>
-                        <input type="boolean" id="has first class" placeholder="Seating Capacity" name="seating capacity" className="form-input mt-1 pl-2 block w-full rounded" />
+                        <input type="boolean" id="has first class" placeholder="True/False" name="seating capacity" className="form-input mt-1 pl-2 block w-full rounded" />
                     </div>
 
                     {/*When full implemented this would submit a POST request to API given the data inputed in the modal*/}

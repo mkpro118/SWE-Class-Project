@@ -41,10 +41,6 @@ const ComponentModal = (props) => {
                         <label htmlFor="cost" className="block text-gray-700">Cost:</label>
                         <input type="number" id="cost" name="cost" min='0' className="form-input mt-1 pl-2 block w-full rounded" />
                     </div>
-                    <div className="mb-4">
-                        <label htmlFor="suplier id" className="block text-gray-700">Suplier ID:</label>
-                        <input type="number" id="suplier id" placeholder="Suplier ID" min='0' name="suplier id" className="form-input mt-1 pl-2 block w-full rounded" />
-                    </div>
                     <div className="mb-6">
                         <label htmlFor="production stage" className="block text-gray-700">Production Stage:</label>
                         <input type="text" id="production stage" placeholder="Production Stage" name="production stage" className="form-input mt-1 pl-2 block w-full rounded" />
