@@ -118,7 +118,7 @@ if __name__ == '__main__':
 
     host = os.environ.get('FLASK_RUN_HOST', '0.0.0.0')
     port = int(os.environ.get('SERVER_PORT', 5000))
-    debug = bool(os.environ.get('FLASK_DEBUG', False))
+    debug = os.environ.get('FLASK_DEBUG', 'false').lower() in ('true', '1')
 
     ps_host = os.environ.get('PROXYSERVER_HOST', 'localhost')
     ps_port = os.environ.get('PROXYSERVER_PORT', 8000)
