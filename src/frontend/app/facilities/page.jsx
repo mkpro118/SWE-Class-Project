@@ -13,7 +13,6 @@ const Facilities = () => {
   const [facilities, setFacilities] = useState([]);
   const [componentData, setComponentData] = useState([]);
   const [airplaneData, setAirplaneData] = useState([]);
-  const [showModal, setShowModal] = useState(false);
 
 
   const mapFacilityToCard = (facility) => {
@@ -45,9 +44,6 @@ const Facilities = () => {
     console.log(facilities);
   }, [facilities]);
 
-  const handleOnClose = () => {
-    setShowModal(false);
-  }
   const handleDelete = (id) => {
     console.log(`Deleted item with ID: ${id}`);
 
@@ -109,9 +105,7 @@ const Facilities = () => {
                 props={facility}
                 airplaneData={airplaneData}
                 componentData={componentData}
-                onDelete={handleDelete}
                 key={facility.id}
-
             />
           })
         }
