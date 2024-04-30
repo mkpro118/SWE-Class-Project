@@ -51,7 +51,7 @@ public class AirplaneRepositoryTest {
 
         repo.getAllWithAllDetails(10);
 
-        assertEquals("SELECT * FROM Airplane LIMIT 10", queryCaptor.getValue());
+        assertEquals("SELECT * FROM Airplane LIMIT 10;", queryCaptor.getValue());
 
     }
 
@@ -105,7 +105,7 @@ public class AirplaneRepositoryTest {
 
         repo.getById(10);
 
-        assertEquals("SELECT * FROM Airplane WHERE AirplaneId = 10", queryCaptor.getValue());
+        assertEquals("SELECT * FROM Airplane WHERE AirplaneId = 10;", queryCaptor.getValue());
 
     }
 
@@ -158,7 +158,7 @@ public class AirplaneRepositoryTest {
 
         repo.getAllWithBasicDetails(10);
 
-        assertEquals("SELECT AirplaneId, Name, ProductionStageName, Cost FROM Airplane LIMIT 10", queryCaptor.getValue());
+        assertEquals("SELECT AirplaneId, Name, ProductionStageName, Cost FROM Airplane LIMIT 10;", queryCaptor.getValue());
     }
 
     @Test

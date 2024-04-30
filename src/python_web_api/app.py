@@ -98,6 +98,8 @@ def setup_routes(args: argparse.Namespace):
         app_routes(mock)
     else:
         from views import backend
+        backend.set_cache_filename('/src/artifacts/cache.json')
+        backend.load_cache()
         app_routes(backend)
         if args.use_ports:
             proxy_ports = args.use_ports.split(',')

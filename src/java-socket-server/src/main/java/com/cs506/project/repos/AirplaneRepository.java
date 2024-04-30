@@ -29,20 +29,21 @@ public class AirplaneRepository implements ISQLRepository<AirplaneSchema> {
         List<AirplaneSchema> airplanes = new ArrayList<>();
         String query = "";
         if (limit != -1) {
-            query = "SELECT AirplaneId, Name, ProductionStageName, Cost FROM Airplane LIMIT " + limit;
+            query = "SELECT AirplaneId, Name, ProductionStage, Cost FROM Airplane LIMIT " + limit + ";";
         } else {
-            query = "SELECT AirplaneId, Name, ProductionStageName, Cost FROM Airplane";
+            query = "SELECT AirplaneId, Name, ProductionStage, Cost FROM Airplane;";
         }
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
+            System.out.println("Query Ran: " + query);
             while (resultSet.next()) {
 
                 AirplaneSchema airplaneSchema = new AirplaneSchema();
 
                 airplaneSchema.airplaneId = resultSet.getInt("AirplaneId");
                 airplaneSchema.name = resultSet.getString("Name");
-                airplaneSchema.productionStageName = resultSet.getString("ProductionStageName");
+                airplaneSchema.productionStage = resultSet.getString("ProductionStage");
                 airplaneSchema.cost = resultSet.getDouble("Cost");
 
                 airplanes.add(airplaneSchema);
@@ -65,13 +66,14 @@ public class AirplaneRepository implements ISQLRepository<AirplaneSchema> {
         String query = "";
 
         if (limit != -1) {
-            query = "SELECT * FROM Airplane LIMIT " + limit;
+            query = "SELECT * FROM Airplane LIMIT " + limit + ";";
         } else {
-            query = "SELEC * FROM Airplane";
+            query = "SELECT * FROM Airplane;";
         }
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
+            System.out.println("Query Ran: " + query);
             while (resultSet.next()) {
 
                 AirplaneSchema airplaneSchema = new AirplaneSchema();
@@ -82,7 +84,7 @@ public class AirplaneRepository implements ISQLRepository<AirplaneSchema> {
                 airplaneSchema.seatingCapacity = resultSet.getInt("SeatingCapacity");
                 airplaneSchema.description = resultSet.getString("Description");
                 airplaneSchema.name = resultSet.getString("Name");
-                airplaneSchema.productionStageName = resultSet.getString("ProductionStageName");
+                airplaneSchema.productionStage = resultSet.getString("ProductionStage");
                 airplaneSchema.cost = resultSet.getDouble("Cost");
                 airplaneSchema.dateStarted = resultSet.getDate("DateStarted");
                 airplaneSchema.dateFinished = resultSet.getDate("DateFinished");
@@ -105,9 +107,10 @@ public class AirplaneRepository implements ISQLRepository<AirplaneSchema> {
     @Override
     public List<AirplaneSchema> getById(int airplaneId) throws SQLException{
         List<AirplaneSchema> airplane = new ArrayList<>();
-        String query = "SELECT * FROM Airplane WHERE AirplaneId = " + airplaneId;
+        String query = "SELECT * FROM Airplane WHERE AirplaneId = " + airplaneId + ";";
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query);){
+            System.out.println("Query Ran: " + query);
 
             while (resultSet.next()) {
 
@@ -119,7 +122,7 @@ public class AirplaneRepository implements ISQLRepository<AirplaneSchema> {
                 airplaneSchema.seatingCapacity = resultSet.getInt("SeatingCapacity");
                 airplaneSchema.description = resultSet.getString("Description");
                 airplaneSchema.name = resultSet.getString("Name");
-                airplaneSchema.productionStageName = resultSet.getString("ProductionStageName");
+                airplaneSchema.productionStage = resultSet.getString("ProductionStage");
                 airplaneSchema.cost = resultSet.getDouble("Cost");
                 airplaneSchema.dateStarted = resultSet.getDate("DateStarted");
                 airplaneSchema.dateFinished = resultSet.getDate("DateFinished");
@@ -144,7 +147,6 @@ public class AirplaneRepository implements ISQLRepository<AirplaneSchema> {
     @Override
     public List<AirplaneSchema> handleCreateQuery(List<AirplaneSchema> requestEntities) throws SQLException {
 
-        closeConnection();
         return null;
     }
 
@@ -160,18 +162,22 @@ public class AirplaneRepository implements ISQLRepository<AirplaneSchema> {
             throws SQLException {
 
         List<AirplaneSchema> result = new ArrayList<>();
-
+        System.out.println("Reading Airplane table in database");
         if (airplanes.size() != 0){
             for ( AirplaneSchema airplane: airplanes  ){
                 result.addAll(getById(airplane.airplaneId));
             }
         } else if (!readAllDetails){
+            System.out.println("Read with basic details query received!");
             result = getAllWithBasicDetails(limit);
+            System.out.println("Read with basic details query result: " + result.toString());
         } else{
+            System.out.println("Read with all details query received!");
             result = getAllWithAllDetails(limit);
+            System.out.println("Read with basic details query result: " + result.toString());
         }
 
-        closeConnection();
+        System.out.println("Closing connection...");
 
         return result;
     }
@@ -185,7 +191,6 @@ public class AirplaneRepository implements ISQLRepository<AirplaneSchema> {
     @Override
     public List<AirplaneSchema> handleUpdateQuery(List<AirplaneSchema> request) throws SQLException {
 
-        closeConnection();
         return null;
     }
 
@@ -198,16 +203,7 @@ public class AirplaneRepository implements ISQLRepository<AirplaneSchema> {
     @Override
     public List<AirplaneSchema> handleDeleteQuery(List<AirplaneSchema> request) throws SQLException {
 
-        closeConnection();
         return null;
-    }
-
-    /**
-     * Closes connection to the database. Must be run after every query method.
-     */
-    @Override
-    public void closeConnection() throws SQLException {
-        connection.close();
     }
 
 }

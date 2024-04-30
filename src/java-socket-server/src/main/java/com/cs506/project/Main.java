@@ -8,6 +8,7 @@ import com.cs506.project.server.ProxyServerListener;
 import com.cs506.project.server.ProxyServerWorker;
 import com.cs506.project.utils.ArgParser;
 import com.cs506.project.utils.Option;
+import com.cs506.project.RepositoryController;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -343,8 +344,13 @@ public class Main {
             return;
         }
 
+        RepositoryController controller = new RepositoryController();
         try {
-            server.setup(x -> new String(x));
+            server.setup(x -> {
+                if ((new String(x)).startsWith("healthcheck"))
+                    return "";
+                return controller.handleRequest(x);
+            });
         } catch (IOException e) {
             System.out.println("Failed to start the server."
                              + " See stderr for stack trace.");
