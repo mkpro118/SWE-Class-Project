@@ -200,7 +200,7 @@ const MasterInventory = () => {
                         checked={filters.finished}
                         onChange={handleCheckboxChange}
                         disabled={filters.inProgress || filters.unstarted} />
-                      <label className="ml-2 text-md font-medium text-gray-900">Finished</label>
+                      <label className="ml-2 text-md font-medium text-gray-700">Finished</label>
                     </li>
                     <li className="flex items-center">
                       <input
