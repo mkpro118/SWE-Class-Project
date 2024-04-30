@@ -147,7 +147,7 @@ class Component(Model):
     city: str
     state: str
     component_type: str
-    supplier_id: int
+    facility_id: int
     cost: float
     production_stage: str
 

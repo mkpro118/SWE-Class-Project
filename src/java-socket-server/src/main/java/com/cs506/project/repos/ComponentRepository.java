@@ -92,7 +92,7 @@ public class ComponentRepository implements ISQLRepository<ComponentSchema> {
                 componentSchema.name = resultSet.getString("Name");
                 componentSchema.description = resultSet.getString("Description");
                 componentSchema.componentType = resultSet.getString("ComponentType");
-                componentSchema.supplierId = resultSet.getInt("SupplierId");
+                componentSchema.facilityId = resultSet.getInt("FacilityId");
                 componentSchema.cost = resultSet.getDouble("Cost");
                 componentSchema.productionStage = resultSet.getString("ProductionStage");
 
@@ -128,7 +128,7 @@ public class ComponentRepository implements ISQLRepository<ComponentSchema> {
                 componentSchema.name = resultSet.getString("Name");
                 componentSchema.description = resultSet.getString("Description");
                 componentSchema.componentType = resultSet.getString("ComponentType");
-                componentSchema.supplierId = resultSet.getInt("SupplierId");
+                componentSchema.facilityId = resultSet.getInt("FacilityId");
                 componentSchema.cost = resultSet.getDouble("Cost");
                 componentSchema.productionStage = resultSet.getString("ProductionStage");
 
