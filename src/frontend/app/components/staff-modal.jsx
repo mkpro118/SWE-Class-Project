@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useState } from 'react';
 
 const StaffModal = (props) => {
     const [formData, setFormData] = useState({
