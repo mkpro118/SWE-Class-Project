@@ -3,9 +3,11 @@ package com.cs506.project;
 import com.cs506.project.repos.AirplaneRepository;
 import com.cs506.project.repos.ComponentRepository;
 import com.cs506.project.repos.FacilityRepository;
+import com.cs506.project.repos.ManagerRepository;
 import com.cs506.project.schemas.AirplaneSchema;
 import com.cs506.project.schemas.ComponentSchema;
 import com.cs506.project.schemas.FacilitySchema;
+import com.cs506.project.schemas.ManagerSchema;
 import com.cs506.project.schemas.SocketServerRequest;
 import jdk.net.Sockets;
 import java.sql.*;
@@ -110,9 +112,7 @@ public class RepositoryController {
                 break;
 
             case "READ":
-                System.out.println("Airplane Read Request Received");
                 result = repository.handleReadQuery(limit, readAll, requestAirplanes);
-                System.out.println("Airplane Read Response: " + result.toString());
                 break;
 
             case "UPDATE":
@@ -151,9 +151,7 @@ public class RepositoryController {
                 break;
 
             case "READ":
-                System.out.println("Component Read Request Received");
                 result = repository.handleReadQuery(limit, readAll, requestComponents);
-                System.out.println("Component Read Response: " + result.toString());
                 break;
 
             case "UPDATE":
@@ -207,18 +205,52 @@ public class RepositoryController {
     }
 
     /**
+     * Chooses which method to run within the Components SQL Repository.
+     *
+     * @param requestComponents : List of Components
+     * @return List of Manager Objects (even if one is just requested).
+     */
+    private List<ManagerSchema> handleManagerRequest (String action, int limit, boolean readAll,
+                                                          List<ManagerSchema> requestManagers) throws SQLException {
+
+        // Call JDBCConnection.create before
+        ManagerRepository repository = new ManagerRepository(conn);
+
+        List<ManagerSchema> result = null;
+
+        switch (action) {
+
+            case "CREATE":
+                result = repository.handleCreateQuery(requestManagers);
+                break;
+
+            case "READ":
+                result = repository.handleReadQuery(limit, readAll, requestManagers);
+                break;
+
+            case "UPDATE":
+                result = repository.handleUpdateQuery(requestManagers);
+                break;
+
+            case "DELETE":
+                result = repository.handleDeleteQuery(requestManagers);
+                break;
+
+            default:
+                break;
+        }
+
+        return result;
+    }
+
+    /**
      * Contains master SQL repository controller switch to dictate which repository handles the incoming request.
      *
      * @param request : byte[] of incoming socket server request
      * @return JSON Response as string.
      */
     public String handleRequest (byte[] request) {
-
-        System.out.println("Request Received!");
-
         SocketServerRequest ssrequest = createSocketServerRequest(request);
-
-        System.out.println("SocketServerRequest Received: " + ssrequest.entityName + " " + ssrequest.type + " " +ssrequest.entities );
 
         if (ssrequest == null) {
             return formResponse(null);
@@ -231,24 +263,22 @@ public class RepositoryController {
             switch (ssrequest.entityName) {
 
                 case "Airplane":
-                    System.out.println("Airplane Request Received");
                     List<AirplaneSchema> airplanes = ssrequest.entities.stream()
                             .map(obj -> (AirplaneSchema) obj)
                             .collect(Collectors.toList());
 
-                    System.out.println("Calling handle method for Airplane Request...");
                     List<AirplaneSchema> responseAirplanes = handleAirplaneRequest(ssrequest.type, ssrequest.limit,
                             ssrequest.requestingAllDetails ,airplanes);
 
                     if (responseAirplanes == null) {
                         response = formResponse(null);
                     } else{
+                        System.out.println("Returning " + responseAirplanes.size() + " airplane records.");
                         response = formResponse(gson.toJson(responseAirplanes));
                     }
                     break;
 
                 case "Component":
-                    System.out.println("Component Request Received");
                     List<ComponentSchema> components = ssrequest.entities.stream()
                             .map(obj -> (ComponentSchema) obj)
                             .collect(Collectors.toList());
@@ -258,6 +288,7 @@ public class RepositoryController {
                     if (responseComponents == null){
                         response = formResponse(null);
                     } else {
+                        System.out.println("Returning " + responseComponents.size() + " component records.");
                         response = formResponse(gson.toJson(responseComponents));
                     }
                     break;
@@ -271,7 +302,22 @@ public class RepositoryController {
                     if (responseFacilities == null){
                         response = formResponse(null);
                     } else {
+                        System.out.println("Returning " + responseFacilities.size() + " facility records.");
                         response = formResponse(gson.toJson(responseFacilities));
+                    }
+                    break;
+
+                case "Manager":
+                    List<ManagerSchema>  managers = ssrequest.entities.stream()
+                            .map(obj -> (ManagerSchema) obj)
+                            .collect(Collectors.toList());
+                    List<ManagerSchema> responseManagers = handleManagerRequest(ssrequest.type, ssrequest.limit,
+                            ssrequest.requestingAllDetails,managers);
+                    if (responseManagers == null){
+                        response = formResponse(null);
+                    } else {
+                        System.out.println("Returning " + responseManagers.size() + " manager records.");
+                        response = formResponse(gson.toJson(responseManagers));
                     }
                     break;
 

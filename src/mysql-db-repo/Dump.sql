@@ -65,7 +65,7 @@ CREATE TABLE Manager(
     ManagerId INT NOT NULL AUTO_INCREMENT,
     `Name` VARCHAR(100),
     `Password` VARCHAR(255),
-    PositionTitle VARCHAR(100),
+    Position VARCHAR(100),
     AccessLevel INT,
     FacilityId INT,
     PRIMARY KEY(ManagerId)
@@ -89,7 +89,8 @@ CREATE TABLE AirplaneComponent (
 ALTER TABLE Customer AUTO_INCREMENT=3001;
 ALTER TABLE Airplane AUTO_INCREMENT=1001;
 ALTER TABLE Facility AUTO_INCREMENT=6001;
-
+ALTER TABLE Manager AUTO_INCREMENT=8001;
+g
 
 -- AIRPLANE
 INSERT INTO Airplane (`Name`, Description, City, State, ProductionStage, Cost, DateStarted, DateFinished, FacilityId, SeatingCapacity, `Size`, HasFirstClass)
@@ -232,3 +233,66 @@ VALUES ('New York Plant', 'New York', 'New York', 'Main production facility in N
 INSERT INTO Facility (`Name`, City, State, `Description`, ComponentsInProduction, ComponentsCompleted, ModelsInProduction, ModelsCompleted, EmployeeCount, ManagerId)
 VALUES ('Atlanta Facility', 'Atlanta', 'Georgia', 'Secondary facility in Atlanta', 12, 22, 2, 4, 160, 8);
 -- FACILITY
+
+-- MANAGER
+INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
+VALUES ('John Doe', 'password123', 'Manager', 3, 6001);
+
+INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
+VALUES ('Jane Smith', 'qwerty456', 'Supervisor', 2, 6002);
+
+INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
+VALUES ('Alice Johnson', 'abc123', 'Assistant', 1, 6003);
+
+INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
+VALUES ('Bob Brown', 'securepass', 'Manager', 3, 6004);
+
+INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
+VALUES ('Sarah Williams', 'p@ssw0rd!', 'Supervisor', 2, 6005);
+
+INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
+VALUES ('Michael Davis', 'managerpass', 'Manager', 3, 6006);
+
+INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
+VALUES ('Emily Wilson', 'emily123', 'Supervisor', 2, 6007);
+
+INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
+VALUES ('David Rodriguez', 'davidpass', 'Assistant', 1, 6008);
+
+INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
+VALUES ('Karen Thompson', 'karen456', 'Manager', 3, 6008);
+
+INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
+VALUES ('Christopher Lee', 'chrispass', 'Supervisor', 2, 6007);
+
+INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
+VALUES ('Jennifer White', 'jennifer789', 'Assistant', 1, 6001);
+
+INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
+VALUES ('Mark Thompson', 'markpass', 'Manager', 3, 6002);
+
+INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
+VALUES ('Laura Davis', 'laura456', 'Supervisor', 2, 6003);
+
+INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
+VALUES ('Ryan Brown', 'ryanpass', 'Manager', 3, 6004);
+
+INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
+VALUES ('Stephanie Clark', 'stephanie789', 'Assistant', 1, 6001);
+
+INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
+VALUES ('Jessica Garcia', 'jessica789', 'Manager', 3, 6001);
+
+INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
+VALUES ('Daniel Martinez', 'danielpass', 'Supervisor', 2, 6002);
+
+INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
+VALUES ('Megan Taylor', 'megan123', 'Assistant', 1, 6003);
+
+INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
+VALUES ('Steven Anderson', 'andersonpass', 'Manager', 3, 6004);
+
+INSERT INTO Manager (`Name`, `Password`, Position, AccessLevel, FacilityId)
+VALUES ('Amanda Thomas', 'amanda456', 'Supervisor', 2, 6005);
+
+-- MANAGER
