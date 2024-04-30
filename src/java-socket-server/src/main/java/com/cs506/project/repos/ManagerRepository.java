@@ -133,7 +133,6 @@ public class ManagerRepository implements ISQLRepository<ManagerSchema>{
                         + managerSchema1.accessLevel + ", "
                         + managerSchema1.facilityId + ")";
                 statement.executeQuery(query);
-                System.out.println("Manager added successfully");
             }
         } catch (SQLException e){
             e.printStackTrace();
