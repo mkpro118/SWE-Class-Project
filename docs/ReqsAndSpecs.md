@@ -17,7 +17,7 @@ This software management platform is meant to serve the aircraft industry specif
 | ---- | ------------------------------------------------------------ | -------- | ------ |
 | R01  | The user should be able to see current model/parts inventory | High      | Done   |
 | R02  | The user should be able to see where a particular plane is in its development lifecycle. | High     | Done   |
-| R03  | The user should be able to see all warehouses and their inventory/staff . | High     | In Progress   |
+| R03  | The user should be able to see all warehouses and their inventory/staff . | High     | Done   |
 | R04  | The user should be able to order new parts from suppliers and understand the finances required. | High      | In Progress   |
 
 ### Use Cases & User Stories
