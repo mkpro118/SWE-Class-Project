@@ -5,6 +5,9 @@ import BoeingLogo from "../icons/Boeing_full_logo.svg.png"
 import Link from 'next/link';
 import Image from 'next/image';
 
+/**
+ * Main header bar with pressable logo to lead to home page
+ */
 const Header = () => {
 
   return (

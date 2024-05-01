@@ -26,12 +26,13 @@ const AirplaneInfo = (plane) => {
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 bg-white">
 
         {/* Plane name (model) and short description above the main table */}
-        <caption className="p-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+        <caption className="p-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white">
           {plane.name}
-          <p className="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">{plane.description}</p>
+          <p className="mt-1 text-sm font-normal text-gray-500">{plane.description}</p>
         </caption>
-        
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+
+        {/* Table headers */}
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
           <th scope="col" className="px-6 py-3">
               Facility
@@ -62,7 +63,7 @@ const AirplaneInfo = (plane) => {
 
         {/*Content of each airplane to be displayed*/}
         <tbody>
-          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <tr className="bg-white border-b text-gray-500">
 
             {/*Facility identified by city, state */}
             <td className="px-6 py-4 whitespace-nowrap">
