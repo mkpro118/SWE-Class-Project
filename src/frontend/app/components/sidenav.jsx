@@ -7,7 +7,11 @@ import BoeingLogo from "../icons/Boeing_full_logo.svg.png"
 import { usePathname } from 'next/navigation';
 import { SIDENAV_ITEMS } from '@/app/styles/constants';
 
+/**
+ *Side Navigation Bar with links, always on a page
+ */
 const SideNav = () => {
+    // State to track the currently selected tab
   const [displaySelectedTab, setDisplaySelectedTab] = useState("Master Inventory");
 
   return (
@@ -16,6 +20,7 @@ const SideNav = () => {
         <div
           className="flex flex-row space-x-3 items-center justify-center md:justify-start md:px-6 bg-indigo-300 border-zinc-200 h-16 w-full"
         >
+            {/* Logo as extra link to homepage */}
           <Link href="/">
             <Image src={BoeingLogo} alt="Boeing Logo" priority={true} />
           </Link>
@@ -27,6 +32,7 @@ const SideNav = () => {
         </div>
 
         <div className="flex flex-col space-y-2  md:px-6 ">
+            {/* Map over the sidebar items for links and highlight current tab */}
           {SIDENAV_ITEMS.map((item, index) => {
             return <MenuItem key={index} item={item} setDisplaySelectedTab={setDisplaySelectedTab} />;
           })}

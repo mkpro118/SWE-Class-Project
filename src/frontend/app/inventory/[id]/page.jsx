@@ -1,10 +1,9 @@
 import React from 'react';
 import AirplaneInfo from '../../components/additional-airplane-data.jsx'
 
-const host = 'localhost';
-// console.log(host);
-const port = 5000;
-// console.log(port)
+// **Use localhost and 5000 only when testing locally**
+const host = process.env.WEBSERVER_HOST || 'localhost';
+const port = process.env.WEBSERVER_PORT || 5000;
 const url = `http://${host}:${port}`;
 
 /**
@@ -14,9 +13,7 @@ const url = `http://${host}:${port}`;
  * @returns An AirplaneInfo object with the passed props
  */
 export default async function AirplanePage({params}) {
-    // console.log(params);
     const props = await getAirplane(params.id)
-    // console.log(props)
     return <AirplaneInfo {...props}/>
     
   };
@@ -30,7 +27,6 @@ export default async function AirplanePage({params}) {
 async function getAirplane(id) {
   const res = await fetch(`${url}/airplane/${id}`);
   const data = await res.json();
-  // console.log(data);
   return data;
 }
 

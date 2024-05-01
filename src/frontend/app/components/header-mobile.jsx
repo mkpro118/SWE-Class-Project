@@ -1,5 +1,6 @@
 'use client';
 
+// Next.js and Framer Motion utilities
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
 
 import Link from 'next/link';
@@ -9,7 +10,7 @@ import { SIDENAV_ITEMS } from '@/app/styles/constants';
 import { Icon } from '@iconify/react';
 import { motion, useCycle } from 'framer-motion';
 
-
+// Animation variants for sidebar open/close states
 const sidebar = {
   open: (height = 1000) => ({
     clipPath: `circle(${height * 2 + 200}px at 100% 0)`,
@@ -29,26 +30,33 @@ const sidebar = {
   },
 };
 
+/**
+ * Main header bar display for mobile devices
+ */
 const HeaderMobile = () => {
-  const pathname = usePathname();
-  const containerRef = useRef(null);
-  const { height } = useDimensions(containerRef);
+  const pathname = usePathname(); // Get current pathname
+  const containerRef = useRef(null); // Reference to the container DOM element
+  const { height } = useDimensions(containerRef); // Get height of the container
   const [isOpen, toggleOpen] = useCycle(false, true);
 
   return (
     <motion.nav
       initial={false}
-      animate={isOpen ? 'open' : 'closed'}
+      animate={isOpen ? 'open' : 'closed'} // Animate based on isOpen state
       custom={height}
-      className={`fixed inset-0 z-50 w-full md:hidden ${
-        isOpen ? '' : 'pointer-events-none'
+      className={`fixed inset-0 z-50 w-full md:hidden ${ 
+        isOpen ? '' : 'pointer-events-none' // Enable pointer events if open
       }`}
       ref={containerRef}
     >
+
+      {/* Background overlay animation */}
       <motion.div
         className="absolute inset-0 right-0 w-full bg-white"
         variants={sidebar}
       />
+
+      {/* Sidebar menu items */}
       <motion.ul
         variants={variants}
         className="absolute grid w-full gap-3 px-10 py-16"
@@ -58,13 +66,10 @@ const HeaderMobile = () => {
 
           return (
             <div key={idx}>
-              {/* {item.submenu ? (
-                <MenuItemWithSubMenu item={item} toggleOpen={toggleOpen} />
-              ) : ( */}
                 <MenuItem>
                   <Link
                     href={item.path}
-                    onClick={() => toggleOpen()}
+                    onClick={() => toggleOpen()} // Toggle menu on item click
                     className={`flex w-full text-2xl ${
                       item.path === pathname ? 'font-bold' : ''
                     }`}
@@ -72,7 +77,8 @@ const HeaderMobile = () => {
                     {item.title}
                   </Link>
                 </MenuItem>
-              
+
+              {/* Divider between items */}
               {!isLastItem && (
                 <MenuItem className="my-3 h-px w-full bg-gray-300" />
               )}
@@ -92,6 +98,7 @@ const MenuToggle = ({ toggle }) => (
     onClick={toggle}
     className="pointer-events-auto absolute right-4 top-[14px] z-30"
   >
+    {/* SVG paths for toggle icon */}
     <svg width="23" height="23" viewBox="0 0 23 23">
       <Path
         variants={{
@@ -117,6 +124,7 @@ const MenuToggle = ({ toggle }) => (
   </button>
 );
 
+// SVG path component
 const Path = (props) => (
   <motion.path
     fill="transparent"
@@ -127,6 +135,7 @@ const Path = (props) => (
   />
 );
 
+// Component for menu item
 const MenuItem = ({
   className,
   children,
@@ -138,57 +147,7 @@ const MenuItem = ({
   );
 };
 
-// const MenuItemWithSubMenu = ({
-//   item,
-//   toggleOpen,
-// }) => {
-//   const pathname = usePathname();
-//   const [subMenuOpen, setSubMenuOpen] = useState(false);
-
-//   return (
-//     <>
-//       <MenuItem>
-//         <button
-//           className="flex w-full text-2xl"
-//           onClick={() => setSubMenuOpen(!subMenuOpen)}
-//         >
-//           <div className="flex flex-row justify-between w-full items-center">
-//             <span
-//               className={`${pathname.includes(item.path) ? 'font-bold' : ''}`}
-//             >
-//               {item.title}
-//             </span>
-//             <div className={`${subMenuOpen && 'rotate-180'}`}>
-//               <Icon icon="lucide:chevron-down" width="24" height="24" />
-//             </div>
-//           </div>
-//         </button>
-//       </MenuItem>
-//       <div className="mt-2 ml-2 flex flex-col space-y-2">
-//         {subMenuOpen && (
-//           <>
-//             {item.subMenuItems?.map((subItem, subIdx) => {
-//               return (
-//                 <MenuItem key={subIdx}>
-//                   <Link
-//                     href={subItem.path}
-//                     onClick={() => toggleOpen()}
-//                     className={` ${
-//                       subItem.path === pathname ? 'font-bold' : ''
-//                     }`}
-//                   >
-//                     {subItem.title}
-//                   </Link>
-//                 </MenuItem>
-//               );
-//             })}
-//           </>
-//         )}
-//       </div>
-//     </>
-//   );
-// };
-
+// Animation variants for menu item
 const MenuItemVariants = {
   open: {
     y: 0,
@@ -207,6 +166,7 @@ const MenuItemVariants = {
   },
 };
 
+// Animation variants for sidebar open/close
 const variants = {
   open: {
     transition: { staggerChildren: 0.02, delayChildren: 0.15 },
@@ -216,6 +176,7 @@ const variants = {
   },
 };
 
+// Hook to get dimensions of an element
 const useDimensions = (ref) => {
   const dimensions = useRef({ width: 0, height: 0 });
 

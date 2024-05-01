@@ -1,5 +1,8 @@
 import { Icon } from "@iconify/react";
 
+/**
+ * Paths to display on side navigation bar
+ */
 export const SIDENAV_ITEMS = [
     {
         title: "Master Inventory",
